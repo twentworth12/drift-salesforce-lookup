@@ -47,6 +47,8 @@ const handleMessage = (orgId, data) => {
 
 const getContactId = (conversationId) => {
   
+  console.log('conversation ID: ' + conversationId)
+  
   var conversationUrl = CONVERSATION_API_BASE + '/${conversationId}'
   var contactId = request.post(conversationUrl)
     .set('Content-Type', 'application/json')
