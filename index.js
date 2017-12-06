@@ -52,7 +52,7 @@ const getContactId = (conversationId) => {
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${TOKEN}`)
     .catch(err => console.log(err))
-    return contactId.body.data.contactId;
+    return contactId.data.contactId;
 }
 
 app.use(bodyParser.json())
