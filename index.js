@@ -4,13 +4,13 @@ const bodyParser = require('body-parser')
 const request = require('superagent');
 const sf_token = process.env.SF_TOKEN
 
-const CONVERSATION_API_BASE = process.env.QA ? 'https://driftapi.com/v1/conversations' : 'https://driftapi.com/v1/conversations'
+const CONVERSATION_API_BASE = process.env.QA ? 'https://driftapi.com/conversations' : 'https://driftapi.com/conversations'
 
 const TOKEN = process.env.BOT_API_TOKEN
 
 
 const sendMessage = (conversationId, message) => {
-  return request.post(CONVERSATION_API_BASE + '/${conversationId}/messages')
+  return request.post(CONVERSATION_API_BASE + `/${conversationId}/messages`)
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${TOKEN}`)
     .send(message)
@@ -37,6 +37,7 @@ const handleMessage = (orgId, data) => {
     console.log('found a private note!')
     const messageBody = data.body
     const conversationId = data.conversationId
+    console.log('contact ID:' + getContactId(conversationId))
     if (messageBody.startsWith('/lookup')) {
         console.log('found a lookup action!')
       return SendMessage(orgId, conversationId, conversationId, data.id)
@@ -45,11 +46,12 @@ const handleMessage = (orgId, data) => {
 }
 
 const getContactId = (conversationId) => {
-  var contactId = request.post(CONVERSATION_API_BASE + '/conversations/${conversationId}')
+    
+  
+  var contactId = request.post(CONVERSATION_API_BASE + `/${conversationId}`)
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${TOKEN}`)
     .catch(err => console.log(err))
-    console.log('contact ID :' + contactId.body.data.contactId)
     return contactId.body.data.contactId;
 }
 
@@ -59,19 +61,6 @@ app.post('/api', (req, res) => {
   if (req.body.type === 'new_message') {
     console.log('found a new message!');
     
-request
-  .get(
-    'https://driftapi.com/conversations/44756351'
-  )
-  .set(`Authorization`, `bearer ${TOKEN}`)
-  .set('Content-Type', 'application/json')
-  .end(function (err, res) {
-    if (err) {
-      console.log(err)
-    } else {
-            console.log('contact ID found:' + res.body.data.contactId)
-    }
-  })
 
 request
   .get(
@@ -111,9 +100,7 @@ conn.query("SELECT Id, Email, FirstName, LastName FROM Lead where Id = '00Qd0000
     
     
     
-    
     handleMessage(req.body.orgId, req.body.data);
   }
   return res.send('ok')
 })
-
