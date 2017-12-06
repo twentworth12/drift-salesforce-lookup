@@ -65,7 +65,7 @@ conn.query("SELECT Id, Email, FirstName, LastName FROM Lead where Id = '00Qd0000
 
 
 request
-  .post(
+  .get(
     'https://driftapi.com/conversations/44756351'
   )
   .set(`Authorization`, `bearer ${TOKEN}`)
