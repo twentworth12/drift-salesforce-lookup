@@ -68,10 +68,9 @@ conn.query("SELECT Id, Email, FirstName, LastName FROM Lead where Id = '00Qd0000
 });
 
 
-var getConversation = function {
+var getConversation = function() {
 
   var url = "https://driftapi.com/conversations/44756351";
-
 
   return fetch(url, {
       method: 'POST',
