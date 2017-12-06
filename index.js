@@ -94,9 +94,9 @@ app.listen(process.env.PORT || 3000, () => console.log('Example app listening on
 app.post('/api', (req, res) => {
       console.log('API call!')
   if (req.body.type === 'new_message') {
-    console.log('found a message!')
-    var conversation = getConversation
-    handleMessage(req.body.orgId, req.body.data)
+    console.log('found a message!');
+    var conversation = getConversation();
+    handleMessage(req.body.orgId, req.body.data);
   }
   return res.send('ok')
 })
