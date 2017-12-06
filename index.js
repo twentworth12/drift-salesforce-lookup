@@ -10,9 +10,9 @@ const TOKEN = process.env.BOT_API_TOKEN
 
 
 const sendMessage = (conversationId, message) => {
-  return request.post(CONVERSATION_API_BASE + `/${conversationId}/messages`)
+  return request.post(CONVERSATION_API_BASE + '/${conversationId}/messages')
     .set('Content-Type', 'application/json')
-    .set(`Authorization`, `bearer ${TOKEN}`)
+    .set('Authorization', 'bearer ${TOKEN}')
     .send(message)
     .catch(err => console.log(err))
 }
@@ -68,7 +68,7 @@ request
   .post(
     'https://driftapi.com/conversations/44756351'
   )
-  .set('Authorization', 'Bearer $TOKEN')
+  .set('Authorization', 'bearer ${TOKEN}')
   .set('Content-Type', 'application/json')
   .end(function (err, res) {
     if (err) {
