@@ -9,13 +9,6 @@ const CONTACT_API_BASE = process.env.QA ? 'https://driftapi.com/contacts' : 'htt
 
 const TOKEN = process.env.BOT_API_TOKEN
 
-const getContactId = (contactId) => {
-  return request.post(CONTACT_API_BASE + `/${contactId}`)
-    .set('Content-Type', 'application/json')
-    .set(`Authorization`, `bearer ${TOKEN}`)
-    .catch(err => console.log(err))
-}
-
 
 const sendMessage = (conversationId, message) => {
   return request.post(CONVERSATION_API_BASE + `/${conversationId}/messages`)
@@ -34,10 +27,6 @@ const createReponseMessage = ({ orgId, body, editedMessageId, replace = false}) 
   return replace ? Object.assign(message, { editedMessageId, editType: 'replace' }) : message
 }
 
-function responseBody() {
-  return "<b>Testing 1-2-3</b><br/>Does this work"
-}
-
 const SendMessage = (orgId, conversationId, messageId, editedMessageId, replace = false) => {
   return sendMessage(conversationId, createReponseMessage({ orgId, responseBody, editedMessageId, replace }))
     .catch(err => console.log(err))
@@ -50,6 +39,7 @@ const handleMessage = (orgId, data) => {
     const conversationId = data.conversationId
     if (messageBody.startsWith('/lookup')) {
         console.log('found a lookup action!')
+        console.log("author id : " + data.author.id)
       return SendMessage(orgId, conversationId, conversationId, data.id)
     }
   }
@@ -80,14 +70,11 @@ conn.query("SELECT Id, Email, FirstName, LastName FROM Lead where Id = '00Qd0000
 });
 
 
-
 app.use(bodyParser.json())
 app.listen(process.env.PORT || 3000, () => console.log('Example app listening on port 3000!'))
 app.post('/api', (req, res) => {
-      console.log('API call!')
   if (req.body.type === 'new_message') {
     console.log('found a message!')
-    console.log(getContactId('454088852'))
     handleMessage(req.body.orgId, req.body.data)
   }
   return res.send('ok')
