@@ -55,9 +55,10 @@ request
     if (err) {
       console.log(err)
     } else {
-      return res.body.data.contactId;
+      var contactId = res.body.data.contactId;
     }
   })
+  return contactId
 }
 
 var jsforce = require('jsforce');
