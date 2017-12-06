@@ -64,7 +64,7 @@ conn.query("SELECT Id, Email, FirstName, LastName FROM Lead where Id = '00Qd0000
 });
 
 
-var request = require('request');
+var request1 = require('request');
 
 var options = {
   uri: 'https://driftapi.com/conversations/44756351',
@@ -75,13 +75,20 @@ var options = {
   }
 };
 
-request(options, function (error, response, body) {
+request1(options, function (error, response, body) {
   if (!error && response.statusCode == 200) {
     console.log(body.id) // Print the shortened url.
   }
 });
 
-
+request
+    .post(https://driftapi.com/conversations/44756351`)
+    .set('Content-Type', 'application/json')
+    .set(`Authorization`, `bearer ${TOKEN}`)
+    .catch(err => console.log(err))
+    .end(function(resp){
+    console.log('Got post', resp.body)
+  });
 
 
 app.use(bodyParser.json())
