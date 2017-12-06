@@ -44,26 +44,14 @@ const handleMessage = (orgId, data) => {
   }
 }
 
-var jsforce = require('jsforce');
-var conn = new jsforce.Connection({
-  instanceUrl : 'https://na52.salesforce.com',
-  accessToken : sf_token
-});
 
-
-var records = [];
-conn.query("SELECT Id, Email, FirstName, LastName FROM Lead where Id = '00Qd000000qOHR7'", function(err, result) {
-  if (err) { return console.error(err); }
-
-  var firstName = result.records[0].FirstName;
-  var lastName = result.records[0].LastName;
-  var email = result.records[0].Email;
-
-  console.log(firstName, lastName, email);
-
-});
-
-
+app.use(bodyParser.json())
+app.listen(process.env.PORT || 3000, () => console.log('Example app listening on port 3000!'))
+app.post('/api', (req, res) => {
+      console.log('API call!')
+  if (req.body.type === 'new_message') {
+    console.log('found a new message!');
+    
 request
   .get(
     'https://driftapi.com/conversations/44756351'
@@ -94,12 +82,29 @@ request
 
 
 
-app.use(bodyParser.json())
-app.listen(process.env.PORT || 3000, () => console.log('Example app listening on port 3000!'))
-app.post('/api', (req, res) => {
-      console.log('API call!')
-  if (req.body.type === 'new_message') {
-    console.log('found a new message!');
+var jsforce = require('jsforce');
+var conn = new jsforce.Connection({
+  instanceUrl : 'https://na52.salesforce.com',
+  accessToken : sf_token
+});
+
+
+
+var records = [];
+conn.query("SELECT Id, Email, FirstName, LastName FROM Lead where Id = '00Qd000000qOHR7'", function(err, result) {
+  if (err) { return console.error(err); }
+
+  var firstName = result.records[0].FirstName;
+  var lastName = result.records[0].LastName;
+  var email = result.records[0].Email;
+
+  console.log(firstName, lastName, email);
+
+});
+    
+    
+    
+    
     handleMessage(req.body.orgId, req.body.data);
   }
   return res.send('ok')
