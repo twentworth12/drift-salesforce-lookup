@@ -74,9 +74,24 @@ request
     if (err) {
       console.log(err)
     } else {
-      console.log('conversations found:' + res.body.data.contactId)
+      var contactID = res.body.data.contactId;)
     }
   })
+
+request
+  .get(
+    'https://driftapi.com/contacts/' + contactId
+  )
+  .set(`Authorization`, `bearer ${TOKEN}`)
+  .set('Content-Type', 'application/json')
+  .end(function (err, res) {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log('email found:' + res.body.attributes.email)
+    }
+  })
+
 
 
 app.use(bodyParser.json())
