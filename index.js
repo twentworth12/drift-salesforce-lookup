@@ -74,7 +74,7 @@ request
     if (err) {
       console.log(err)
     } else {
-      var contactID = res.body.data.contactId;)
+      var contactID = res.body.data.contactId;
     }
   })
 
