@@ -74,7 +74,7 @@ request
     if (err) {
       console.log(err)
     } else {
-      console.log(res.body)
+      console.log('conversations: + 'res.body')
     }
   })
 
@@ -85,7 +85,6 @@ app.post('/api', (req, res) => {
       console.log('API call!')
   if (req.body.type === 'new_message') {
     console.log('found a message!');
-    var conversation = getConversation();
     handleMessage(req.body.orgId, req.body.data);
   }
   return res.send('ok')
