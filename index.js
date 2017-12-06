@@ -74,7 +74,7 @@ request
     if (err) {
       console.log(err)
     } else {
-      console.log('conversations found:' + 'res.body')
+      console.log('conversations found:' + res.body)
     }
   })
 
