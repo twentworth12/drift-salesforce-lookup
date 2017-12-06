@@ -37,10 +37,15 @@ const handleMessage = (orgId, data) => {
     console.log('found a private note!')
     const messageBody = data.body
     const conversationId = data.conversationId
+    
+    
+    
     const contactId = getContactId(conversationId)
-    console.log('contact ID1:' + contactId)
-    console.log('contact ID1:' + contactId.data)
-    console.log('contact ID1:' + contactId.data.contactId)
+
+	Promise.resolve(contactId) {
+	  console.log('contact id: ' + contactId); // "Success"
+	}
+
     if (messageBody.startsWith('/lookup')) {
         console.log('found a lookup action!')
       return SendMessage(orgId, conversationId, conversationId, data.id)
