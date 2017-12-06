@@ -74,7 +74,7 @@ var getConversation = function {
         method: 'POST',
         headers: {
             'Authorization': 'bearer ' + TOKEN,
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         }
 
     })
