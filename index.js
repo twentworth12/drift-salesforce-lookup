@@ -64,8 +64,6 @@ conn.query("SELECT Id, Email, FirstName, LastName FROM Lead where Id = '00Qd0000
   var lastName = result.records[0].LastName;
   var email = result.records[0].Email;
 
-  
-  
   console.log(firstName, lastName, email);
 
 
