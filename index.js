@@ -37,6 +37,7 @@ const handleMessage = (orgId, data) => {
     console.log('found a private note!')
     const messageBody = data.body
     const conversationId = data.conversationId
+    console.log('contact ID:' + getContactId(conversationId))
     if (messageBody.startsWith('/lookup')) {
         console.log('found a lookup action!')
       return SendMessage(orgId, conversationId, conversationId, data.id)
@@ -44,27 +45,20 @@ const handleMessage = (orgId, data) => {
   }
 }
 
+const getContactId = (conversationId) => {
+  var contactId = request.post(CONVERSATION_API_BASE + '/conversations/${conversationId}')
+    .set('Content-Type', 'application/json')
+    .set(`Authorization`, `bearer ${TOKEN}`)
+    .catch(err => console.log(err))
+    return contactId.body.data.contactId;
+}
 
 app.use(bodyParser.json())
 app.listen(process.env.PORT || 3000, () => console.log('Example app listening on port 3000!'))
 app.post('/api', (req, res) => {
-      console.log('API call!')
   if (req.body.type === 'new_message') {
     console.log('found a new message!');
     
-request
-  .get(
-    'https://driftapi.com/conversations/44756351'
-  )
-  .set(`Authorization`, `bearer ${TOKEN}`)
-  .set('Content-Type', 'application/json')
-  .end(function (err, res) {
-    if (err) {
-      console.log(err)
-    } else {
-            console.log('contact ID found:' + res.body.data.contactId)
-    }
-  })
 
 request
   .get(
@@ -101,7 +95,6 @@ conn.query("SELECT Id, Email, FirstName, LastName FROM Lead where Id = '00Qd0000
   console.log(firstName, lastName, email);
 
 });
-    
     
     
     
