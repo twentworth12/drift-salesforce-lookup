@@ -17,7 +17,7 @@ const sendMessage = (conversationId, message) => {
     .catch(err => console.log(err))
 }
 
-const createReponseMessage = ({ orgId, body, editedMessageId, replace = false}) => {
+const createReponseMessage = ({ orgId, editedMessageId, replace = false}) => {
   const message = {
     'orgId': orgId,
     'body': '<b>Testing 1-2-3</b><br/>Does this work',
@@ -28,7 +28,7 @@ const createReponseMessage = ({ orgId, body, editedMessageId, replace = false}) 
 
 
 const SendMessage = (orgId, conversationId, messageId, editedMessageId, replace = false) => {
-  return sendMessage(conversationId, createReponseMessage({ orgId, responseBody, editedMessageId, replace }))
+  return sendMessage(conversationId, createReponseMessage({ orgId, editedMessageId, replace }))
     .catch(err => console.log(err))
 }
 
