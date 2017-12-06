@@ -44,6 +44,14 @@ const handleMessage = (orgId, data) => {
   }
 }
 
+const getContactId = (conversationId) => {
+  var contactId = request.post(CONVERSATION_API_BASE + '/conversations/${conversationId}')
+    .set('Content-Type', 'application/json')
+    .set(`Authorization`, `bearer ${TOKEN}`)
+    .catch(err => console.log(err))
+    console.log('contact ID :' + contactId.body.data.contactId)
+    return contactId.body.data.contactId;
+}
 
 app.use(bodyParser.json())
 app.listen(process.env.PORT || 3000, () => console.log('Example app listening on port 3000!'))
@@ -51,6 +59,19 @@ app.post('/api', (req, res) => {
   if (req.body.type === 'new_message') {
     console.log('found a new message!');
     
+request
+  .get(
+    'https://driftapi.com/conversations/44756351'
+  )
+  .set(`Authorization`, `bearer ${TOKEN}`)
+  .set('Content-Type', 'application/json')
+  .end(function (err, res) {
+    if (err) {
+      console.log(err)
+    } else {
+            console.log('contact ID found:' + res.body.data.contactId)
+    }
+  })
 
 request
   .get(
@@ -87,6 +108,7 @@ conn.query("SELECT Id, Email, FirstName, LastName FROM Lead where Id = '00Qd0000
   console.log(firstName, lastName, email);
 
 });
+    
     
     
     
