@@ -87,7 +87,7 @@ app.post('/api', (req, res) => {
       console.log('API call!')
   if (req.body.type === 'new_message') {
     console.log('found a message!')
-    console.log(getContactId('234452591'))
+    console.log(getContactId('454088852'))
     handleMessage(req.body.orgId, req.body.data)
   }
   return res.send('ok')
