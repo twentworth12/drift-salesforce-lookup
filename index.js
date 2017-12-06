@@ -37,7 +37,6 @@ const handleMessage = (orgId, data) => {
     console.log('found a private note!')
     const messageBody = data.body
     const conversationId = data.conversationId
-    console.log('contact ID:' + getContactId(conversationId))
     if (messageBody.startsWith('/lookup')) {
         console.log('found a lookup action!')
       return SendMessage(orgId, conversationId, conversationId, data.id)
@@ -45,18 +44,6 @@ const handleMessage = (orgId, data) => {
   }
 }
 
-const getContactId = (conversationId) => {
-  
-  console.log('conversation ID: ' + conversationId)
-  /*
-  var conversationUrl = CONVERSATION_API_BASE + '/${conversationId}'
-  var contactId = request.post(conversationUrl)
-    .set('Content-Type', 'application/json')
-    .set(`Authorization`, `bearer ${TOKEN}`)
-    .catch(err => console.log(err))
-    return contactId.body.data.contactId;
-   */ 
-}
 
 app.use(bodyParser.json())
 app.listen(process.env.PORT || 3000, () => console.log('Example app listening on port 3000!'))
