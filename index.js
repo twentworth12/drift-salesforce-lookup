@@ -45,7 +45,6 @@ const handleMessage = (orgId, data) => {
   }
 }
 
-console.log("token : " + sf_token);
 var jsforce = require('jsforce');
 var conn = new jsforce.Connection({
   instanceUrl : 'https://na52.salesforce.com',
@@ -56,8 +55,6 @@ var conn = new jsforce.Connection({
 var records = [];
 conn.query("SELECT Id, Email, FirstName, LastName FROM Lead where Id = '00Qd000000qOHR7'", function(err, result) {
   if (err) { return console.error(err); }
-  console.log("total : " + result.totalSize);
-  console.log("fetched : " + result.records.length);
 
   var firstName = result.records[0].FirstName;
   var lastName = result.records[0].LastName;
@@ -85,7 +82,7 @@ var getConversation = function() {
   })
   .then(function(data){
     console.log(data); //this will just be text
-    var data_obj = JSON.parse(data);
+    var data_obj = JSON.parse('conversation: ' + data);
     return data_obj
   })
 
