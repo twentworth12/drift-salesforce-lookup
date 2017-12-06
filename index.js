@@ -37,7 +37,6 @@ const handleMessage = (orgId, data) => {
     console.log('found a private note!')
     const messageBody = data.body
     const conversationId = data.conversationId
-   console.log("author id : " + data.author.id)
     if (messageBody.startsWith('/lookup')) {
         console.log('found a lookup action!')
       return SendMessage(orgId, conversationId, conversationId, data.id)
@@ -67,6 +66,7 @@ conn.query("SELECT Id, Email, FirstName, LastName FROM Lead where Id = '00Qd0000
 
 var getConversation = function() {
 
+  console.log('found a conversation!')
   var url = "https://driftapi.com/conversations/44756351";
 
   return fetch(url, {
@@ -95,7 +95,7 @@ app.post('/api', (req, res) => {
       console.log('API call!')
   if (req.body.type === 'new_message') {
     console.log('found a message!')
-    getConversation
+    var conversation = getConversation
     handleMessage(req.body.orgId, req.body.data)
   }
   return res.send('ok')
