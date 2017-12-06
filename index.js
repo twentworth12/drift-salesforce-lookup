@@ -74,7 +74,7 @@ request
     if (err) {
       console.log(err)
     } else {
-            console.log('contact id found:' + res.body.data.contactId)
+            console.log('contact ID found:' + res.body.data.contactId)
     }
   })
 
