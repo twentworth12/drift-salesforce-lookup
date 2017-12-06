@@ -44,7 +44,7 @@ const handleMessage = (orgId, data) => {
   }
 }
 
-function getContactID() { 
+function getContactId() { 
 request
   .get(
     'https://driftapi.com/conversations/44756351'
