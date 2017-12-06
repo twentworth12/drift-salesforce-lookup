@@ -46,7 +46,10 @@ const handleMessage = (orgId, data) => {
 }
 
 const getContactId = (conversationId) => {
-  var contactId = request.post(CONVERSATION_API_BASE + '/conversations/${conversationId}')
+  var contactId = request.post(CONVERSATION_API_BASE + '/${conversationId}')
+  
+  return request.post(CONVERSATION_API_BASE + '/${conversationId}/messages')  
+  
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${TOKEN}`)
     .catch(err => console.log(err))
