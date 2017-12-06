@@ -48,10 +48,12 @@ const handleMessage = (orgId, data) => {
 const getContactId = (conversationId) => {
   
   var contactId = request.get(CONVERSATION_API_BASE + `/${conversationId}`)
-  console.log('contact ID:' + contactId)
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${TOKEN}`)
     .catch(err => console.log(err))
+    console.log('contact ID:' + contactId)
+    console.log('contact ID1:' + contactId.data)
+    console.log('contact ID2:' + contactId.data.contactId)
     return contactId.data.contactId;
 }
 
