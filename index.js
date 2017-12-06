@@ -82,7 +82,7 @@ request1(options, function (error, response, body) {
 });
 
 request
-    .post(https://driftapi.com/conversations/44756351`)
+    .post('https://driftapi.com/conversations/44756351')
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${TOKEN}`)
     .catch(err => console.log(err))
