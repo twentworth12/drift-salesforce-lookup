@@ -44,6 +44,22 @@ const handleMessage = (orgId, data) => {
   }
 }
 
+function getContactID() { 
+request
+  .get(
+    'https://driftapi.com/conversations/44756351'
+  )
+  .set(`Authorization`, `bearer ${TOKEN}`)
+  .set('Content-Type', 'application/json')
+  .end(function (err, res) {
+    if (err) {
+      console.log(err)
+    } else {
+      return res.body.data.contactId;
+    }
+  })
+}
+
 var jsforce = require('jsforce');
 var conn = new jsforce.Connection({
   instanceUrl : 'https://na52.salesforce.com',
@@ -64,23 +80,10 @@ conn.query("SELECT Id, Email, FirstName, LastName FROM Lead where Id = '00Qd0000
 });
 
 
-request
-  .get(
-    'https://driftapi.com/conversations/44756351'
-  )
-  .set(`Authorization`, `bearer ${TOKEN}`)
-  .set('Content-Type', 'application/json')
-  .end(function (err, res) {
-    if (err) {
-      console.log(err)
-    } else {
-      var contactID = res.body.data.contactId;
-    }
-  })
 
 request
   .get(
-    'https://driftapi.com/contacts/' + contactId
+    'https://driftapi.com/contacts/' + getContactId()
   )
   .set(`Authorization`, `bearer ${TOKEN}`)
   .set('Content-Type', 'application/json')
