@@ -65,12 +65,18 @@ conn.query("SELECT Id, Email, FirstName, LastName FROM Lead where Id = '00Qd0000
 
 
 request
-  .post('https://driftapi.com/conversations/44756351')
+  .post(
+    'https://driftapi.com/conversations/44756351'
+  )
+  .set('Authorization', 'Bearer $TOKEN')
   .set('Content-Type', 'application/json')
-  .set('Authorization', 'bearer ${TOKEN}')
-  .end(function(resp){
-    console.log('Got post', resp.body)
-  });
+  .end(function (err, res) {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log(res.body)
+    }
+  })
 
 
 app.use(bodyParser.json())
