@@ -46,7 +46,7 @@ const handleMessage = (orgId, data) => {
   }
 }
 
-
+console.log("token : " + sf_token);
 var jsforce = require('jsforce');
 var conn = new jsforce.Connection({
   instanceUrl : 'https://na52.salesforce.com',
