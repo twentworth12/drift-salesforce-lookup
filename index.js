@@ -45,13 +45,13 @@ function getContactId(conversationID) {
        console.log('Oh no! error');
      } else {
        console.log('getContactId: ' + res.body.data.contactId)
-       return JSON.stringify(res.body.data.contactId)
+       return res.body.data.contactId
      }
    });
 }
 
 
-
+/*
 
 function getContactEmail(contactId) {
 
@@ -69,10 +69,14 @@ request
   })
 }
 
+*/
+
 const handleMessage = (orgId, data) => {
   if (data.type === 'private_note') {
     const messageBody = data.body
     const conversationId = data.conversationId
+
+        console.log('conversationId: ' + conversationId)
 
 	contactId = getContactId(conversationId)
     
