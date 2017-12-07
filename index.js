@@ -37,7 +37,7 @@ const handleMessage = (orgId, data) => {
     console.log('found a private note!')
     const messageBody = data.body
     const conversationId = data.conversationId
-    getContactID('44756351', afterTheRequest)
+    getContactId('44756351', afterTheRequest)
     if (messageBody.startsWith('/lookup')) {
         console.log('found a lookup action!')
       return SendMessage(orgId, conversationId, conversationId, data.id)
@@ -63,7 +63,7 @@ function getContactId(conversationID, callbackFn) {
 
 // call back function
 function afterTheRequest(contactId) { 
-    // do something with the contactID, it's now defined
+    console.log('contactID 2: ' + contactId)
 }
 
 /*
