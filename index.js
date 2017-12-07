@@ -38,7 +38,7 @@ const handleMessage = (orgId, data) => {
     const messageBody = data.body
     const conversationId = data.conversationId
 
-    getContactID(conversationId, afterTheRequest)
+    getContactId(conversationId, afterTheRequest)
 
     if (messageBody.startsWith('/lookup')) {
         console.log('found a lookup action!')
@@ -54,7 +54,7 @@ function afterTheRequest(contactId) {
 
 
 // request function
-function getContactID(conversationID, callbackFn) {
+function getContactId(conversationID, callbackFn) {
   request
    .get(CONVERSATION_API_BASE + `/${conversationId}`)
     .set('Content-Type', 'application/json')
