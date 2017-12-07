@@ -5,6 +5,8 @@ const request = require('superagent');
 const sf_token = process.env.SF_TOKEN
 
 const CONVERSATION_API_BASE = process.env.QA ? 'https://driftapi.com/conversations' : 'https://driftapi.com/conversations'
+const CONTACT_API_BASE = process.env.QA ? 'https://driftapi.com/contacts' : 'https://driftapi.com/contacts'
+
 
 const TOKEN = process.env.BOT_API_TOKEN
 
@@ -58,25 +60,17 @@ function getContactId (conversationId) {
        console.log('Oh no! error');
      } else {
        console.log('contact id 1 is: ' + res.body.data.contactId)
-       var contactId = res.body.data.contactId;
+       getContactEmail(res.body.data.contactId);
      }
    });
-return contactId
+
     
 }
 
-
-
-app.use(bodyParser.json())
-app.listen(process.env.PORT || 3000, () => console.log('Example app listening on port 3000!'))
-app.post('/api', (req, res) => {
-  if (req.body.type === 'new_message') {
-    console.log('found a new message!');
+function getContactEmail (contactId) {
 
 request
-  .get(
-    'https://driftapi.com/contacts/40439664'
-  )
+  .get(CONTACT_API_BASE + `/${contactId}`)
   .set(`Authorization`, `bearer ${TOKEN}`)
   .set('Content-Type', 'application/json')
   .end(function (err, res) {
@@ -87,6 +81,14 @@ request
     }
   })
 
+
+
+
+app.use(bodyParser.json())
+app.listen(process.env.PORT || 3000, () => console.log('Example app listening on port 3000!'))
+app.post('/api', (req, res) => {
+  if (req.body.type === 'new_message') {
+    console.log('found a new message!');
 
 
 var jsforce = require('jsforce');
