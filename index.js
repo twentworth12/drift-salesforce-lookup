@@ -7,7 +7,6 @@ const sf_token = process.env.SF_TOKEN
 const CONVERSATION_API_BASE = process.env.QA ? 'https://driftapi.com/conversations' : 'https://driftapi.com/conversations'
 const CONTACT_API_BASE = process.env.QA ? 'https://driftapi.com/contacts' : 'https://driftapi.com/contacts'
 
-
 const TOKEN = process.env.BOT_API_TOKEN
 
 
@@ -34,22 +33,8 @@ const SendMessage = (orgId, conversationId, messageId, editedMessageId, replace 
     .catch(err => console.log(err))
 }
 
-const handleMessage = (orgId, data) => {
-  if (data.type === 'private_note') {
-    console.log('found a private note!')
-    const messageBody = data.body
-    const conversationId = data.conversationId
-    var contactId = getContactId(conversationId)
-    console.log('(handleMessage) contactId: ' + contactId)
-    if (messageBody.startsWith('/lookup')) {
-        console.log('found a lookup action!')
-      return SendMessage(orgId, conversationId, conversationId, data.id)
-    }
-  }
-}
 
-
-function getContactId(conversationID, callback) {
+function getContactId(conversationID) {
 
  request
    .get(CONVERSATION_API_BASE + `/${conversationId}`)
@@ -59,16 +44,14 @@ function getContactId(conversationID, callback) {
      if (err || !res.ok) {
        console.log('Oh no! error');
      } else {
-       console.log('contact id 1 is: ' + res.body.data.contactId)
-       contactId = res.body.data.contactId
-       console.log('getContactId: ' + contactId)
+       console.log('getContactId: ' + res.body.data.contactId)
+       return JSON.stringify(res.body.data.contactId)
      }
-     callback()
    });
 }
 
 
-function getContactEmail (contactId) {
+function getContactEmail(contactId) {
 
 request
   .get(CONTACT_API_BASE + `/${contactId}`)
@@ -82,7 +65,21 @@ request
       return JSON.stringify(res.body.data.attributes.email)
     }
   })
-  return JSON.stringify(res.body.data.attributes.email)
+}
+
+const handleMessage = (orgId, data) => {
+  if (data.type === 'private_note') {
+    const messageBody = data.body
+    const conversationId = data.conversationId
+    const contactId = getContactId(conversationId)
+    const email = getContactEmail(contactId)
+        
+    
+    if (messageBody.startsWith('/lookup')) {
+        console.log('found a lookup action!')
+      return SendMessage(orgId, conversationId, conversationId, data.id)
+    }
+  }
 }
 
 
@@ -91,12 +88,10 @@ app.listen(process.env.PORT || 3000, () => console.log('Example app listening on
 app.post('/api', (req, res) => {
   if (req.body.type === 'new_message') {
     console.log('found a new message!');
-    
     handleMessage(req.body.orgId, req.body.data);
   }
   return res.send('ok')
 })
-
 
 
 
