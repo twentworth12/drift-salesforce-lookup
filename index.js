@@ -48,19 +48,22 @@ const handleMessage = (orgId, data) => {
 
 
 function getContactId (conversationId) {
-  var contactId = request.get(CONVERSATION_API_BASE + `/${conversationId}`)
+
+ request
+   .get(CONVERSATION_API_BASE + `/${conversationId}`)
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${TOKEN}`)
-    .catch(err => console.log(err))
-	.end(function(err, res){
-     	if (err || !res.ok) {
-       		alert('Oh no! error');
-     	} else {
-       		alert('yay got ' + JSON.stringify(res.body));
-     	}
-   	});
+   .end(function(err, res){
+     if (err || !res.ok) {
+       alert('Oh no! error');
+     } else {
+       alert('yay got ' + JSON.stringify(res.body));
+     }
+   });
+
     
 }
+
 
 
 app.use(bodyParser.json())
