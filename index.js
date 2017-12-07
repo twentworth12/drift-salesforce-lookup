@@ -57,7 +57,7 @@ function getContactId (conversationId) {
      if (err || !res.ok) {
        console.log('Oh no! error');
      } else {
-       return res.body.data.contactId);
+       return res.body.data.contactId;
      }
    });
 
