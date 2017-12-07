@@ -52,9 +52,6 @@ function getContactId(conversationID, callbackFn) {
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${TOKEN}`)
    .end(function(err, res){
-     if (err || !res.ok) {
-       console.log('Oh no! error');
-     } else {
        callbackFn(res.body.data.contactId)
      }
    });  
