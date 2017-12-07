@@ -73,7 +73,8 @@ const handleMessage = (orgId, data) => {
   if (data.type === 'private_note') {
     const messageBody = data.body
     const conversationId = data.conversationId
-    const contactId = getContactId(conversationId)
+
+	contactId = getContactId(conversationId)
     
     if (messageBody.startsWith('/lookup')) {
         console.log('found a lookup action!')
