@@ -7,6 +7,7 @@ const sf_token = process.env.SF_TOKEN
 const CONVERSATION_API_BASE = process.env.QA ? 'https://driftapi.com/conversations' : 'https://driftapi.com/conversations'
 const CONTACT_API_BASE = process.env.QA ? 'https://driftapi.com/contacts' : 'https://driftapi.com/contacts'
 
+
 const TOKEN = process.env.BOT_API_TOKEN
 
 
@@ -33,32 +34,21 @@ const SendMessage = (orgId, conversationId, messageId, editedMessageId, replace 
     .catch(err => console.log(err))
 }
 
-
-
-/*
-
-function getContactEmail(contactId) {
-
-request
-  .get(CONTACT_API_BASE + `/${contactId}`)
-  .set(`Authorization`, `bearer ${TOKEN}`)
-  .set('Content-Type', 'application/json')
-  .end(function (err, res) {
-    if (err) {
-      console.log(err)
-    } else {
-      console.log('getContactEmail: ' + JSON.stringify(res.body.data.attributes.email))
-      return res.body.data.attributes.email
+const handleMessage = (orgId, data) => {
+  if (data.type === 'private_note') {
+    console.log('found a private note!')
+    const messageBody = data.body
+    const conversationId = data.conversationId
+    var contactId = getContactId(conversationId)
+    if (messageBody.startsWith('/lookup')) {
+        console.log('found a lookup action!')
+      return SendMessage(orgId, conversationId, conversationId, data.id)
     }
-  })
+  }
 }
 
-*/
 
-function getContactId(conversationID) {
-
-
-    console.log('conversationId 2: ' + conversationId)
+function getContactId (conversationId) {
 
  request
    .get(CONVERSATION_API_BASE + `/${conversationId}`)
@@ -68,27 +58,28 @@ function getContactId(conversationID) {
      if (err || !res.ok) {
        console.log('Oh no! error');
      } else {
-       console.log('getContactId: ' + res.body.data.contactId)
-       return res.body.data.contactId
+       console.log('contact id 1 is: ' + res.body.data.contactId)
+       getContactEmail(res.body.data.contactId);
      }
    });
+
+    
 }
 
+function getContactEmail (contactId) {
 
-const handleMessage = (orgId, data) => {
-  if (data.type === 'private_note') {
-    const messageBody = data.body
-    const conversationId = data.conversationId
-
-    console.log('conversationId: ' + conversationId)
-
-	getContactId(conversationId)
-    
-    if (messageBody.startsWith('/lookup')) {
-        console.log('found a lookup action!')
-      return SendMessage(orgId, conversationId, conversationId, data.id)
+request
+  .get(CONTACT_API_BASE + `/${contactId}`)
+  .set(`Authorization`, `bearer ${TOKEN}`)
+  .set('Content-Type', 'application/json')
+  .end(function (err, res) {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log('email found:' + JSON.stringify(res.body.data.attributes))
     }
-  }
+  })
+
 }
 
 
@@ -97,14 +88,7 @@ app.listen(process.env.PORT || 3000, () => console.log('Example app listening on
 app.post('/api', (req, res) => {
   if (req.body.type === 'new_message') {
     console.log('found a new message!');
-    handleMessage(req.body.orgId, req.body.data);
-  }
-  return res.send('ok')
-})
 
-
-
-/*
 
 var jsforce = require('jsforce');
 var conn = new jsforce.Connection({
@@ -125,5 +109,10 @@ conn.query("SELECT Id, Email, FirstName, LastName FROM Lead where Id = '00Qd0000
   console.log(firstName, lastName, email);
 
 });
-
-*/
+    
+    
+    
+    handleMessage(req.body.orgId, req.body.data);
+  }
+  return res.send('ok')
+})
