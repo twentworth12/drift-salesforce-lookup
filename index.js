@@ -58,7 +58,7 @@ function getContactId(conversationID, callbackFn) {
 
 // call back function
 function afterTheRequest(contactId) { 
-    console.log('contactID is: ' + res.body.data.contactId)
+    console.log('contactID is: ' + contactId)
 }
 
 
