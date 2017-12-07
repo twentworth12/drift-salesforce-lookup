@@ -63,9 +63,8 @@ function getContactId (conversationId) {
        getContactEmail(res.body.data.contactId);
      }
    });
-
-    
 }
+
 
 function getContactEmail (contactId) {
 
@@ -77,11 +76,13 @@ request
     if (err) {
       console.log(err)
     } else {
-      console.log('email found:' + res.body.data.attributes.email)
+      console.log('email found:' + JSON.stringify(res.body.data.attributes.email))
       return JSON.stringify(res.body.data.attributes.email)
     }
   })
-
+  
+  return JSON.stringify(res.body.data.attributes.email)
+  
 }
 
 
@@ -90,7 +91,16 @@ app.listen(process.env.PORT || 3000, () => console.log('Example app listening on
 app.post('/api', (req, res) => {
   if (req.body.type === 'new_message') {
     console.log('found a new message!');
+    
+    handleMessage(req.body.orgId, req.body.data);
+  }
+  return res.send('ok')
+})
 
+
+
+
+/*
 
 var jsforce = require('jsforce');
 var conn = new jsforce.Connection({
@@ -111,10 +121,5 @@ conn.query("SELECT Id, Email, FirstName, LastName FROM Lead where Id = '00Qd0000
   console.log(firstName, lastName, email);
 
 });
-    
-    
-    
-    handleMessage(req.body.orgId, req.body.data);
-  }
-  return res.send('ok')
-})
+
+*/
