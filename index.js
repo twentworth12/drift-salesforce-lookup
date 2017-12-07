@@ -54,7 +54,6 @@ function getContactId(conversationID, callbackFn) {
    .end(function(err, res){
        callbackFn(res.body.data.contactId)
      }
-   });  
 }
 
 // call back function
