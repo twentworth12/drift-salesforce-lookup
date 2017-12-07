@@ -51,6 +51,8 @@ function getContactId(conversationID) {
 }
 
 
+
+
 function getContactEmail(contactId) {
 
 request
@@ -62,7 +64,7 @@ request
       console.log(err)
     } else {
       console.log('getContactEmail: ' + JSON.stringify(res.body.data.attributes.email))
-      return JSON.stringify(res.body.data.attributes.email)
+      return res.body.data.attributes.email)
     }
   })
 }
