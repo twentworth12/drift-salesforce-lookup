@@ -57,6 +57,8 @@ request
 
 function getContactId(conversationID) {
 
+    console.log('conversationId 2: ' + conversationId)
+
  request
    .get(CONVERSATION_API_BASE + `/${conversationId}`)
     .set('Content-Type', 'application/json')
