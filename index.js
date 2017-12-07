@@ -61,7 +61,7 @@ function getContactId (conversationId) {
      } else {
        console.log('contact id 1 is: ' + res.body.data.contactId)
        var email = getContactEmail(res.body.data.contactId)
-       console.log('email new 123 is: ' + email)       
+       console.log('getContactId: ' + email)     
      }
    });
 }
@@ -77,7 +77,7 @@ request
     if (err) {
       console.log(err)
     } else {
-      console.log('email found:' + JSON.stringify(res.body.data.attributes.email))
+      console.log('getContactEmail: ' + JSON.stringify(res.body.data.attributes.email))
       return JSON.stringify(res.body.data.attributes.email)
     }
   })
