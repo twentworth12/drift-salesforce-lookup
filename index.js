@@ -76,7 +76,7 @@ request
     if (err) {
       console.log(err)
     } else {
-      console.log('email found:' + res.body.data.attributes.email)
+      console.log('email found:' + JSON.stringify(res.body.data))
     }
   })
 
