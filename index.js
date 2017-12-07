@@ -34,22 +34,6 @@ const SendMessage = (orgId, conversationId, messageId, editedMessageId, replace 
 }
 
 
-function getContactId(conversationID) {
-
- request
-   .get(CONVERSATION_API_BASE + `/${conversationId}`)
-    .set('Content-Type', 'application/json')
-    .set(`Authorization`, `bearer ${TOKEN}`)
-   .end(function(err, res){
-     if (err || !res.ok) {
-       console.log('Oh no! error');
-     } else {
-       console.log('getContactId: ' + res.body.data.contactId)
-       return res.body.data.contactId
-     }
-   });
-}
-
 
 /*
 
@@ -71,14 +55,31 @@ request
 
 */
 
+function getContactId(conversationID) {
+
+ request
+   .get(CONVERSATION_API_BASE + `/${conversationId}`)
+    .set('Content-Type', 'application/json')
+    .set(`Authorization`, `bearer ${TOKEN}`)
+   .end(function(err, res){
+     if (err || !res.ok) {
+       console.log('Oh no! error');
+     } else {
+       console.log('getContactId: ' + res.body.data.contactId)
+       return res.body.data.contactId
+     }
+   });
+}
+
+
 const handleMessage = (orgId, data) => {
   if (data.type === 'private_note') {
     const messageBody = data.body
     const conversationId = data.conversationId
 
-        console.log('conversationId: ' + conversationId)
+    console.log('conversationId: ' + conversationId)
 
-	contactId = getContactId(conversationId)
+	getContactId(conversationId)
     
     if (messageBody.startsWith('/lookup')) {
         console.log('found a lookup action!')
