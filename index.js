@@ -37,8 +37,8 @@ const handleMessage = (orgId, data) => {
     console.log('found a private note!')
     const messageBody = data.body
     const conversationId = data.conversationId
-    getContactId(conversationId)
-
+    var contactId = getContactId(conversationId)
+    console.log('contact id is: ' + contactId)
     if (messageBody.startsWith('/lookup')) {
         console.log('found a lookup action!')
       return SendMessage(orgId, conversationId, conversationId, data.id)
@@ -57,7 +57,7 @@ function getContactId (conversationId) {
      if (err || !res.ok) {
        console.log('Oh no! error');
      } else {
-       console.log('yay got ' + JSON.stringify(res.body.data.contactId));
+       return res.body.data.contactId);
      }
    });
 
