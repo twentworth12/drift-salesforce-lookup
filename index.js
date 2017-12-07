@@ -37,9 +37,7 @@ const handleMessage = (orgId, data) => {
     console.log('found a private note!')
     const messageBody = data.body
     const conversationId = data.conversationId
-
-    getContactId(data.conversationId, afterTheRequest)
-
+    var contactId = getContactId(conversationId)
     if (messageBody.startsWith('/lookup')) {
         console.log('found a lookup action!')
       return SendMessage(orgId, conversationId, conversationId, data.id)
@@ -47,15 +45,11 @@ const handleMessage = (orgId, data) => {
   }
 }
 
-// call back function
-function afterTheRequest(contactId) { 
-    console.log('FINAL CONTACT ID' + contactId)
-}
 
 
-// request function
-function getContactId(conversationID, callbackFn) {
-  request
+function getContactId (conversationId) {
+
+ request
    .get(CONVERSATION_API_BASE + `/${conversationId}`)
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${TOKEN}`)
@@ -64,9 +58,9 @@ function getContactId(conversationID, callbackFn) {
        console.log('Oh no! error');
      } else {
        console.log('contactID: ' + res.body.data.contactId)
-       callbackFn(res.body.data.contactId)
+       return res.body.data.contactId;
      }
-   });  
+   });   
 }
 
 /*
