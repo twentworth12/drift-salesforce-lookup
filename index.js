@@ -55,9 +55,9 @@ function getContactId (conversationId) {
     .set(`Authorization`, `bearer ${TOKEN}`)
    .end(function(err, res){
      if (err || !res.ok) {
-       alert('Oh no! error');
+       console.log('Oh no! error');
      } else {
-       alert('yay got ' + JSON.stringify(res.body));
+       console.log('yay got ' + JSON.stringify(res.body));
      }
    });
 
