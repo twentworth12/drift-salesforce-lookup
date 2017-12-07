@@ -61,6 +61,7 @@ function afterTheRequest(contactId) {
     console.log('contactID is: ' + res.body.data.contactId)
 }
 
+
 /*
 
 function getContactEmail (contactId) {
