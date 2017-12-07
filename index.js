@@ -74,8 +74,6 @@ const handleMessage = (orgId, data) => {
     const messageBody = data.body
     const conversationId = data.conversationId
     const contactId = getContactId(conversationId)
-    const email = getContactEmail(contactId)
-        
     
     if (messageBody.startsWith('/lookup')) {
         console.log('found a lookup action!')
