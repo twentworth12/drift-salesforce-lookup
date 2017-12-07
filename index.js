@@ -53,7 +53,7 @@ function getContactId(conversationID, callbackFn) {
     .set(`Authorization`, `bearer ${TOKEN}`)
    .end(function(err, res){
        callbackFn(res.body.data.contactId)
-     }
+     });
 }
 
 // call back function
