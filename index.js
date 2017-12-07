@@ -55,7 +55,6 @@ function getContactId(conversationID, callbackFn) {
      if (err || !res.ok) {
        console.log('Oh no! error');
      } else {
-       console.log('contactID: ' + res.body.data.contactId)
        callbackFn(res.body.data.contactId)
      }
    });  
@@ -63,7 +62,7 @@ function getContactId(conversationID, callbackFn) {
 
 // call back function
 function afterTheRequest(contactId) { 
-    console.log('contactID: ' + res.body.data.contactId)
+    console.log('contactID is: ' + res.body.data.contactId)
 }
 
 /*
