@@ -7,9 +7,7 @@ const sf_token = process.env.SF_TOKEN
 const CONVERSATION_API_BASE = process.env.QA ? 'https://driftapi.com/conversations' : 'https://driftapi.com/conversations'
 const CONTACT_API_BASE = process.env.QA ? 'https://driftapi.com/contacts' : 'https://driftapi.com/contacts'
 
-
 const TOKEN = process.env.BOT_API_TOKEN
-
 
 const sendMessage = (conversationId, message) => {
   return request.post(CONVERSATION_API_BASE + `/${conversationId}/messages`)
@@ -67,6 +65,7 @@ function getContactId (conversationId) {
 }
 
 /*
+
 function getContactEmail (contactId) {
 
 request
@@ -97,7 +96,6 @@ app.post('/api', (req, res) => {
 })
 
 /*
-
 
 var jsforce = require('jsforce');
 var conn = new jsforce.Connection({
