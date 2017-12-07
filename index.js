@@ -40,7 +40,7 @@ const handleMessage = (orgId, data) => {
     const messageBody = data.body
     const conversationId = data.conversationId
     var contactId = getContactId(conversationId)
-    console.log('email 2 found:' + contactId)
+    console.log('(handleMessage) contactId: ' + contactId)
     if (messageBody.startsWith('/lookup')) {
         console.log('found a lookup action!')
       return SendMessage(orgId, conversationId, conversationId, data.id)
@@ -49,7 +49,7 @@ const handleMessage = (orgId, data) => {
 }
 
 
-function getContactId (conversationId) {
+function getContactId(conversationID, callback) {
 
  request
    .get(CONVERSATION_API_BASE + `/${conversationId}`)
@@ -60,9 +60,10 @@ function getContactId (conversationId) {
        console.log('Oh no! error');
      } else {
        console.log('contact id 1 is: ' + res.body.data.contactId)
-       var email = getContactEmail(res.body.data.contactId)
-       console.log('getContactId: ' + email)     
+       contactId = res.body.data.contactId
+       console.log('getContactId: ' + contactId)
      }
+     callback()
    });
 }
 
