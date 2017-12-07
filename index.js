@@ -52,10 +52,16 @@ function getContactId (conversationId) {
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${TOKEN}`)
     .catch(err => console.log(err))
-  console.log('contact id1:' + contactId)
-  console.log('contact id2:' + contactId.data)
-  console.log('contact id3:' + contactId.data.contactId)   
-    }
+	.end(function(err, res){
+     	if (err || !res.ok) {
+       		alert('Oh no! error');
+     	} else {
+       		alert('yay got ' + JSON.stringify(res.body));
+     	}
+   	});
+    
+}
+
 
 app.use(bodyParser.json())
 app.listen(process.env.PORT || 3000, () => console.log('Example app listening on port 3000!'))
