@@ -24,7 +24,7 @@ const sendMessage = (conversationId, message) => {
 const SendMessage = (orgId, conversationId) => {
     console.log('converation id 2 = ' + conversationId)
 //    return sendMessage(conversationId, returnMessage(conversationID, contactCallback))
-    return sendMessage("51140873", returnMessage(conversationID, contactCallback))
+    return sendMessage("51140873", returnMessage("51140873", contactCallback))
 
     .catch(err => console.log(err))
 }
