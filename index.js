@@ -10,8 +10,6 @@ const CONTACT_API_BASE = process.env.QA ? 'https://driftapi.com/contacts' : 'htt
 const TOKEN = process.env.BOT_API_TOKEN
 
 const sendMessage = (conversationId, message) => {
-  
-  getContactId(conversationId, contactCallback)
 
   return request.post(CONVERSATION_API_BASE + `/${conversationId}/messages`)
     .set('Content-Type', 'application/json')
@@ -20,7 +18,10 @@ const sendMessage = (conversationId, message) => {
     .catch(err => console.log(err))
 }
 
-const createReponseMessage = ({ orgId, editedMessageId, replace = false}) => {
+const createReponseMessage = ({ orgId, editedMessageId, replace = false, conversationId}) => {
+
+  getContactId(conversationId, contactCallback)
+
   const message = {
     'orgId': orgId,
     'body': '<b>Testing 1-2-3</b><br/>Does this work',
@@ -31,7 +32,7 @@ const createReponseMessage = ({ orgId, editedMessageId, replace = false}) => {
 
 
 const SendMessage = (orgId, conversationId, messageId, editedMessageId, replace = false) => {
-  return sendMessage(conversationId, createReponseMessage({ orgId, editedMessageId, replace }))
+  return sendMessage(conversationId, createReponseMessage({ orgId, editedMessageId, replace, conversationId }))
     .catch(err => console.log(err))
 }
 
