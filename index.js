@@ -76,19 +76,48 @@ request
   .set(`Authorization`, `bearer ${TOKEN}`)
   .set('Content-Type', 'application/json')
   .end(function (err, res) {
- 
-       console.log('email is : ' + res.body.data.attributes.email)
-       callbackFn(res.body.data.attributes.email)
+        callbackFn(res.body.data.attributes.email)
      });
 }
 
 
 // call back function
 function emailCallback(emailAddress) { 
-    console.log('email 2 is: ' + emailAddress)
+    console.log('email is: ' + emailAddress)
+    return callSF(emailAddress, returnSFMessage) {
 }
 
+function callSF (contactId, callbackFn) {
 
+	var jsforce = require('jsforce');
+	var conn = new jsforce.Connection({
+	  instanceUrl : 'https://na52.salesforce.com',
+	  accessToken : sf_token
+	});
+
+
+
+	var records = [];
+	conn.query("SELECT Id, Email, FirstName, LastName FROM Lead where Id = '00Qd000000qOHR7'", function(err, result) {
+	  if (err) { return console.error(err); }
+
+	  var firstName = result.records[0].FirstName;
+	  var lastName = result.records[0].LastName;
+	  var email = result.records[0].Email;
+
+	  console.log(firstName, lastName, email);
+
+	});
+
+
+
+}
+
+// call back function
+function returnSFMessage(emailAddress) { 
+    console.log('email is: ' + emailAddress)
+    return callSF(emailAddress, returnSFMessage) {
+}
 
 app.use(bodyParser.json())
 app.listen(process.env.PORT || 3000, () => console.log('Example app listening on port 3000!'))
@@ -100,27 +129,3 @@ app.post('/api', (req, res) => {
   }
   return res.send('ok')
 })
-
-/*
-
-var jsforce = require('jsforce');
-var conn = new jsforce.Connection({
-  instanceUrl : 'https://na52.salesforce.com',
-  accessToken : sf_token
-});
-
-
-
-var records = [];
-conn.query("SELECT Id, Email, FirstName, LastName FROM Lead where Id = '00Qd000000qOHR7'", function(err, result) {
-  if (err) { return console.error(err); }
-
-  var firstName = result.records[0].FirstName;
-  var lastName = result.records[0].LastName;
-  var email = result.records[0].Email;
-
-  console.log(firstName, lastName, email);
-
-});
-
-*/
