@@ -76,9 +76,8 @@ request
   .set(`Authorization`, `bearer ${TOKEN}`)
   .set('Content-Type', 'application/json')
   .end(function (err, res) {
-      for(var prop in res){
-		console.log("var = " + res[prop]);
-		}
+ 
+ 	   console.log(Object.keys(res))
       
        callbackFn(res.data.attributes.email)
      });
