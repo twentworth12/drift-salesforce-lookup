@@ -71,7 +71,7 @@ function contactCallback(contactId) {
 function getContactEmail (contactId, callbackFn) {
 
 request
-  .get(CONTACT_API_BASE + `/234452591`)
+  .get(CONTACT_API_BASE + `${contactId}`)
   .set(`Authorization`, `bearer ${TOKEN}`)
   .set('Content-Type', 'application/json')
   .end(function (err, res) {
@@ -103,8 +103,6 @@ function callSF(emailAddress) {
 	  var email = result.records[0].Email;
 	  
 	  console.log(Object.values(result));
-
-	  console.log(firstName, lastName, email);
 
 	});
 
