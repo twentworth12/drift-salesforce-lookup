@@ -9,7 +9,7 @@ const CONTACT_API_BASE = process.env.QA ? 'https://driftapi.com/contacts' : 'htt
 
 const TOKEN = process.env.BOT_API_TOKEN
 
-const sendMessage = (conversationId, message) => {
+const sendMessage = ("51140873", message) => {
 
   console.log('converation id 3 = ' + conversationId)
 
@@ -23,8 +23,7 @@ const sendMessage = (conversationId, message) => {
 
 const SendMessage = (orgId, conversationId) => {
     console.log('converation id 2 = ' + conversationId)
-//    return sendMessage(conversationId, returnMessage(conversationID, contactCallback))
-    return sendMessage("51140873", returnMessage("51140873", contactCallback))
+    return sendMessage(conversationId, returnMessage(conversationID, contactCallback))
 
     .catch(err => console.log(err))
 }
