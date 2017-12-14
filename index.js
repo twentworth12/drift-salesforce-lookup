@@ -96,7 +96,7 @@ function callSF(emailAddress) {
 	});
 
 	var records = [];
-	conn.query("SELECT Id, Email, FirstName, LastName FROM Lead where Email = '"+emailAddress, function(err, result)+"'" {
+	conn.query("SELECT Id, Email, FirstName, LastName FROM Lead where Email = '"+emailAddress+"'", function(err, result) {
 	  if (err) { return console.error(err); }
 
 	  var firstName = result.records[0].FirstName;
