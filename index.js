@@ -16,7 +16,7 @@ function SendMessage(conversationId, message) {
   return request.post(CONVERSATION_API_BASE + `/${conversationId}/messages`)
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${TOKEN}`)
-    .send(returnMessage(conversationId, callbackFn))
+    .send(returnMessage(conversationId, contactCallback))
     .catch(err => console.log(err))
 }
 
