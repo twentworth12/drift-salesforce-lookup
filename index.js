@@ -38,8 +38,10 @@ const handleMessage = (orgId, data) => {
     const messageBody = data.body
     const conversationId = data.conversationId
 
-    getContactId(data.conversationId, contactCallback)
-    getContactEmail(data.conversationId, emailCallback)
+    var contactId = getContactId(data.conversationId, contactCallback)
+    console.log('contact ID is : ' + contactId)
+    
+    // getContactEmail(data.conversationId, emailCallback)
     
     if (messageBody.startsWith('/lookup')) {
         console.log('found a lookup action!')
@@ -61,7 +63,7 @@ function getContactId(conversationID, callbackFn) {
 
 // call back function
 function contactCallback(contactId) { 
-    console.log('contactID is: ' + contactId)
+    return contactId;
 }
 
 
