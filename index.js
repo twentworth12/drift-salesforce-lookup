@@ -24,7 +24,7 @@ const createReponseMessage = ({ orgId, editedMessageId, replace = false, convers
 
   const message = {
     'orgId': orgId,
-    'body': '<b>Testing 1-2-3</b><br/>Does this work',
+    'body': getContactId(conversationId, contactCallback),
     'type': replace ? 'edit' : 'private_prompt',
   }
   return replace ? Object.assign(message, { editedMessageId, editType: 'replace' }) : message
