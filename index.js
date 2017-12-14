@@ -51,20 +51,20 @@ const handleMessage = (orgId, data) => {
 
 
 // request function
-function getContactId(conversationID, callbackFn, orgId, editedMessageId, replace, conversationId ) {
+function getContactId(conversationID, callbackFn, orgId, editedMessageId, replace) {
   request
    .get(CONVERSATION_API_BASE + `${conversationID}`)
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${TOKEN}`)
    .end(function(err, res){
-       callbackFn(res.body.data.contactId)
+       callbackFn(res.body.data.contactId, orgId, editedMessageId, replace, conversationId)
      });
 }
 
 // call back function
 function contactCallback(contactId, orgId, editedMessageId, replace, conversationId ) { 
     console.log('contact ID is : ' + contactId)
-    return getContactEmail(contactId, emailCallback);
+    return getContactEmail(contactId, emailCallback, orgId, editedMessageId, replace, conversationId);
 }
 
 function getContactEmail (contactId, callbackFn, orgId, editedMessageId, replace, conversationId ) {
@@ -113,11 +113,6 @@ function callSF(emailAddress, orgId, editedMessageId, replace, conversationId ) 
 
 }
 
-// call back function
-function sfCallback(body) { 
-    var body = "this is the body";
-    return body;
-}
 
 
 app.use(bodyParser.json())
