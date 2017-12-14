@@ -54,7 +54,7 @@ const handleMessage = (orgId, data) => {
 function getContactId(req, callbackFn) {
   var con_id = req.conversationId
   request
-   .get(CONVERSATION_API_BASE + `${con_ID}`)
+   .get(CONVERSATION_API_BASE + `${con_id}`)
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${TOKEN}`)
    .end(function(err, res){
