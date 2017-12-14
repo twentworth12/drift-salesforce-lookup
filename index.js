@@ -9,39 +9,31 @@ const CONTACT_API_BASE = process.env.QA ? 'https://driftapi.com/contacts' : 'htt
 
 const TOKEN = process.env.BOT_API_TOKEN
 
-const sendMessage = ("51140873", message) => {
+function SendMessage(conversationId, message) {
 
   console.log('converation id 3 = ' + conversationId)
 
   return request.post(CONVERSATION_API_BASE + `/${conversationId}/messages`)
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${TOKEN}`)
-    .send(message)
+    .send(returnMessage(conversationId, callbackFn))
     .catch(err => console.log(err))
 }
 
 
-const SendMessage = (orgId, conversationId) => {
-    console.log('converation id 2 = ' + conversationId)
-    return sendMessage(conversationId, returnMessage(conversationID, contactCallback))
-
-    .catch(err => console.log(err))
-}
-
-const handleMessage = (orgId, data) => {
+function handleMessage(orgId, data) {
   if (data.type === 'private_note') {
     console.log('found a private note!')
     const messageBody = data.body
     const conversationId = data.conversationId
     console.log('converation id = ' + conversationId)
-    
+
     if (messageBody.startsWith('/lookup')) {
         console.log('found a lookup action!')
       return SendMessage(orgId, conversationId)
     }
   }
 }
-
 
 
 // request function
@@ -52,7 +44,6 @@ function returnMessage(conversationID, callbackFn) {
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${TOKEN}`)
    .end(function(err, res){
-       console.log('in return message')
        callbackFn(res.body.data.contactId)
      });
 }
@@ -73,7 +64,6 @@ request
         callbackFn(res.body.data.attributes.email)
      });
 }
-
 
 // call back function
 function emailCallback(emailAddress) { 
@@ -98,8 +88,6 @@ function callSF(emailAddress, callbackFn) {
 	  var email = result.records[0].Email;
 	  	  
 	  callbackFn(result.records[0].FirstName)
-
-
 	});
 
 }
