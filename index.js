@@ -20,9 +20,11 @@ const sendMessage = (conversationId, message) => {
 
 const createReponseMessage = ({ orgId, editedMessageId, replace = false, conversationId}) => {
 
+  getContactId(conversationId, contactCallback)
+
   const message = {
     'orgId': orgId,
-    'body': dummyF(conversationId),
+    'body': '<b>Testing 1-2-3</b><br/>Does this work',
     'type': replace ? 'edit' : 'private_prompt',
   }
   return replace ? Object.assign(message, { editedMessageId, editType: 'replace' }) : message
@@ -82,10 +84,10 @@ request
 // call back function
 function emailCallback(emailAddress) { 
     console.log('email is: ' + emailAddress)
-    return callSF(emailAddress)
+    return callSF(emailAddress, sfCallback)
 }
 
-function callSF(emailAddress) {
+function callSF(emailAddress, callbackFn) {
 
 	var jsforce = require('jsforce');
 	var conn = new jsforce.Connection({
@@ -101,16 +103,19 @@ function callSF(emailAddress) {
 	  var lastName = result.records[0].LastName;
 	  var email = result.records[0].Email;
 	  
+	  callbackFn(result.records[0].FirstName)
 	  console.log(Object.values(result));
-	  
-	  return "testing 1-2-3-4-5-6";
 
 	});
+
 }
 
-function dummyF(conversationId) {
-	return conversationId;
+// call back function
+function sfCallback(body) { 
+    var body = "this is the body";
+    return body;
 }
+
 
 app.use(bodyParser.json())
 app.listen(process.env.PORT || 3000, () => console.log('Example app listening on port 3000!'))
