@@ -47,6 +47,7 @@ function returnMessage(conversationID, callbackFn) {
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${TOKEN}`)
    .end(function(err, res){
+       console.log('in return message')
        callbackFn(res.body.data.contactId)
      });
 }
@@ -90,9 +91,9 @@ function callSF(emailAddress, callbackFn) {
 	  var firstName = result.records[0].FirstName;
 	  var lastName = result.records[0].LastName;
 	  var email = result.records[0].Email;
-	  
+	  	  
 	  callbackFn(result.records[0].FirstName)
-	  console.log(Object.values(result));
+
 
 	});
 
@@ -100,7 +101,7 @@ function callSF(emailAddress, callbackFn) {
 
 // call back function
 function sfCallback(body) { 
-    var body = "this is the body";
+    console.log('body is ' + body);
     return body;
 }
 
