@@ -38,8 +38,8 @@ const handleMessage = (orgId, data) => {
     const messageBody = data.body
     const conversationId = data.conversationId
 
-    var contactId = getContactId(data.conversationId, contactCallback)
-    console.log('contact ID is : ' + contactId)
+    getContactId(data.conversationId, contactCallback)
+
     
     // getContactEmail(data.conversationId, emailCallback)
     
@@ -49,6 +49,8 @@ const handleMessage = (orgId, data) => {
     }
   }
 }
+
+
 
 // request function
 function getContactId(conversationID, callbackFn) {
@@ -63,9 +65,9 @@ function getContactId(conversationID, callbackFn) {
 
 // call back function
 function contactCallback(contactId) { 
-    return contactId;
+    console.log('contact ID is : ' + contactId)
+    return getContactEmail(contactId);
 }
-
 
 function getContactEmail (contactId, callbackFn) {
 
