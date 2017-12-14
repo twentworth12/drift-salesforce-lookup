@@ -91,9 +91,26 @@ function callSF(emailAddress, callbackFn) {
 
 	var jsforce = require('jsforce');
 	var conn = new jsforce.Connection({
-	  instanceUrl : 'https://na52.salesforce.com',
-	  accessToken : sf_token
+	  oauth2 : {
+		// you can change loginUrl to connect to sandbox or prerelease env.
+		// loginUrl : 'https://na52.salesforce.com',
+		clientId : '3MVG9rFJvQRVOvk6O6Jp9PiHT9vMu_HqB4.xiqza6gtSLBQKGtc7q.Hrj.ahNIMEvQkNz93VPEyg3g7X0d3pZ',
+		clientSecret : '2131124073545412448',
+		redirectUri : '#'
+	  }
 	});
+	conn.login(username, password, function(err, userInfo) {
+	  if (err) { return console.error(err); }
+	  // Now you can get the access token and instance URL information.
+	  // Save them to establish connection next time.
+	  console.log(conn.accessToken);
+	  console.log(conn.instanceUrl);
+	  // logged in user property
+	  console.log("User ID: " + userInfo.id);
+	  console.log("Org ID: " + userInfo.organizationId);
+	  // ...
+	});
+
 
 	var records = [];
 	conn.query("SELECT Id, Email, FirstName, LastName FROM Lead where Id = '00Qd000000qOHR7'", function(err, result) {
