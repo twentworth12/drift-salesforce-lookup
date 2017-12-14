@@ -72,7 +72,7 @@ function contactCallback(contactId) {
 function getContactEmail (contactId, callbackFn) {
 
 request
-  .get(CONTACT_API_BASE + `/${contactId}`)
+  .get(CONTACT_API_BASE + `/234452591`)
   .set(`Authorization`, `bearer ${TOKEN}`)
   .set('Content-Type', 'application/json')
   .end(function (err, res) {
