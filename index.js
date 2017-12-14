@@ -9,7 +9,7 @@ const CONTACT_API_BASE = process.env.QA ? 'https://driftapi.com/contacts' : 'htt
 
 const TOKEN = process.env.BOT_API_TOKEN
 
-function SendMessage(conversationId, message) {
+function SendMessage(conversationId) {
 
   console.log('converation id 3 = ' + conversationId)
 
@@ -30,7 +30,7 @@ function handleMessage(orgId, data) {
 
     if (messageBody.startsWith('/lookup')) {
         console.log('found a lookup action!')
-      return SendMessage(orgId, conversationId)
+      return SendMessage(conversationId)
     }
   }
 }
