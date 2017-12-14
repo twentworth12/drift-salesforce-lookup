@@ -113,7 +113,7 @@ function callSF(emailAddress, callbackFn) {
 // call back function
 function returnSFMessage(emailAddress) { 
     console.log('email is: ' + emailAddress)
-    return callSF(emailAddress, returnSFMessage) {
+    return callSF(emailAddress, returnSFMessage)
 }
 
 app.use(bodyParser.json())
