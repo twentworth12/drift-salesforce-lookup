@@ -80,7 +80,7 @@ request
 
 
 // call back function
-function emailCallback(emailAddress) { 
+function emailCallback(emailAddress, orgId, editedMessageId, replace, conversationId) { 
     console.log('email is: ' + emailAddress)
     return callSF(emailAddress, orgId, editedMessageId, replace, conversationId )
 }
