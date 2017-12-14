@@ -19,7 +19,7 @@ const sendMessage = (conversationId, message) => {
 }
 
 
-const SendMessage = (orgId, conversationId, messageId) => {
+const SendMessage = (orgId, conversationId) => {
   return sendMessage(conversationId, returnMessage(conversationID, contactCallback))
     .catch(err => console.log(err))
 }
@@ -29,11 +29,11 @@ const handleMessage = (orgId, data) => {
     console.log('found a private note!')
     const messageBody = data.body
     const conversationId = data.conversationId
-    
+    console.log('converation id = ' + conversationId)
     
     if (messageBody.startsWith('/lookup')) {
         console.log('found a lookup action!')
-      return SendMessage(orgId, conversationId, data.id)
+      return SendMessage(orgId, conversationId)
     }
   }
 }
