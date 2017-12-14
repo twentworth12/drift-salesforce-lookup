@@ -19,7 +19,7 @@ const sendMessage = (conversationId, message) => {
 }
 
 
-const SendMessage = (orgId, conversationId, messageId, editedMessageId, replace = false) => {
+const SendMessage = (orgId, conversationId, messageId) => {
   return sendMessage(conversationId, returnMessage(conversationID, contactCallback))
     .catch(err => console.log(err))
 }
@@ -33,7 +33,7 @@ const handleMessage = (orgId, data) => {
     
     if (messageBody.startsWith('/lookup')) {
         console.log('found a lookup action!')
-      return SendMessage(orgId, conversationId, conversationId, data.id)
+      return SendMessage(orgId, conversationId, data.id)
     }
   }
 }
