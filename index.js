@@ -76,6 +76,8 @@ request
   .set(`Authorization`, `bearer ${TOKEN}`)
   .set('Content-Type', 'application/json')
   .end(function (err, res) {
+      console.log('res is : ' + res)
+      console.log('res data is : ' + res.data)
        callbackFn(res.data.attributes.email)
      });
 }
