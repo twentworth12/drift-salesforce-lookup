@@ -87,15 +87,13 @@ function emailCallback(emailAddress) {
     return callSF(emailAddress, returnSFMessage) {
 }
 
-function callSF (contactId, callbackFn) {
+function callSF(emailAddress, callbackFn) {
 
 	var jsforce = require('jsforce');
 	var conn = new jsforce.Connection({
 	  instanceUrl : 'https://na52.salesforce.com',
 	  accessToken : sf_token
 	});
-
-
 
 	var records = [];
 	conn.query("SELECT Id, Email, FirstName, LastName FROM Lead where Id = '00Qd000000qOHR7'", function(err, result) {
@@ -108,7 +106,6 @@ function callSF (contactId, callbackFn) {
 	  console.log(firstName, lastName, email);
 
 	});
-
 
 
 }
