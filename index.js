@@ -38,8 +38,6 @@ const handleMessage = (orgId, data) => {
     const messageBody = data.body
     const conversationId = data.conversationId
 
-    getContactId(data.conversationId, contactCallback)
-
     
     // getContactEmail(data.conversationId, emailCallback)
     
@@ -53,30 +51,31 @@ const handleMessage = (orgId, data) => {
 
 
 // request function
-function getContactId(conversationID, callbackFn) {
+function getContactId(req, callbackFn) {
+  var con_id = req.conversationId
   request
-   .get(CONVERSATION_API_BASE + `${conversationID}`)
+   .get(CONVERSATION_API_BASE + `${con_ID}`)
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${TOKEN}`)
    .end(function(err, res){
-       callbackFn(res.body.data.contactId)
+       callbackFn(res.body.data.contactId, req)
      });
 }
 
 // call back function
-function contactCallback(contactId) { 
+function contactCallback(contactId, req) { 
     console.log('contact ID is : ' + contactId)
-    return getContactEmail(contactId, emailCallback);
+    return getContactEmail(contactId, emailCallback, req);
 }
 
-function getContactEmail (contactId, callbackFn) {
+function getContactEmail (contactId, callbackFn, req) {
 
 request
   .get(CONTACT_API_BASE + `/234452591`)
   .set(`Authorization`, `bearer ${TOKEN}`)
   .set('Content-Type', 'application/json')
   .end(function (err, res) {
-        callbackFn(res.body.data.attributes.email)
+        callbackFn(res.body.data.attributes.email, req)
      });
 }
 
@@ -84,7 +83,7 @@ request
 // call back function
 function emailCallback(emailAddress) { 
     console.log('email is: ' + emailAddress)
-    return callSF(emailAddress)
+    return callSF(emailAddress, req)
 }
 
 function callSF(emailAddress) {
@@ -105,7 +104,10 @@ function callSF(emailAddress) {
 	  
 	  console.log("result is " + Object.values(result));
 
-	  console.log("name is " + firstName, lastName, email);
+	  console.log(firstName, lastName, email);
+	  
+	  handleMessage(req.body.orgId, req.body.data);
+
 
 	});
 
@@ -124,8 +126,10 @@ app.listen(process.env.PORT || 3000, () => console.log('Example app listening on
 app.post('/api', (req, res) => {
   if (req.body.type === 'new_message') {
     console.log('found a new message!');
+
+   getContactId(req, contactCallback)
+
     
-    handleMessage(req.body.orgId, req.body.data);
   }
   return res.send('ok')
 })
