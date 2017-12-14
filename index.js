@@ -10,6 +10,9 @@ const CONTACT_API_BASE = process.env.QA ? 'https://driftapi.com/contacts' : 'htt
 const TOKEN = process.env.BOT_API_TOKEN
 
 const sendMessage = (conversationId, message) => {
+  
+  getContactId(conversationId, contactCallback)
+
   return request.post(CONVERSATION_API_BASE + `/${conversationId}/messages`)
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${TOKEN}`)
@@ -37,9 +40,7 @@ const handleMessage = (orgId, data) => {
     console.log('found a private note!')
     const messageBody = data.body
     const conversationId = data.conversationId
-
     
-    // getContactEmail(data.conversationId, emailCallback)
     
     if (messageBody.startsWith('/lookup')) {
         console.log('found a lookup action!')
@@ -51,31 +52,30 @@ const handleMessage = (orgId, data) => {
 
 
 // request function
-function getContactId(req, callbackFn) {
-  var con_id = req.conversationId
+function getContactId(conversationID, callbackFn) {
   request
-   .get(CONVERSATION_API_BASE + `${con_id}`)
+   .get(CONVERSATION_API_BASE + `${conversationID}`)
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${TOKEN}`)
    .end(function(err, res){
-       callbackFn(res.body.data.contactId, req)
+       callbackFn(res.body.data.contactId)
      });
 }
 
 // call back function
-function contactCallback(contactId, req) { 
+function contactCallback(contactId) { 
     console.log('contact ID is : ' + contactId)
-    return getContactEmail(contactId, emailCallback, req);
+    return getContactEmail(contactId, emailCallback);
 }
 
-function getContactEmail (contactId, callbackFn, req) {
+function getContactEmail (contactId, callbackFn) {
 
 request
   .get(CONTACT_API_BASE + `/234452591`)
   .set(`Authorization`, `bearer ${TOKEN}`)
   .set('Content-Type', 'application/json')
   .end(function (err, res) {
-        callbackFn(res.body.data.attributes.email, req)
+        callbackFn(res.body.data.attributes.email)
      });
 }
 
@@ -83,7 +83,7 @@ request
 // call back function
 function emailCallback(emailAddress) { 
     console.log('email is: ' + emailAddress)
-    return callSF(emailAddress, req)
+    return callSF(emailAddress)
 }
 
 function callSF(emailAddress) {
@@ -102,12 +102,9 @@ function callSF(emailAddress) {
 	  var lastName = result.records[0].LastName;
 	  var email = result.records[0].Email;
 	  
-	  console.log("result is " + Object.values(result));
+	  console.log(Object.values(result));
 
 	  console.log(firstName, lastName, email);
-	  
-	  handleMessage(req.body.orgId, req.body.data);
-
 
 	});
 
@@ -126,10 +123,8 @@ app.listen(process.env.PORT || 3000, () => console.log('Example app listening on
 app.post('/api', (req, res) => {
   if (req.body.type === 'new_message') {
     console.log('found a new message!');
-
-   getContactId(req, contactCallback)
-
     
+    handleMessage(req.body.orgId, req.body.data);
   }
   return res.send('ok')
 })
