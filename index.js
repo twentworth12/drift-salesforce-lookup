@@ -87,7 +87,7 @@ function emailCallback(emailAddress) {
     return callSF(emailAddress, returnSFMessage)
 }
 
-function callSF(emailAddress, callbackFn) {
+function callSF(emailAddress) {
 
 	var jsforce = require('jsforce');
 	var conn = new jsforce.Connection({
@@ -96,7 +96,7 @@ function callSF(emailAddress, callbackFn) {
 	});
 
 	var records = [];
-	conn.query("SELECT Id, Email, FirstName, LastName FROM Lead where Id = '00Qd000000qOHR7'", function(err, result) {
+	conn.query("SELECT Id, Email, FirstName, LastName FROM Lead where Email = "+emailAddress, function(err, result) {
 	  if (err) { return console.error(err); }
 
 	  var firstName = result.records[0].FirstName;
@@ -109,12 +109,13 @@ function callSF(emailAddress, callbackFn) {
 
 
 }
-
+/*
 // call back function
 function returnSFMessage(emailAddress) { 
     console.log('email is: ' + emailAddress)
     return callSF(emailAddress, returnSFMessage)
 }
+*/
 
 app.use(bodyParser.json())
 app.listen(process.env.PORT || 3000, () => console.log('Example app listening on port 3000!'))
