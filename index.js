@@ -66,7 +66,7 @@ function getContactId(conversationID, callbackFn) {
 // call back function
 function contactCallback(contactId) { 
     console.log('contact ID is : ' + contactId)
-    return getContactEmail(contactId);
+    return getContactEmail(contactId, emailCallback);
 }
 
 function getContactEmail (contactId, callbackFn) {
@@ -77,8 +77,7 @@ request
   .set('Content-Type', 'application/json')
   .end(function (err, res) {
  
- 	   console.log(Object.keys(res))
-      
+       console.log('email is : ' + res.body.data.attributes.email)
        callbackFn(res.body.data.attributes.email)
      });
 }
@@ -86,7 +85,7 @@ request
 
 // call back function
 function emailCallback(emailAddress) { 
-    console.log('email is: ' + emailAddress)
+    console.log('email 2 is: ' + emailAddress)
 }
 
 
