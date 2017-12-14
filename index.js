@@ -84,7 +84,7 @@ request
 // call back function
 function emailCallback(emailAddress) { 
     console.log('email is: ' + emailAddress)
-    return callSF(emailAddress, returnSFMessage) {
+    return callSF(emailAddress, returnSFMessage)
 }
 
 function callSF(emailAddress, callbackFn) {
