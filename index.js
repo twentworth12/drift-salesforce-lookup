@@ -72,7 +72,7 @@ request
   .set(`Authorization`, `bearer ${TOKEN}`)
   .set('Content-Type', 'application/json')
   .end(function (err, res) {
-       callbackFn(res.attributes.email)
+       callbackFn(res.body.data.attributes.email)
      });
 }
 
