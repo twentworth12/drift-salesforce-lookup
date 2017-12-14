@@ -20,11 +20,9 @@ const sendMessage = (conversationId, message) => {
 
 const createReponseMessage = ({ orgId, editedMessageId, replace = false, conversationId}) => {
 
-  getContactId(conversationId, contactCallback)
-
   const message = {
     'orgId': orgId,
-    'body': '<b>Testing 1-2-3</b><br/>Does this work',
+    'body': getContactId(conversationId, contactCallback),
     'type': replace ? 'edit' : 'private_prompt',
   }
   return replace ? Object.assign(message, { editedMessageId, editType: 'replace' }) : message
@@ -104,18 +102,13 @@ function callSF(emailAddress) {
 	  var email = result.records[0].Email;
 	  
 	  console.log(Object.values(result));
+	  
+	  return "testing 1-2-3-4-5-6";
 
 	});
 
 
 }
-/*
-// call back function
-function returnSFMessage(emailAddress) { 
-    console.log('email is: ' + emailAddress)
-    return callSF(emailAddress, returnSFMessage)
-}
-*/
 
 app.use(bodyParser.json())
 app.listen(process.env.PORT || 3000, () => console.log('Example app listening on port 3000!'))
