@@ -102,8 +102,10 @@ function callSF(emailAddress) {
 	  var firstName = result.records[0].FirstName;
 	  var lastName = result.records[0].LastName;
 	  var email = result.records[0].Email;
+	  
+	  console.log("result is " + Object.values(result));
 
-	  console.log(firstName, lastName, email);
+	  console.log("name is " + firstName, lastName, email);
 
 	});
 
