@@ -38,7 +38,9 @@ const handleMessage = (orgId, data) => {
     const messageBody = data.body
     const conversationId = data.conversationId
 
-    getContactId(data.conversationId, afterTheRequest)
+    getContactId(data.conversationId, contactCallback)
+    getContactEmail(data.conversationId, emailCallback)
+    
     if (messageBody.startsWith('/lookup')) {
         console.log('found a lookup action!')
       return SendMessage(orgId, conversationId, conversationId, data.id)
@@ -58,30 +60,28 @@ function getContactId(conversationID, callbackFn) {
 }
 
 // call back function
-function afterTheRequest(contactId) { 
+function contactCallback(contactId) { 
     console.log('contactID is: ' + contactId)
 }
 
 
-/*
-
-function getContactEmail (contactId) {
+function getContactEmail (contactId, callbackFn) {
 
 request
   .get(CONTACT_API_BASE + `/${contactId}`)
   .set(`Authorization`, `bearer ${TOKEN}`)
   .set('Content-Type', 'application/json')
   .end(function (err, res) {
-    if (err) {
-      console.log(err)
-    } else {
-      console.log('email found:' + JSON.stringify(res.body.data.attributes))
-    }
-  })
-
+       callbackFn(res.body.attributes.email)
+     });
 }
 
-*/
+// call back function
+function emailCallback(emailAddress) { 
+    console.log('email is: ' + emailAddress)
+}
+
+
 
 app.use(bodyParser.json())
 app.listen(process.env.PORT || 3000, () => console.log('Example app listening on port 3000!'))
