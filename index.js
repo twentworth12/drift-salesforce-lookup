@@ -22,7 +22,7 @@ const createReponseMessage = ({ orgId, editedMessageId, replace = false, convers
 
   const message = {
     'orgId': orgId,
-    'body': getContactId(conversationId, contactCallback),
+    'body': dummyF(conversationId),
     'type': replace ? 'edit' : 'private_prompt',
   }
   return replace ? Object.assign(message, { editedMessageId, editType: 'replace' }) : message
@@ -106,8 +106,10 @@ function callSF(emailAddress) {
 	  return "testing 1-2-3-4-5-6";
 
 	});
+}
 
-
+function dummyF(conversationId) {
+	return conversationId;
 }
 
 app.use(bodyParser.json())
