@@ -11,6 +11,8 @@ const TOKEN = process.env.BOT_API_TOKEN
 
 const sendMessage = (conversationId, message) => {
 
+  console.log('converation id 3 = ' + conversationId)
+
   return request.post(CONVERSATION_API_BASE + `/${conversationId}/messages`)
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${TOKEN}`)
@@ -20,6 +22,7 @@ const sendMessage = (conversationId, message) => {
 
 
 const SendMessage = (orgId, conversationId) => {
+    console.log('converation id 2 = ' + conversationId)
   return sendMessage(conversationId, returnMessage(conversationID, contactCallback))
     .catch(err => console.log(err))
 }
@@ -42,6 +45,7 @@ const handleMessage = (orgId, data) => {
 
 // request function
 function returnMessage(conversationID, callbackFn) {
+    console.log('converation id 4 = ' + conversationId)
   request
    .get(CONVERSATION_API_BASE + `${conversationID}`)
     .set('Content-Type', 'application/json')
