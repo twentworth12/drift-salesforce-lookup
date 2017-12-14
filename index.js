@@ -18,13 +18,11 @@ const sendMessage = (conversationId, message) => {
     .catch(err => console.log(err))
 }
 
-const createReponseMessage = ({ orgId, editedMessageId, replace = false, conversationId}) => {
-
-  getContactId(conversationId, contactCallback)
+const createReponseMessage = ({ orgId, editedMessageId, replace = false, conversationId, body}) => {
 
   const message = {
     'orgId': orgId,
-    'body': getContactId(conversationId, contactCallback),
+    'body': body,
     'type': replace ? 'edit' : 'private_prompt',
   }
   return replace ? Object.assign(message, { editedMessageId, editType: 'replace' }) : message
@@ -32,7 +30,7 @@ const createReponseMessage = ({ orgId, editedMessageId, replace = false, convers
 
 
 const SendMessage = (orgId, conversationId, messageId, editedMessageId, replace = false) => {
-  return sendMessage(conversationId, createReponseMessage({ orgId, editedMessageId, replace, conversationId }))
+  return sendMessage(conversationId, getContactId(conversationId, contactCallback, orgId, editedMessageId, replace, conversationId ))
     .catch(err => console.log(err))
 }
 
@@ -53,7 +51,7 @@ const handleMessage = (orgId, data) => {
 
 
 // request function
-function getContactId(conversationID, callbackFn) {
+function getContactId(conversationID, callbackFn, orgId, editedMessageId, replace, conversationId ) {
   request
    .get(CONVERSATION_API_BASE + `${conversationID}`)
     .set('Content-Type', 'application/json')
@@ -64,19 +62,19 @@ function getContactId(conversationID, callbackFn) {
 }
 
 // call back function
-function contactCallback(contactId) { 
+function contactCallback(contactId, orgId, editedMessageId, replace, conversationId ) { 
     console.log('contact ID is : ' + contactId)
     return getContactEmail(contactId, emailCallback);
 }
 
-function getContactEmail (contactId, callbackFn) {
+function getContactEmail (contactId, callbackFn, orgId, editedMessageId, replace, conversationId ) {
 
 request
   .get(CONTACT_API_BASE + `${contactId}`)
   .set(`Authorization`, `bearer ${TOKEN}`)
   .set('Content-Type', 'application/json')
   .end(function (err, res) {
-        callbackFn(res.body.data.attributes.email)
+        callbackFn(res.body.data.attributes.email, orgId, editedMessageId, replace, conversationId )
      });
 }
 
@@ -84,10 +82,10 @@ request
 // call back function
 function emailCallback(emailAddress) { 
     console.log('email is: ' + emailAddress)
-    return callSF(emailAddress, sfCallback)
+    return callSF(emailAddress, orgId, editedMessageId, replace, conversationId )
 }
 
-function callSF(emailAddress, callbackFn) {
+function callSF(emailAddress, orgId, editedMessageId, replace, conversationId ) {
 
 	var jsforce = require('jsforce');
 	var conn = new jsforce.Connection({
@@ -105,6 +103,11 @@ function callSF(emailAddress, callbackFn) {
 	  
 	  callbackFn(result.records[0].FirstName)
 	  console.log(Object.values(result));
+	  
+	  var body = "testme 123";
+	  
+	  createReponseMessage({ orgId, editedMessageId, replace, conversationId, body })
+
 
 	});
 
