@@ -79,7 +79,7 @@ request
  
  	   console.log(Object.keys(res))
       
-       callbackFn(res.data.attributes.email)
+       callbackFn(res.body.data.attributes.email)
      });
 }
 
