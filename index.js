@@ -37,7 +37,7 @@ const handleMessage = (orgId, data) => {
     console.log('found a private note!')
     const messageBody = data.body
     const conversationId = data.conversationId
-    var conId = data.conversationId
+
     getContactId(conId, afterTheRequest)
     if (messageBody.startsWith('/lookup')) {
         console.log('found a lookup action!')
