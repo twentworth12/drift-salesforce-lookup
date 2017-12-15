@@ -9,6 +9,15 @@ const CONTACT_API_BASE = process.env.QA ? 'https://driftapi.com/contacts' : 'htt
 
 const TOKEN = process.env.BOT_API_TOKEN
 
+function sendMessage(conversationId, body) {
+
+  return request.post(CONVERSATION_API_BASE + `/${conversationId}/messages`)
+    .set('Content-Type', 'application/json')
+    .set(`Authorization`, `bearer ${TOKEN}`)
+    .send(body)
+    .catch(err => console.log(err))
+}
+
 
 function handleMessage(orgId, data) {
   if (data.type === 'private_note') {
@@ -20,6 +29,7 @@ function handleMessage(orgId, data) {
     if (messageBody.startsWith('/lookup')) {
         console.log('found a lookup action!')
       return returnMessage(conversationId, contactCallback)
+    }
   }
 }
 
@@ -38,6 +48,7 @@ function returnMessage(data, callbackFn) {
      });
 }
 
+// call back function
 function contactCallback(contactId, conversationId) { 
     console.log('contact ID is : ' + contactId)
     return getContactEmail(contactId, emailCallback, conversationId);
@@ -54,6 +65,7 @@ request
      });
 }
 
+// call back function
 function emailCallback(emailAddress, conversationId) { 
     console.log('email is: ' + emailAddress)
     return callSF(emailAddress, sfCallback, conversationId)
@@ -82,19 +94,12 @@ function callSF(emailAddress, callbackFn, conversationId) {
 
 }
 
+// call back function
 function sfCallback(body, conversationId) { 
     console.log('body is : ' + body)
     return sendMessage(body, conversationId)
 }
 
-function sendMessage(conversationId, body) {
-
-  return request.post(CONVERSATION_API_BASE + `/${conversationId}/messages`)
-    .set('Content-Type', 'application/json')
-    .set(`Authorization`, `bearer ${TOKEN}`)
-    .send(body)
-    .catch(err => console.log(err))
-}
 
 app.use(bodyParser.json())
 app.listen(process.env.PORT || 3000, () => console.log('Example app listening on port 3000!'))
@@ -106,4 +111,4 @@ app.post('/api', (req, res) => {
     
   }
   return res.send('ok')
-}
+})
