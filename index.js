@@ -100,13 +100,15 @@ function sfCallback(body, conversationId) {
 
 function sendMessage(body, conversationId, orgId) {
 
+console.log('in sendmessage')
+
   const message = {
     'orgId': orgId,
     'body': '<b>Testing 1-2-3</b><br/>Does this work',
     'type': false ? 'edit' : 'private_prompt',
   }
 
-    console.log('message is : ' + message)
+  console.log('message is : ' + message)
 
   return request.post(CONVERSATION_API_BASE + `/${conversationId}/messages`)
     .set('Content-Type', 'application/json')
