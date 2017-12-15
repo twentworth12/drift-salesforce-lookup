@@ -35,10 +35,10 @@ function handleMessage(orgId, data) {
 
 
 // request function
-function returnMessage(data, callbackFn) {
-      
-  const conversationId = data.conversationId
+function returnMessage(conversationId, callbackFn) {
 
+    console.log('converation id 2 = ' + conversationId)
+      
   request
    .get(CONVERSATION_API_BASE + `${conversationID}`)
     .set('Content-Type', 'application/json')
@@ -56,6 +56,9 @@ function contactCallback(contactId, conversationId) {
 
 function getContactEmail (contactId, callbackFn, conversationId) {
 
+    console.log('contact id 2 = ' + contactId)
+    console.log('converation id 3 = ' + conversationId)
+
 request
   .get(CONTACT_API_BASE + `${contactId}`)
   .set(`Authorization`, `bearer ${TOKEN}`)
@@ -68,6 +71,7 @@ request
 // call back function
 function emailCallback(emailAddress, conversationId) { 
     console.log('email is: ' + emailAddress)
+    console.log('converation id 4 = ' + conversationId)
     return callSF(emailAddress, sfCallback, conversationId)
 }
 
