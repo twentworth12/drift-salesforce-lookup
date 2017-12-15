@@ -97,6 +97,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  accessToken : accessToken
 		});
 
+		
 		  var records = [];
 		
 	
@@ -130,16 +131,13 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 			  // Built the Drift reply body
 			  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a><br/>" + "Company: " + Company + "<br/>Total Studio Starts: " + totalStudioStarts + "<br/>Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
 			  callbackFn(body, conversationId, orgId)
-
 	  
 			}); 
 		  
-
-		});
-
 		
 
 		} else {
+			// No email address was found
 			body = "Oops, we didn't find an email address"
 			callbackFn(body, conversationId, orgId)
 			}
