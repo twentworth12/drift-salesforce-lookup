@@ -78,19 +78,15 @@ function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
 		  var SF_INSTANCE = conn.instanceUrl
 		  console.log(conn.accessToken);
 		  console.log(conn.instanceUrl);
-
-		});
-
-		var jsforce = require('jsforce');
-		var conn = new jsforce.Connection({
+		  
+		  var jsforce = require('jsforce');
+		  var conn = new jsforce.Connection({
 			  instanceUrl : SF_INSTANCE,
 			  accessToken : SF_TOKEN
-		});
+			});
 		
-
-		var records = [];
+		  var records = [];
 		
-
 	
 			// Customize this to change the fields you return from the Lead object
 			conn.query("SELECT Id, Email, FirstName, LastName, Company, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
@@ -124,7 +120,13 @@ function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
 			  callbackFn(body, conversationId, orgId)
 
 	  
+			}); 
+		  
+
 		});
+
+		
+
 		} else {
 			body = "Oops, we didn't find an email address"
 			callbackFn(body, conversationId, orgId)
