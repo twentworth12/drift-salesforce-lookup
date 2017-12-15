@@ -9,17 +9,6 @@ const CONTACT_API_BASE = process.env.QA ? 'https://driftapi.com/contacts' : 'htt
 
 const TOKEN = process.env.BOT_API_TOKEN
 
-function SendMessage(conversationId) {
-
-  console.log('converation id 3 = ' + conversationId)
-
-  return request.post(CONVERSATION_API_BASE + `/${conversationId}/messages`)
-    .set('Content-Type', 'application/json')
-    .set(`Authorization`, `bearer ${TOKEN}`)
-    .send(returnMessage(conversationId, contactCallback))
-    .catch(err => console.log(err))
-}
-
 
 function handleMessage(orgId, data) {
   if (data.type === 'private_note') {
@@ -30,48 +19,47 @@ function handleMessage(orgId, data) {
 
     if (messageBody.startsWith('/lookup')) {
         console.log('found a lookup action!')
-      return SendMessage(conversationId)
-    }
+      return returnMessage(conversationId, contactCallback)
   }
 }
 
 
 // request function
-function returnMessage(conversationID, callbackFn) {
-    console.log('converation id 4 = ' + conversationId)
+function returnMessage(data, callbackFn) {
+      
+  const conversationId = data.conversationId
+
   request
    .get(CONVERSATION_API_BASE + `${conversationID}`)
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${TOKEN}`)
    .end(function(err, res){
-       callbackFn(res.body.data.contactId)
+       callbackFn(res.body.data.contactId, conversationId)
      });
 }
 
-// call back function
-function contactCallback(contactId) { 
+function contactCallback(contactId, conversationId) { 
     console.log('contact ID is : ' + contactId)
-    return getContactEmail(contactId, emailCallback);
+    return getContactEmail(contactId, emailCallback, conversationId);
 }
 
-function getContactEmail (contactId, callbackFn) {
+function getContactEmail (contactId, callbackFn, conversationId) {
 
 request
   .get(CONTACT_API_BASE + `${contactId}`)
   .set(`Authorization`, `bearer ${TOKEN}`)
   .set('Content-Type', 'application/json')
   .end(function (err, res) {
-        callbackFn(res.body.data.attributes.email)
+        callbackFn(res.body.data.attributes.email, conversationId)
      });
 }
 
-// call back function
-function emailCallback(emailAddress) { 
+function emailCallback(emailAddress, conversationId) { 
     console.log('email is: ' + emailAddress)
-    return callSF(emailAddress, sfCallback)
+    return callSF(emailAddress, sfCallback, conversationId)
 }
 
-function callSF(emailAddress, callbackFn) {
+function callSF(emailAddress, callbackFn, conversationId) {
 
 	var jsforce = require('jsforce');
 	var conn = new jsforce.Connection({
@@ -87,17 +75,26 @@ function callSF(emailAddress, callbackFn) {
 	  var lastName = result.records[0].LastName;
 	  var email = result.records[0].Email;
 	  	  
-	  callbackFn(result.records[0].FirstName)
+	  callbackFn(result.records[0].FirstName, conversationId)
+	  
+	  
 	});
 
 }
 
-// call back function
-function sfCallback(body) { 
-    console.log('body is ' + body);
-    return body;
+function sfCallback(body, conversationId) { 
+    console.log('body is : ' + body)
+    return sendMessage(body, conversationId)
 }
 
+function sendMessage(conversationId, body) {
+
+  return request.post(CONVERSATION_API_BASE + `/${conversationId}/messages`)
+    .set('Content-Type', 'application/json')
+    .set(`Authorization`, `bearer ${TOKEN}`)
+    .send(body)
+    .catch(err => console.log(err))
+}
 
 app.use(bodyParser.json())
 app.listen(process.env.PORT || 3000, () => console.log('Example app listening on port 3000!'))
@@ -105,7 +102,8 @@ app.post('/api', (req, res) => {
   if (req.body.type === 'new_message') {
     console.log('found a new message!');
     
-    handleMessage(req.body.orgId, req.body.data);
+    handleMessage(req.body.orgId, req.body.data);  
+    
   }
   return res.send('ok')
 })
