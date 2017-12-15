@@ -94,13 +94,13 @@ function callSF(emailAddress, callbackFn, conversationId, orgId) {
 
 // call back function
 function sfCallback(body, conversationId) { 
-    console.log('body is : ' + body)
+    console.log('sf message body is : ' + body)
     return sendMessage(body, conversationId, orgId)
 }
 
 function sendMessage(body, conversationId, orgId) {
 
-console.log('in sendmessage')
+console.log('**********in sendmessage**********')
 
   const message = {
     'orgId': orgId,
