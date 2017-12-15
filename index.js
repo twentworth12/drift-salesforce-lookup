@@ -71,33 +71,24 @@ function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
 			}); */
 		
 		var jsforce = require('jsforce');
-		//
-		// OAuth2 client information can be shared with multiple connections.
-		//
+
 		var oauth2 = new jsforce.OAuth2({
-		  // you can change loginUrl to connect to sandbox or prerelease env.
-		  // loginUrl : 'https://test.salesforce.com',
 		  clientId : SF_ID,
 		  clientSecret : SF_SECRET,
 		  redirectUri : 'https://salesforce-lookup.herokuapp.com:3000/oauth2/callback'
 		});
-		//
-		// Get authorization url and redirect to it.
-		//
+		
+		
 		app.get('/oauth2/auth', function(req, res) {
 		  res.redirect(oauth2.getAuthorizationUrl({ scope : 'api id web' }));
 		});
 		
-		//
-		// Pass received authorization code and get access token
-		//
 		app.get('/oauth2/callback', function(req, res) {
 		  var conn = new jsforce.Connection({ oauth2 : oauth2 });
 		  var code = req.param('code');
 		  conn.authorize(code, function(err, userInfo) {
 			if (err) { return console.error(err); }
-			// Now you can get the access token, refresh token, and instance URL information.
-			// Save them to establish connection next time.
+
 			console.log(conn.accessToken);
 			console.log(conn.refreshToken);
 			console.log(conn.instanceUrl);
@@ -105,7 +96,6 @@ function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
 			console.log("Org ID: " + userInfo.organizationId);
 			
 			var records = [];
-		
 
 			// Customize this to change the fields you return from the Lead object
 			conn.query("SELECT Id, Email, FirstName, LastName, Company, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
