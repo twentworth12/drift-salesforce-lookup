@@ -5,9 +5,8 @@ const request = require('superagent');
 
 const DRIFT_TOKEN = process.env.BOT_API_TOKEN
 
-const SF_TOKEN = process.env.SF_TOKEN
-const SF_SECRET = process.env.SF_SECRET
-const SF_ID = process.env.SF_ID
+const SF_USER= process.env.SF_USER
+const SF_PASS = process.env.SF_PASS
 
 const CONVERSATION_API_BASE = 'https://driftapi.com/conversations'
 const CONTACT_API_BASE = 'https://driftapi.com/contacts'
@@ -64,39 +63,27 @@ function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
 
  if (typeof emailAddress != 'undefined') {
 
-			/* var jsforce = require('jsforce');
-			var conn = new jsforce.Connection({
-			  instanceUrl : 'https://na52.salesforce.com',
-			  accessToken : SF_TOKEN
-			}); */
-		
+
 		var jsforce = require('jsforce');
+		var conn = new jsforce.Connection({
 
-		var oauth2 = new jsforce.OAuth2({
-		  clientId : SF_ID,
-		  clientSecret : SF_SECRET,
-		  redirectUri : 'https://salesforce-lookup.herokuapp.com:3000/oauth2/callback'
 		});
 		
-		
-		app.get('/oauth2/auth', function(req, res) {
-		  res.redirect(oauth2.getAuthorizationUrl({ scope : 'api id web' }));
+		conn.login(SF_USER, SF_PASS, function(err, userInfo) {
+		  if (err) { return console.error(err); }
+		  // Now you can get the access token and instance URL information.
+		  // Save them to establish connection next time.
+		  console.log(conn.accessToken);
+		  console.log(conn.instanceUrl);
+		  // logged in user property
+		  console.log("User ID: " + userInfo.id);
+		  console.log("Org ID: " + userInfo.organizationId);
+		  // ...
 		});
+
+		var records = [];
 		
-		app.get('/oauth2/callback', function(req, res) {
-		  var conn = new jsforce.Connection({ oauth2 : oauth2 });
-		  var code = req.param('code');
-		  conn.authorize(code, function(err, userInfo) {
-			if (err) { return console.error(err); }
-
-			console.log(conn.accessToken);
-			console.log(conn.refreshToken);
-			console.log(conn.instanceUrl);
-			console.log("User ID: " + userInfo.id);
-			console.log("Org ID: " + userInfo.organizationId);
-			
-			var records = [];
-
+	
 			// Customize this to change the fields you return from the Lead object
 			conn.query("SELECT Id, Email, FirstName, LastName, Company, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
 			  if (err) { return console.error(err); }
@@ -129,10 +116,7 @@ function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
 			  callbackFn(body, conversationId, orgId)
 
 	  
-			});		
-		  }); 	  
 		});
-
 		} else {
 			body = "Oops, we didn't find an email address"
 			callbackFn(body, conversationId, orgId)
