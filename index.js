@@ -4,7 +4,10 @@ const bodyParser = require('body-parser')
 const request = require('superagent');
 
 const DRIFT_TOKEN = process.env.BOT_API_TOKEN
+
 const SF_TOKEN = process.env.SF_TOKEN
+const SF_SECRET = process.env.SF_SECRET
+const SF_ID = process.env.SF_ID
 
 const CONVERSATION_API_BASE = 'https://driftapi.com/conversations'
 const CONTACT_API_BASE = 'https://driftapi.com/contacts'
@@ -63,11 +66,25 @@ function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
 
  if (typeof emailAddress != 'undefined') {
 
-		var jsforce = require('jsforce');
+		/* var jsforce = require('jsforce');
 		var conn = new jsforce.Connection({
 		  instanceUrl : 'https://na52.salesforce.com',
 		  accessToken : SF_TOKEN
+		}); */
+		
+		var oauth2 = new jsforce.OAuth2({
+		  clientId: SF_ID,
+		  clientSecret: SF_SECRET,
+		  redirectUri: '#'
 		});
+		
+		oauth2.refreshToken(refreshToken).then(function(ret) {
+		  var conn = new jsforce.Connection({
+		     accessToken: ret.access_token,
+		     instanceUrl: ret.instance_url
+		  });
+		});
+
 
 		var records = [];
 		
@@ -94,7 +111,7 @@ function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
 			  }	  
 	  
 			  if (result.records[0].Academics__c != "") {
-				var Academic = result.records[0].Academics__c
+				Academic = "Yeah"
 			  } else {
 				Academic = "Nope"
 			  }
