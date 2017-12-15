@@ -72,6 +72,8 @@ function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
 		  accessToken : SF_TOKEN
 		}); */
 		
+		var jsforce = require('jsforce');
+		
 		var oauth2 = new jsforce.OAuth2({
 		  clientId: SF_ID,
 		  clientSecret: SF_SECRET,
