@@ -78,7 +78,7 @@ function callSF(emailAddress, callbackFn, conversationId, orgId) {
 	  var Id = result.records[0].Id;
 	  var lastStudioUsage = result.records[0].Last_RM_Studio_usage__c
 	  
-	  body = "Salesforce Link: <a href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a><br/>Last RM Studio Usage: " + lastStudioUsage
+	  body = "Salesforce Link: <a target="_blank" href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a><br/>Last RM Studio Usage: " + lastStudioUsage
 	  	    
 	  callbackFn(body, conversationId, orgId)
 	  
