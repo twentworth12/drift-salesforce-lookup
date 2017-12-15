@@ -13,7 +13,8 @@ Take a look at these steps from Drift to setup Heroku https://github.com/Driftt/
 Make sure you set these tokens
 
 DRIFT_TOKEN = {Your Drift OAuth Token}
-SF_TOKEN = {Your Salesforce OAuth Token}
+SF_USER = {Your Salesforce User}
+SF_PASS = {Your Salesforce Pass. Note that you might have to append your SF security token too...}
 
 ### Linking to dev.drift.com
 
