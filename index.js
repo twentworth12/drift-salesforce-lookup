@@ -37,10 +37,10 @@ function handleMessage(orgId, data) {
 // request function
 function returnMessage(conversationId, callbackFn) {
 
-    console.log('converation id 2 = ' + conversationId)
+  console.log('converation id 2 = ' + conversationId)
       
   request
-   .get(CONVERSATION_API_BASE + `${conversationID}`)
+   .get(CONVERSATION_API_BASE + `${conversationId}`)
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${TOKEN}`)
    .end(function(err, res){
