@@ -74,8 +74,8 @@ function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
 		  if (err) { return console.error(err); }
 		  // Now you can get the access token and instance URL information.
 		  // Save them to establish connection next time.
-		  var SF_TOKEN = conn.accessToken;
-		  var SF_INSTANCE = conn.instanceUrl
+		  // var SF_TOKEN = conn.accessToken;
+		  // var SF_INSTANCE = conn.instanceUrl
 		  console.log(conn.accessToken);
 		  console.log(conn.instanceUrl);
 		  
