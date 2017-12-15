@@ -90,7 +90,6 @@ function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
 	  	totalStudioStarts = "None"
 	  }	  
 	  
-	  
 	  if (result.records[0].Academics__c != "") {
 	  	var Academic = result.records[0].Academics__c
 	  } else {
