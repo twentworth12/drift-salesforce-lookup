@@ -95,10 +95,10 @@ function callSF(emailAddress, callbackFn, conversationId, orgId) {
 // call back function
 function sfCallback(body, conversationId) { 
     console.log('sf message body is : ' + body)
-    return sendMessage(body, conversationId, orgId)
+    return sendMessage(body, finalCallback, conversationId, orgId)
 }
 
-function sendMessage(body, conversationId, orgId) {
+function sendMessage(body, callbackFn, conversationId, orgId) {
 
 console.log('**********in sendmessage**********')
 
@@ -109,12 +109,22 @@ console.log('**********in sendmessage**********')
   }
 
   console.log('message is : ' + message)
+  
+  callbackFn(message, conversationId)
+
+
+
+}
+
+// call back function
+function finalCallback(message, conversationId) { 
 
   return request.post(CONVERSATION_API_BASE + `/${conversationId}/messages`)
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${TOKEN}`)
     .send(message)
     .catch(err => console.log(err))
+
 }
 
 app.use(bodyParser.json())
