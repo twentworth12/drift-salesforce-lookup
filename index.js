@@ -66,27 +66,29 @@ function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
 
  if (typeof emailAddress != 'undefined') {
 
-		/* var jsforce = require('jsforce');
-		var conn = new jsforce.Connection({
-		  instanceUrl : 'https://na52.salesforce.com',
-		  accessToken : SF_TOKEN
-		}); */
+			/* var jsforce = require('jsforce');
+			var conn = new jsforce.Connection({
+			  instanceUrl : 'https://na52.salesforce.com',
+			  accessToken : SF_TOKEN
+			}); */
 		
 		var jsforce = require('jsforce');
-		
+		//
+		// OAuth2 client information can be shared with multiple connections.
+		//
 		var oauth2 = new jsforce.OAuth2({
-		  clientId: SF_ID,
-		  clientSecret: SF_SECRET,
-		  redirectUri: '#'
+		  // you can change loginUrl to connect to sandbox or prerelease env.
+		  // loginUrl : 'https://test.salesforce.com',
+		  clientId : SF_ID,
+		  clientSecret : SF_SECRET,
+		  redirectUri : '#'
 		});
-		
-		oauth2.refreshToken(refreshToken).then(function(ret) {
-		  var conn = new jsforce.Connection({
-		     accessToken: ret.access_token,
-		     instanceUrl: ret.instance_url
-		  });
+		//
+		// Get authorization url and redirect to it.
+		//
+		app.get('/oauth2/auth', function(req, res) {
+		  res.redirect(oauth2.getAuthorizationUrl({ scope : 'api id web' }));
 		});
-
 
 		var records = [];
 		
