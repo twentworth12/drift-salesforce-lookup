@@ -78,13 +78,13 @@ function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
 	  var Id = result.records[0].Id;
 	  var Company = result.records[0].Company;
 	  
-	  if (result.records[0].Last_RM_Studio_usage__c != "") {
+	  if (result.records[0].Last_RM_Studio_usage__c != null) {
 	  	var lastStudioUsage = result.records[0].Last_RM_Studio_usage__c
 	  } else {
 	  	lastStudioUsage = "None"
 	  }
 	  
-	  if (result.records[0].Total_RM_Studio_starts__c != "") {
+	  if (result.records[0].Total_RM_Studio_starts__c != null) {
 	  	var totalStudioStarts = result.records[0].Total_RM_Studio_starts__c
 	  } else {
 	  	totalStudioStarts = "None"
