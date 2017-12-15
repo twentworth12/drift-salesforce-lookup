@@ -5,9 +5,8 @@ const request = require('superagent');
 
 const DRIFT_TOKEN = process.env.BOT_API_TOKEN
 
-const SF_TOKEN = process.env.SF_TOKEN
-const SF_SECRET = process.env.SF_SECRET
-const SF_ID = process.env.SF_ID
+const SF_USER = process.env.SF_USER
+const SF_PASS = process.env.SF_PASS
 
 const CONVERSATION_API_BASE = 'https://driftapi.com/conversations'
 const CONTACT_API_BASE = 'https://driftapi.com/contacts'
@@ -71,7 +70,7 @@ function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
 		  // you can change loginUrl to connect to sandbox or prerelease env.
 		  // loginUrl : 'https://test.salesforce.com'
 		});
-		conn.login(username, password, function(err, userInfo) {
+		conn.login(SF_USER, SF_PASS, function(err, userInfo) {
 		  if (err) { return console.error(err); }
 		  // Now you can get the access token and instance URL information.
 		  // Save them to establish connection next time.
