@@ -18,6 +18,7 @@ function handleMessage(orgId, data) {
     const conversationId = data.conversationId
 
     if (messageBody.startsWith('/lookup')) {
+      console.log("Yeah! We found a /lookup message!")
       return getContactId(conversationId, GetContactId, orgId)
     }
   }
