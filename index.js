@@ -61,53 +61,56 @@ function GetContactEmail(emailAddress, conversationId, orgId) {
 
 function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
 
-	var jsforce = require('jsforce');
-	var conn = new jsforce.Connection({
-	  instanceUrl : 'https://na52.salesforce.com',
-	  accessToken : SF_TOKEN
-	});
+ if (typeof emailAddress != 'undefined') {
 
-	var records = [];
-	
-	if (typeof emailAddress != 'undefined') {
-	
-		// Customize this to change the fields you return from the Lead object
-		conn.query("SELECT Id, Email, FirstName, LastName, Company, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
-		  if (err) { return console.error(err); }
+		var jsforce = require('jsforce');
+		var conn = new jsforce.Connection({
+		  instanceUrl : 'https://na52.salesforce.com',
+		  accessToken : SF_TOKEN
+		});
 
-		  var firstName = result.records[0].FirstName;
-		  var lastName = result.records[0].LastName;
-		  var Id = result.records[0].Id;
-		  var Company = result.records[0].Company;
-	  
-		  if (result.records[0].Last_RM_Studio_usage__c != null) {
-			var lastStudioUsage = result.records[0].Last_RM_Studio_usage__c
-		  } else {
-			lastStudioUsage = "None"
-		  }
-	  
-		  if (result.records[0].Total_RM_Studio_starts__c != null) {
-			var totalStudioStarts = result.records[0].Total_RM_Studio_starts__c
-		  } else {
-			totalStudioStarts = "None"
-		  }	  
-	  
-		  if (result.records[0].Academics__c != "") {
-			var Academic = result.records[0].Academics__c
-		  } else {
-			Academic = "Nope"
-		  }
-	  
-		  // Built the Drift reply body
-		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a><br/>" + "Company: " + Company + "<br/>Total Studio Starts: " + totalStudioStarts + "<br/>Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
-		}
-		else {
-		  body = "No email address was found"
-		  }
+		var records = [];
 		
-	  callbackFn(body, conversationId, orgId)
+	
+			// Customize this to change the fields you return from the Lead object
+			conn.query("SELECT Id, Email, FirstName, LastName, Company, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
+			  if (err) { return console.error(err); }
+
+			  var firstName = result.records[0].FirstName;
+			  var lastName = result.records[0].LastName;
+			  var Id = result.records[0].Id;
+			  var Company = result.records[0].Company;
 	  
-	});
+			  if (result.records[0].Last_RM_Studio_usage__c != null) {
+				var lastStudioUsage = result.records[0].Last_RM_Studio_usage__c
+			  } else {
+				lastStudioUsage = "None"
+			  }
+	  
+			  if (result.records[0].Total_RM_Studio_starts__c != null) {
+				var totalStudioStarts = result.records[0].Total_RM_Studio_starts__c
+			  } else {
+				totalStudioStarts = "None"
+			  }	  
+	  
+			  if (result.records[0].Academics__c != "") {
+				var Academic = result.records[0].Academics__c
+			  } else {
+				Academic = "Nope"
+			  }
+	  
+			  // Built the Drift reply body
+			  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a><br/>" + "Company: " + Company + "<br/>Total Studio Starts: " + totalStudioStarts + "<br/>Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
+			
+	
+	  
+		});
+		} else {
+			body = "Oops, we didn't find an email address"
+			}
+
+	  callbackFn(body, conversationId, orgId)
+
 
 }
 
