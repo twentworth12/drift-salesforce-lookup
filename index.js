@@ -57,7 +57,7 @@ request
 
 // call back function
 function GetContactEmail(emailAddress, conversationId, orgId) { 
-    return callSF(emailAddress, postMessage, conversationId, orgId)
+    return querySalesforce(emailAddress, postMessage, conversationId, orgId)
 }
 
 function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
