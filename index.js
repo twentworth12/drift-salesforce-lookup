@@ -5,8 +5,9 @@ const request = require('superagent');
 
 const DRIFT_TOKEN = process.env.BOT_API_TOKEN
 
-const SF_USER= process.env.SF_USER
-const SF_PASS = process.env.SF_PASS
+const SF_TOKEN = process.env.SF_TOKEN
+const SF_SECRET = process.env.SF_SECRET
+const SF_ID = process.env.SF_ID
 
 const CONVERSATION_API_BASE = 'https://driftapi.com/conversations'
 const CONTACT_API_BASE = 'https://driftapi.com/contacts'
@@ -64,25 +65,33 @@ function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
  if (typeof emailAddress != 'undefined') {
 
 
+
 		var jsforce = require('jsforce');
 		var conn = new jsforce.Connection({
-
+		  // you can change loginUrl to connect to sandbox or prerelease env.
+		  // loginUrl : 'https://test.salesforce.com'
 		});
-		
-		conn.login(SF_USER, SF_PASS, function(err, userInfo) {
+		conn.login(username, password, function(err, userInfo) {
 		  if (err) { return console.error(err); }
 		  // Now you can get the access token and instance URL information.
 		  // Save them to establish connection next time.
+		  var SF_TOKEN = conn.accessToken;
+		  var SF_INSTANCE = conn.instanceUrl
 		  console.log(conn.accessToken);
 		  console.log(conn.instanceUrl);
-		  // logged in user property
-		  console.log("User ID: " + userInfo.id);
-		  console.log("Org ID: " + userInfo.organizationId);
-		  // ...
+
 		});
+
+		var jsforce = require('jsforce');
+		var conn = new jsforce.Connection({
+			  instanceUrl : SF_INSTANCE,
+			  accessToken : SF_TOKEN
+		}); */
+		
 
 		var records = [];
 		
+
 	
 			// Customize this to change the fields you return from the Lead object
 			conn.query("SELECT Id, Email, FirstName, LastName, Company, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
