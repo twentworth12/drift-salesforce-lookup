@@ -103,7 +103,7 @@ function sendMessage(body, conversationId, orgId) {
   const message = {
     'orgId': orgId,
     'body': '<b>Testing 1-2-3</b><br/>Does this work',
-    'type': replace ? 'edit' : 'private_prompt',
+    'type': false ? 'edit' : 'private_prompt',
   }
 
     console.log('message is : ' + message)
