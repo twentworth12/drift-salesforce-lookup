@@ -77,11 +77,27 @@ function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
 	  var lastName = result.records[0].LastName;
 	  var Id = result.records[0].Id;
 	  var Company = result.records[0].Company;
-	  var lastStudioUsage = result.records[0].Last_RM_Studio_usage__c
-	  var totalStudioStarts = result.records[0].Total_RM_Studio_starts__c
-	  var Academic = result.records[0].Academics__c
 	  
-	  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a><br/>" + "Company: " + Company + "<br/>Total Studio Starts" + totalStudioStarts + "<br/>Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
+	  if (result.records[0].Last_RM_Studio_usage__c != "") {
+	  	var lastStudioUsage = result.records[0].Last_RM_Studio_usage__c
+	  } else {
+	  	lastStudioUsage = "None"
+	  }
+	  
+	  if (result.records[0].Total_RM_Studio_starts__c != "") {
+	  	var totalStudioStarts = result.records[0].Total_RM_Studio_starts__c
+	  } else {
+	  	totalStudioStarts = "None"
+	  }	  
+	  
+	  
+	  if (result.records[0].Academics__c != "") {
+	  	var Academic = result.records[0].Academics__c
+	  } else {
+	  	Academic = "Don't Know Yet"
+	  }
+	  
+	  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a><br/>" + "Company: " + Company + "<br/>Total Studio Starts: " + totalStudioStarts + "<br/>Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
 	  	    
 	  callbackFn(body, conversationId, orgId)
 	  
