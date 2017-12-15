@@ -85,7 +85,7 @@ function callSF(emailAddress, callbackFn, conversationId, orgId) {
 	  var lastName = result.records[0].LastName;
 	  var Id = result.records[0].Id;
 	  
-	  body = "<a href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a>"
+	  body = "Salesforce Link: <a href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a>"
 	  	  
 	  callbackFn(body, conversationId, orgId)
 	  
