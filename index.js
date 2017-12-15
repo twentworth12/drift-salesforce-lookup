@@ -86,7 +86,7 @@ function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
 		var conn = new jsforce.Connection({
 			  instanceUrl : SF_INSTANCE,
 			  accessToken : SF_TOKEN
-		}); */
+		});
 		
 
 		var records = [];
