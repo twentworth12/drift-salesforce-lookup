@@ -83,9 +83,11 @@ function callSF(emailAddress, callbackFn, conversationId, orgId) {
 
 	  var firstName = result.records[0].FirstName;
 	  var lastName = result.records[0].LastName;
-	  var email = result.records[0].Email;
+	  var Id = result.records[0].Id;
+	  
+	  body = "<a href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a>"
 	  	  
-	  callbackFn(result.records[0].FirstName, conversationId, orgId)
+	  callbackFn(body, conversationId, orgId)
 	  
 	  
 	});
@@ -99,7 +101,7 @@ function sfCallback(body, conversationId, orgId) {
     
     const message = {
     'orgId': orgId,
-    'body': '<b>Testing 1-2-3</b><br/>Does this work',
+    'body': body,
     'type': false ? 'edit' : 'private_prompt',
   }
   
