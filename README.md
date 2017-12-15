@@ -4,7 +4,7 @@ Salesforce Lookup for Drift
 This app looks up the current person we're chatting with in Salesforce and returns a link along with some useful information about them right inside Drift.
 
 You can find your Drift OAuth Access token at dev.drift.com
-![OAuth token](https://d1ax1i5f2y3x71.cloudfront.net/items/073z1y1f3Q2F28381M3J/%5B8fbf40aa6cdb4864f1a68d0bc9e04eff%5D_Screen+Shot+2017-11-17+at+9.31.53+AM.png?X-CloudApp-Visitor-Id=2789091&v=7439000e)
+![OAuth token]
 
 ## Deploying to Heroku
 
