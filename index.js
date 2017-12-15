@@ -17,8 +17,6 @@ function handleMessage(orgId, data) {
   if (data.type === 'private_note') {
     const messageBody = data.body
     const conversationId = data.conversationId
-    console.log('converation id = ' + conversationId)
-    console.log('org id = ' + orgId)
 
     if (messageBody.startsWith('/lookup')) {
       return getContactId(conversationId, GetContactId, orgId)
@@ -81,7 +79,7 @@ function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
 		  // loginUrl : 'https://test.salesforce.com',
 		  clientId : SF_ID,
 		  clientSecret : SF_SECRET,
-		  redirectUri : '#'
+		  redirectUri : 'https://salesforce-lookup.herokuapp.com:3000/oauth2/callback'
 		});
 		//
 		// Get authorization url and redirect to it.
