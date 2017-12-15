@@ -78,14 +78,14 @@ function callSF(emailAddress, callbackFn, conversationId, orgId) {
 	});
 
 	var records = [];
-	conn.query("SELECT Id, Email, FirstName, LastName FROM Lead where Email = '"+emailAddress+"'", function(err, result) {
+	conn.query("SELECT Id, Email, FirstName, LastName, Last_RM_Studio_usage__c FROM Lead where Email = '"+emailAddress+"'", function(err, result) {
 	  if (err) { return console.error(err); }
 
 	  var firstName = result.records[0].FirstName;
 	  var lastName = result.records[0].LastName;
 	  var Id = result.records[0].Id;
 	  
-	  body = "Salesforce Link: <a href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a>"
+	  body = "Salesforce Link: <a href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a><br/>Last RM Studio Usage: " + Last_RM_Studio_usage__c
 	  	  
 	  callbackFn(body, conversationId, orgId)
 	  
