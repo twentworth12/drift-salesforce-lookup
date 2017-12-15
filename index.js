@@ -103,15 +103,10 @@ function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
 			console.log(conn.instanceUrl);
 			console.log("User ID: " + userInfo.id);
 			console.log("Org ID: " + userInfo.organizationId);
-			// ...
-			res.send('success'); // or your desired response
-		  });
-		});
+			
+			var records = [];
 		
 
-		var records = [];
-		
-	
 			// Customize this to change the fields you return from the Lead object
 			conn.query("SELECT Id, Email, FirstName, LastName, Company, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
 			  if (err) { return console.error(err); }
@@ -144,7 +139,10 @@ function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
 			  callbackFn(body, conversationId, orgId)
 
 	  
+			});		
+		  }); 	  
 		});
+
 		} else {
 			body = "Oops, we didn't find an email address"
 			callbackFn(body, conversationId, orgId)
