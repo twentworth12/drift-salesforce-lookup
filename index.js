@@ -30,8 +30,6 @@ function handleMessage(orgId, data) {
 // request function
 function returnMessage(conversationId, callbackFn, orgId) {
 
-  console.log('converation id 2 = ' + conversationId)
-  console.log('org id 2 = ' + orgId)
       
   request
    .get(CONVERSATION_API_BASE + `${conversationId}`)
@@ -44,14 +42,10 @@ function returnMessage(conversationId, callbackFn, orgId) {
 
 // call back function
 function contactCallback(contactId, conversationId, orgId) { 
-    console.log('contact ID is : ' + contactId)
     return getContactEmail(contactId, emailCallback, conversationId, orgId);
 }
 
 function getContactEmail (contactId, callbackFn, conversationId, orgId) {
-
-    console.log('contact id 2 = ' + contactId)
-    console.log('converation id 3 = ' + conversationId)
 
 request
   .get(CONTACT_API_BASE + `${contactId}`)
@@ -64,8 +58,6 @@ request
 
 // call back function
 function emailCallback(emailAddress, conversationId, orgId) { 
-    console.log('email is: ' + emailAddress)
-    console.log('converation id 4 = ' + conversationId)
     return callSF(emailAddress, sfCallback, conversationId, orgId)
 }
 
@@ -87,10 +79,8 @@ function callSF(emailAddress, callbackFn, conversationId, orgId) {
 	  var lastStudioUsage = result.records[0].Last_RM_Studio_usage__c
 	  
 	  body = "Salesforce Link: <a href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a><br/>Last RM Studio Usage: " + lastStudioUsage
-	  	  
-	  	  
+	  	    
 	  callbackFn(body, conversationId, orgId)
-	  
 	  
 	});
 
@@ -98,9 +88,7 @@ function callSF(emailAddress, callbackFn, conversationId, orgId) {
 
 // call back function
 function sfCallback(body, conversationId, orgId) { 
-    console.log('sf message body is : ' + body)
 
-    
     const message = {
     'orgId': orgId,
     'body': body,
@@ -120,7 +108,6 @@ app.use(bodyParser.json())
 app.listen(process.env.PORT || 3000, () => console.log('Example app listening on port 3000!'))
 app.post('/api', (req, res) => {
   if (req.body.type === 'new_message') {
-    console.log('found a new message!');
     
     handleMessage(req.body.orgId, req.body.data);  
     
