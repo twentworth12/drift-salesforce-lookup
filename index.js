@@ -106,6 +106,8 @@ function sendMessage(body, conversationId, orgId) {
     'type': replace ? 'edit' : 'private_prompt',
   }
 
+    console.log('message is : ' + message)
+
   return request.post(CONVERSATION_API_BASE + `/${conversationId}/messages`)
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${TOKEN}`)
