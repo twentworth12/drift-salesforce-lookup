@@ -70,7 +70,7 @@ function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
 
 	var records = [];
 	
-	conn.query("SELECT Id, Email, FirstName, LastName, Company, Last_RM_Studio_usage__c FROM Lead where Email = '"+emailAddress+"'", function(err, result) {
+	conn.query("SELECT Id, Email, FirstName, LastName, Company, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
 	  if (err) { return console.error(err); }
 
 	  var firstName = result.records[0].FirstName;
