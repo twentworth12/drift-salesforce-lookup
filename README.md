@@ -14,7 +14,7 @@ Make sure you set these tokens
 
 DRIFT_TOKEN = {Your Drift OAuth Token}
 SF_USER = {Your Salesforce User}
-SF_PASS = {Your Salesforce Pass. Not that you might have to append your SF security token too...}
+SF_PASS = {Your Salesforce Pass. Note that you might have to append your SF security token too...}
 
 ### Linking to dev.drift.com
 
