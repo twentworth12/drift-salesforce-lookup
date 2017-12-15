@@ -1,4 +1,4 @@
 # Salesforce Lookup for Drift
 Salesforce Lookup for Drift
 
-Stuff will go here
+This app looks up the current person we're chatting with in Salesforce and returns a link to them inside a Drift window.
