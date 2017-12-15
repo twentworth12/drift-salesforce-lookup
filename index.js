@@ -67,6 +67,7 @@ var conn = new jsforce.Connection({
   // you can change loginUrl to connect to sandbox or prerelease env.
   // loginUrl : 'https://test.salesforce.com'
 });
+
 conn.login(SF_USER, SF_PASS, function(err, userInfo) {
   if (err) { return console.error(err); }
   callbackFn(emailAddress, conn.accessToken, conversationId, orgId)
@@ -121,7 +122,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  }
   
 		  // Built the Drift reply body
-		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a><br/>" + "Company: " + Company + "<br/>Total Studio Starts: " + totalStudioStarts + "<br/>Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
+		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a><br/>" + "Company: " + Company + "<br/>Total RM Studio Starts: " + totalStudioStarts + "<br/>Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
 		  callbackFn(body, conversationId, orgId)
 		}); 
 
