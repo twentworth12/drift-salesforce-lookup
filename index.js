@@ -93,38 +93,24 @@ function callSF(emailAddress, callbackFn, conversationId, orgId) {
 }
 
 // call back function
-function sfCallback(body, conversationId) { 
+function sfCallback(body, conversationId, orgId) { 
     console.log('sf message body is : ' + body)
-    return deliverMessage(body, postCallback, conversationId, orgId)
-}
 
-
-function deliverMessage(body, callbackFn, conversationId, orgId) {
-
-console.log('**********in sendmessage**********')
-
-  const message = {
+    
+    const message = {
     'orgId': orgId,
     'body': '<b>Testing 1-2-3</b><br/>Does this work',
     'type': false ? 'edit' : 'private_prompt',
   }
-
-  console.log('message is : ' + message)
   
-  callbackFn(message, conversationId)
-
-}
-
-// call back function
-function postCallback(message, conversationId) { 
-
-  return request.post(CONVERSATION_API_BASE + `/${conversationId}/messages`)
+    return request.post(CONVERSATION_API_BASE + `/${conversationId}/messages`)
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${TOKEN}`)
     .send(message)
     .catch(err => console.log(err))
-
+    
 }
+
 
 app.use(bodyParser.json())
 app.listen(process.env.PORT || 3000, () => console.log('Example app listening on port 3000!'))
