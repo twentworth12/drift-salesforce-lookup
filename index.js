@@ -9,7 +9,7 @@ const CONTACT_API_BASE = process.env.QA ? 'https://driftapi.com/contacts' : 'htt
 
 const TOKEN = process.env.BOT_API_TOKEN
 
-function sendMessage(conversationId, body) {
+function sendMessage(body, conversationId) {
 
   return request.post(CONVERSATION_API_BASE + `/${conversationId}/messages`)
     .set('Content-Type', 'application/json')
