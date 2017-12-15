@@ -12,14 +12,12 @@ const CONTACT_API_BASE = 'https://driftapi.com/contacts'
 
 function handleMessage(orgId, data) {
   if (data.type === 'private_note') {
-    console.log('found a private note!')
     const messageBody = data.body
     const conversationId = data.conversationId
     console.log('converation id = ' + conversationId)
     console.log('org id = ' + orgId)
 
     if (messageBody.startsWith('/lookup')) {
-        console.log('found a lookup action!')
       return getContactId(conversationId, GetContactId, orgId)
     }
   }
@@ -29,7 +27,7 @@ function handleMessage(orgId, data) {
 // request function
 function getContactId(conversationId, callbackFn, orgId) {
 
-      
+// Get the contact from Drift
   request
    .get(CONVERSATION_API_BASE + `${conversationId}`)
     .set('Content-Type', 'application/json')
@@ -46,6 +44,7 @@ function GetContactId(contactId, conversationId, orgId) {
 
 function getContactEmail (contactId, callbackFn, conversationId, orgId) {
 
+// Get the email address from Drift
 request
   .get(CONTACT_API_BASE + `${contactId}`)
   .set(`Authorization`, `bearer ${DRIFT_TOKEN}`)
@@ -70,6 +69,9 @@ function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
 
 	var records = [];
 	
+	console.log("email is " + emailAddress)
+	
+	// Customize this to change the fields you return from the Lead object
 	conn.query("SELECT Id, Email, FirstName, LastName, Company, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
 	  if (err) { return console.error(err); }
 
@@ -93,9 +95,10 @@ function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
 	  if (result.records[0].Academics__c != "") {
 	  	var Academic = result.records[0].Academics__c
 	  } else {
-	  	Academic = "Don't Know Yet"
+	  	Academic = "Nope"
 	  }
 	  
+	  // Built the Drift reply body
 	  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a><br/>" + "Company: " + Company + "<br/>Total Studio Starts: " + totalStudioStarts + "<br/>Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
 	  	    
 	  callbackFn(body, conversationId, orgId)
@@ -113,6 +116,7 @@ function postMessage(body, conversationId, orgId) {
     'type': false ? 'edit' : 'private_prompt',
   }
   
+  	// Send the message
     return request.post(CONVERSATION_API_BASE + `/${conversationId}/messages`)
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${DRIFT_TOKEN}`)
