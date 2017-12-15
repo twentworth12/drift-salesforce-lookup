@@ -2,13 +2,12 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const request = require('superagent');
-const sf_token = process.env.SF_TOKEN
 
-const CONVERSATION_API_BASE = process.env.QA ? 'https://driftapi.com/conversations' : 'https://driftapi.com/conversations'
-const CONTACT_API_BASE = process.env.QA ? 'https://driftapi.com/contacts' : 'https://driftapi.com/contacts'
+const DRIFT_TOKEN = process.env.BOT_API_TOKEN
+const SF_TOKEN = process.env.SF_TOKEN
 
-const TOKEN = process.env.BOT_API_TOKEN
-
+const CONVERSATION_API_BASE = 'https://driftapi.com/conversations'
+const CONTACT_API_BASE = 'https://driftapi.com/contacts'
 
 
 function handleMessage(orgId, data) {
@@ -21,35 +20,35 @@ function handleMessage(orgId, data) {
 
     if (messageBody.startsWith('/lookup')) {
         console.log('found a lookup action!')
-      return returnMessage(conversationId, contactCallback, orgId)
+      return getContactId(conversationId, GetContactId, orgId)
     }
   }
 }
 
 
 // request function
-function returnMessage(conversationId, callbackFn, orgId) {
+function getContactId(conversationId, callbackFn, orgId) {
 
       
   request
    .get(CONVERSATION_API_BASE + `${conversationId}`)
     .set('Content-Type', 'application/json')
-    .set(`Authorization`, `bearer ${TOKEN}`)
+    .set(`Authorization`, `bearer ${DRIFT_TOKEN}`)
    .end(function(err, res){
        callbackFn(res.body.data.contactId, conversationId, orgId)
      });
 }
 
 // call back function
-function contactCallback(contactId, conversationId, orgId) { 
-    return getContactEmail(contactId, emailCallback, conversationId, orgId);
+function GetContactId(contactId, conversationId, orgId) { 
+    return getContactEmail(contactId, GetContactEmail, conversationId, orgId);
 }
 
 function getContactEmail (contactId, callbackFn, conversationId, orgId) {
 
 request
   .get(CONTACT_API_BASE + `${contactId}`)
-  .set(`Authorization`, `bearer ${TOKEN}`)
+  .set(`Authorization`, `bearer ${DRIFT_TOKEN}`)
   .set('Content-Type', 'application/json')
   .end(function (err, res) {
         callbackFn(res.body.data.attributes.email, conversationId, orgId)
@@ -57,16 +56,16 @@ request
 }
 
 // call back function
-function emailCallback(emailAddress, conversationId, orgId) { 
-    return callSF(emailAddress, sfCallback, conversationId, orgId)
+function GetContactEmail(emailAddress, conversationId, orgId) { 
+    return callSF(emailAddress, postMessage, conversationId, orgId)
 }
 
-function callSF(emailAddress, callbackFn, conversationId, orgId) {
+function querySalesforce(emailAddress, callbackFn, conversationId, orgId) {
 
 	var jsforce = require('jsforce');
 	var conn = new jsforce.Connection({
 	  instanceUrl : 'https://na52.salesforce.com',
-	  accessToken : sf_token
+	  accessToken : SF_TOKEN
 	});
 
 	var records = [];
@@ -87,7 +86,7 @@ function callSF(emailAddress, callbackFn, conversationId, orgId) {
 }
 
 // call back function
-function sfCallback(body, conversationId, orgId) { 
+function postMessage(body, conversationId, orgId) { 
 
     const message = {
     'orgId': orgId,
@@ -97,7 +96,7 @@ function sfCallback(body, conversationId, orgId) {
   
     return request.post(CONVERSATION_API_BASE + `/${conversationId}/messages`)
     .set('Content-Type', 'application/json')
-    .set(`Authorization`, `bearer ${TOKEN}`)
+    .set(`Authorization`, `bearer ${DRIFT_TOKEN}`)
     .send(message)
     .catch(err => console.log(err))
     
