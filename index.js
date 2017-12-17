@@ -11,23 +11,16 @@ const SF_PASS = process.env.SF_PASS
 const CONVERSATION_API_BASE = 'https://driftapi.com/conversations'
 const CONTACT_API_BASE = 'https://driftapi.com/contacts'
 
-// Automatically lookup the user instead of requiring /lookup
-const AUTOMATIC_LOOKUP = true;
-
 
 function handleMessage(orgId, data) {
   if (data.type === 'private_note') {
     const messageBody = data.body
     const conversationId = data.conversationId
 
-    if (AUTOMATIC_LOOKUP) {
-    	return getContactId(conversationId, GetContactId, orgId)
-    } else
-	    if (messageBody.startsWith('/lookup')) {
-	      console.log("Yeah! We found a /lookup message!")
-	      return getContactId(conversationId, GetContactId, orgId)
-	    }
-  }
+    if (messageBody.startsWith('/lookup')) {
+      console.log("Yeah! We found a /lookup message!")
+      return getContactId(conversationId, GetContactId, orgId)
+    }
   }
 }
 
