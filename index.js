@@ -117,7 +117,6 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
   
 		  if (result.records[0].Last_RM_Studio_usage__c != null) {
 			var lastStudioUsage = result.records[0].Last_RM_Studio_usage__c
-			lastStudioUsage = string.slice(1,10);
 		  } else {
 			lastStudioUsage = "None"
 		  }
@@ -135,7 +134,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  }
   
 		  // Built the Drift reply body
-		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + Company + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
+		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a><br/>" + "Company: " + Company + "<br/>Total RM Studio Starts: " + totalStudioStarts + "<br/>Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
 		  callbackFn(body, conversationId, orgId)
 		}); 
 
