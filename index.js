@@ -127,13 +127,14 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  if (result.records[0].Last_RM_Studio_usage__c != null) {
 			var lastStudioUsage = result.records[0].Last_RM_Studio_usage__c
 			lastStudioUsage = str.slice(0,9)
-			
+			    console.log ("debug 4")	  
 		  } else {
 			lastStudioUsage = "None"
 		  }
   
 		  if (result.records[0].Total_RM_Studio_starts__c != null) {
 			var totalStudioStarts = result.records[0].Total_RM_Studio_starts__c
+						    console.log ("debug 5")	  
 		  } else {
 			totalStudioStarts = "None"
 		  }	  
