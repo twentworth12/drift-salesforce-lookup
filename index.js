@@ -155,6 +155,7 @@ console.log ("in function querySalesforce 2")
 
 	} else {
 		// No email address was found
+		console.log ("email is undefined" + emailAddress)
 		body = "Oops, we don't have an email address or the user isn't in Salesforce yet"
 		callbackFn(body, conversationId, orgId)
 		}
