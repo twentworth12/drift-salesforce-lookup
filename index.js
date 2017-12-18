@@ -146,10 +146,6 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  console.log ("about to send message")
 		  callbackFn(body, conversationId, orgId)
 		     }); 
-		
-		 
-		callbackFn("", conversationId, orgId)
-
 			
 
 	} else {
@@ -162,8 +158,6 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 }
 
 function postMessage(body, conversationId, orgId) { 
-
-	console.log("body is " + body)
 	
 	if (body == "") {
 		body = "Oops, we don't have an email address or the user isn't in Salesforce yet"
