@@ -166,7 +166,6 @@ function postMessage(body, conversationId, orgId) {
 	console.log("body is " + body)
 	
 	if (body != "") {
-
 		const message = {
 		'orgId': orgId,
 		'body': body,
@@ -174,7 +173,11 @@ function postMessage(body, conversationId, orgId) {
 		}
     }
     else {
-    	message = "Oops, we don't have an email address or the user isn't in Salesforce yet"
+			const message = {
+			'orgId': orgId,
+			'body': "Oops, we don't have an email address or the user isn't in Salesforce yet",
+			'type': false ? 'edit' : 'private_prompt',
+			}
     	}
   
   	// Send the message
