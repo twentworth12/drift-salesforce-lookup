@@ -148,7 +148,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		     }); 
 		
 		 
-		callbackFn(body, conversationId, orgId)
+		callbackFn("", conversationId, orgId)
 
 			
 
@@ -164,12 +164,19 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 function postMessage(body, conversationId, orgId) { 
 
 	console.log("body is " + body)
+	
+	if (body != "") then {
 
     const message = {
     'orgId': orgId,
     'body': body,
     'type': false ? 'edit' : 'private_prompt',
-  }
+    }
+    
+    else {
+    	message = "Oops, we don't have an email address or the user isn't in Salesforce yet"
+    	}
+    }
   
   	// Send the message
     return request.post(CONVERSATION_API_BASE + `/${conversationId}/messages`)
