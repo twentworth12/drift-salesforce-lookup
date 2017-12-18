@@ -116,25 +116,19 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		      return console.error(err);     
 		  }
 
-		    console.log ("debug 0 - testing")	  
-
 		  var firstName = result.records[0].FirstName;
 		  var lastName = result.records[0].LastName;
 		  var Id = result.records[0].Id;
 		  var Company = result.records[0].Company;
 		  var Country = result.records[0].Country;
   
-  		console.log ("debug 1 - testing")
   
 		  if (result.records[0].Last_RM_Studio_usage__c != null) {
-			var lastStudioUsage = result.records[0].Last_RM_Studio_usage__c
-			lastStudioUsage = str.slice(0,9)
-  
+			var lastStudioUsage = result.records[0].Last_RM_Studio_usage__c  
 		  } else {
 			lastStudioUsage = "None"
 		  }
 		  
-  		console.log ("debug 10 - testing")		  
   
 		  if (result.records[0].Total_RM_Studio_starts__c != null) {
 			var totalStudioStarts = result.records[0].Total_RM_Studio_starts__c 
@@ -142,7 +136,6 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 			totalStudioStarts = "None"
 		  }	  
 		  
-		    		console.log ("debug 11 - testing")
   
 		  if (result.records[0].Academics__c != "") {
 			Academic = "Yeah"
@@ -150,14 +143,16 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 			Academic = "Nope"
 		  }
 		  
-  		console.log ("debug 12 - testing")		  
   
 		  // Built the Drift reply body
 		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + Company + " | " + Country + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
+		  console.log ("about to send message")
 		  callbackFn(body, conversationId, orgId)
 		     }); 
 
-  		console.log ("debug 13 - testing")
+		console.log ("after message should be sent")
+
+			
 
 	} else {
 		// No email address was found
@@ -165,9 +160,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		body = "Oops, we don't have an email address or the user isn't in Salesforce yet"
 		callbackFn(body, conversationId, orgId)
 		}
-		
-  console.log ("debug 3")		
-	
+			
 }
 
 function postMessage(body, conversationId, orgId) { 
