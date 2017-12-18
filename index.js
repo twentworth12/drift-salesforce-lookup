@@ -135,7 +135,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  }
   
 		  // Built the Drift reply body
-		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + "Company: " + Company + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
+		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + Company + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
 		  callbackFn(body, conversationId, orgId)
 		}); 
 
@@ -169,13 +169,11 @@ function postMessage(body, conversationId, orgId) {
 app.use(bodyParser.json())
 app.listen(process.env.PORT || 3000, () => console.log('Example app listening on port 3000!'))
 app.post('/api', (req, res) => {
-  console.log("message type is " + req.body.type)
   
   if (req.body.type === 'new_message') {
     handleMessage(req.body.orgId, req.body.data);  
   }
   if ((req.body.type === 'new_conversation') && AUTO_LOOKUP ) {
-      console.log("found an auto lookup message ")
       handleConversation(req.body.orgId, req.body.data);  
   }
   
