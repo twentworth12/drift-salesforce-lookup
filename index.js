@@ -165,7 +165,7 @@ function postMessage(body, conversationId, orgId) {
 
 	console.log("body is " + body)
 	
-	if (body != "") then {
+	if (body != "") {
 
     const message = {
     'orgId': orgId,
