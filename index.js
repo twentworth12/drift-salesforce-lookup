@@ -108,7 +108,6 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 
 		// Customize this to change the fields you return from the Lead object
 		conn.query("SELECT Id, Email, FirstName, LastName, Company, Country, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
-		  console.log ("in conn.query. Id =" + result.records[0].Id + "<-")
 		  
 		  if (err) { 
 		  	  console.log ("salesforce query error")
@@ -122,6 +121,8 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  var Id = result.records[0].Id;
 		  var Company = result.records[0].Company;
 		  var Country = result.records[0].Country;
+  
+  console.log ("debug 1")
   
 		  if (result.records[0].Last_RM_Studio_usage__c != null) {
 			var lastStudioUsage = result.records[0].Last_RM_Studio_usage__c
@@ -143,6 +144,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 			Academic = "Nope"
 		  }
   	  
+    console.log ("debug 2")	  
   
 		  // Built the Drift reply body
 		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + Company + " | " + Country + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
@@ -156,6 +158,8 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		body = "Oops, we don't have an email address or the user isn't in Salesforce yet"
 		callbackFn(body, conversationId, orgId)
 		}
+		
+  console.log ("debug 3")		
 	
 }
 
