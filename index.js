@@ -114,10 +114,10 @@ console.log ("in function querySalesforce 2")
 			  console.log ("salesforce query error")
 			  body = "Oops, we don't have an email address or the user isn't in Salesforce yet"
 			  callbackFn(body, conversationId, orgId)		  
-		  }
+		  } else { console.log("query error else") }
 
-			console.log ("record results = " + record.results)
-			console.log ("SF ID = " + result.records[0].Id)
+		console.log ("record results = " + record.results)
+		console.log ("SF ID = " + result.records[0].Id)
 
 		  var firstName = result.records[0].FirstName;
 		  var lastName = result.records[0].LastName;
@@ -159,7 +159,7 @@ console.log ("in function querySalesforce 2")
 		body = "Oops, we don't have an email address or the user isn't in Salesforce yet"
 		callbackFn(body, conversationId, orgId)
 		}
-
+	console.log ("end of function Query Salesforce" + emailAddress)
 }
 
 function postMessage(body, conversationId, orgId) { 
