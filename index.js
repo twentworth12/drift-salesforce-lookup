@@ -145,7 +145,12 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + Company + " | " + Country + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
 		  console.log ("about to send message")
 		  callbackFn(body, conversationId, orgId)
+		  return
 		     }); 
+		
+		 
+		callbackFn("", conversationId, orgId)
+
 			
 
 	} else {
@@ -153,6 +158,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		console.log ("email is undefined" + emailAddress)
 		body = "Oops, we don't have an email address or the user isn't in Salesforce yet"
 		callbackFn(body, conversationId, orgId)
+		return
 		}
 			
 }
