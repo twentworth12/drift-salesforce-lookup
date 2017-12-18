@@ -145,14 +145,10 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + Company + " | " + Country + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
 		  console.log ("about to send message")
 		  callbackFn(body, conversationId, orgId)
-		     }
-			
-			console.log ("after the message should be sent " + conn.result + " is the result")
-	     
-		     
-		     ); 
+		     }); 
 		
 		 
+		console.log ("after the message should be sent " + conn.result + " is the result")
 
 			
 
@@ -166,6 +162,9 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 }
 
 function postMessage(body, conversationId, orgId) { 
+
+	console.log("body is " + body)
+
     const message = {
     'orgId': orgId,
     'body': body,
