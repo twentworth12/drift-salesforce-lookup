@@ -30,7 +30,7 @@ function handleMessage(orgId, data) {
 function handleConversation(orgId, data) {
 
     const messageBody = data.body
-    const conversationId = data.conversationId
+    const conversationId = data.id
     console.log("Yeah! We found a new conversation!")
       return getContactId(conversationId, GetContactId, orgId)
 }
