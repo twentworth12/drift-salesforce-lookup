@@ -108,10 +108,11 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 
 		// Customize this to change the fields you return from the Lead object
 		conn.query("SELECT Id, Email, FirstName, LastName, Company, Country, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
-		  if (err) { return console.error(err); 
-			  console.log ("salesforce query error")
+		  if (err) { 
+		  	  console.log ("salesforce query error")
 			  body = "Oops, we don't have an email address or the user isn't in Salesforce yet"
-			  callbackFn(body, conversationId, orgId)		  
+			  callbackFn(body, conversationId, orgId)	
+		      return console.error(err);     
 		  }
 
 		  var firstName = result.records[0].FirstName;
@@ -155,13 +156,9 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		callbackFn(body, conversationId, orgId)
 		}
 	
-	// User isn't in Salesforce yet	
-	body = "Oops, we don't have an email address or the user isn't in Salesforce yet"
-	callbackFn(body, conversationId, orgId)
 }
 
 function postMessage(body, conversationId, orgId) { 
-console.log ("in function postMessage")
     const message = {
     'orgId': orgId,
     'body': body,
