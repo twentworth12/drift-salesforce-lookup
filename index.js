@@ -72,7 +72,6 @@ function GetContactEmail(emailAddress, conversationId, orgId) {
 }
 
 function returnSFAccessToken(emailAddress, callbackFn, conversationId, orgId) {
-console.log ("in function returnSFAccessToken")
 
 var jsforce = require('jsforce');
 var conn = new jsforce.Connection({
@@ -94,7 +93,6 @@ function ReturnSFAccessToken(emailAddress, accessToken, conversationId, orgId) {
 
 function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, orgId) {
 
-console.log ("in function querySalesforce 2")
 
  if (typeof emailAddress != 'undefined') {
 
@@ -114,10 +112,7 @@ console.log ("in function querySalesforce 2")
 			  console.log ("salesforce query error")
 			  body = "Oops, we don't have an email address or the user isn't in Salesforce yet"
 			  callbackFn(body, conversationId, orgId)		  
-		  } else { console.log("query error else") }
-
-		console.log ("record results = " + record.results)
-		console.log ("SF ID = " + result.records[0].Id)
+		  }
 
 		  var firstName = result.records[0].FirstName;
 		  var lastName = result.records[0].LastName;
@@ -159,7 +154,10 @@ console.log ("in function querySalesforce 2")
 		body = "Oops, we don't have an email address or the user isn't in Salesforce yet"
 		callbackFn(body, conversationId, orgId)
 		}
-	console.log ("end of function Query Salesforce" + emailAddress)
+	
+	// User isn't in Salesforce yet	
+	body = "Oops, we don't have an email address or the user isn't in Salesforce yet"
+	callbackFn(body, conversationId, orgId)
 }
 
 function postMessage(body, conversationId, orgId) { 
