@@ -11,6 +11,9 @@ const SF_PASS = process.env.SF_PASS
 const CONVERSATION_API_BASE = 'https://driftapi.com/conversations'
 const CONTACT_API_BASE = 'https://driftapi.com/contacts'
 
+// Set this to true if you want to automatically lookup users for new conversations where we have an email address
+const AUTO_LOOKUP = true;
+
 
 function handleMessage(orgId, data) {
   if (data.type === 'private_note') {
@@ -22,6 +25,14 @@ function handleMessage(orgId, data) {
       return getContactId(conversationId, GetContactId, orgId)
     }
   }
+}
+
+function handleConversation(orgId, data) {
+
+    const messageBody = data.body
+    const conversationId = data.conversationId
+    console.log("Yeah! We found a new conversation!")
+      return getContactId(conversationId, GetContactId, orgId)
 }
 
 
@@ -157,10 +168,14 @@ function postMessage(body, conversationId, orgId) {
 app.use(bodyParser.json())
 app.listen(process.env.PORT || 3000, () => console.log('Example app listening on port 3000!'))
 app.post('/api', (req, res) => {
+  console.log("message type is " + req.body.type)
+  
   if (req.body.type === 'new_message') {
-    
     handleMessage(req.body.orgId, req.body.data);  
-    
   }
+  if ((req.body.type === 'new_conversation') && (AUTO_LOOKUP = true)) {
+    handleConversation(req.body.orgId, req.body.data);  
+  }
+  
   return res.send('ok')
 })
