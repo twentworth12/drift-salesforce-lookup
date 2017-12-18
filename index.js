@@ -108,7 +108,10 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 
 		// Customize this to change the fields you return from the Lead object
 		conn.query("SELECT Id, Email, FirstName, LastName, Company, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
-		  if (err) { return console.error(err); }
+		  if (err) { return console.error(err); 
+			  body = "Oops, we don't have an email address or the user isn't in Salesforce yet"
+			  callbackFn(body, conversationId, orgId)		  
+		  }
 
 		  var firstName = result.records[0].FirstName;
 		  var lastName = result.records[0].LastName;
