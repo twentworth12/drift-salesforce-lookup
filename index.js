@@ -165,20 +165,15 @@ function postMessage(body, conversationId, orgId) {
 
 	console.log("body is " + body)
 	
-	if (body != "") {
-		const message = {
-		'orgId': orgId,
-		'body': body,
-		'type': false ? 'edit' : 'private_prompt',
-		}
-    }
-    else {
-			const message = {
-			'orgId': orgId,
-			'body': "Oops, we don't have an email address or the user isn't in Salesforce yet",
-			'type': false ? 'edit' : 'private_prompt',
-			}
-    	}
+	if (body == "") {
+		body = "Oops, we don't have an email address or the user isn't in Salesforce yet"
+	}
+		
+    const message = {
+    'orgId': orgId,
+    'body': body,
+    'type': false ? 'edit' : 'private_prompt',
+  }
   
   	// Send the message
     return request.post(CONVERSATION_API_BASE + `/${conversationId}/messages`)
