@@ -94,7 +94,7 @@ function ReturnSFAccessToken(emailAddress, accessToken, conversationId, orgId) {
 
 function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, orgId) {
 
-console.log ("in function querySalesforce")
+console.log ("in function querySalesforce 2")
 
  if (typeof emailAddress != 'undefined') {
 
