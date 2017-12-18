@@ -173,7 +173,7 @@ app.post('/api', (req, res) => {
   if (req.body.type === 'new_message') {
     handleMessage(req.body.orgId, req.body.data);  
   }
-  if ((req.body.type === 'new_conversation') && (AUTO_LOOKUP = true)) {
+  if ((req.body.type === 'new_conversation') && (AUTO_LOOKUP === true)) {
     handleConversation(req.body.orgId, req.body.data);  
   }
   
