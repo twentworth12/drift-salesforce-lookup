@@ -107,7 +107,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 	
 
 		// Customize this to change the fields you return from the Lead object
-		conn.query("SELECT Id, Email, FirstName, LastName, Company, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
+		conn.query("SELECT Id, Email, FirstName, LastName, Company, Country, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
 		  if (err) { return console.error(err); 
 			  body = "Oops, we don't have an email address or the user isn't in Salesforce yet"
 			  callbackFn(body, conversationId, orgId)		  
@@ -117,9 +117,12 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  var lastName = result.records[0].LastName;
 		  var Id = result.records[0].Id;
 		  var Company = result.records[0].Company;
+		  var Country = result.records[0].Country;
   
 		  if (result.records[0].Last_RM_Studio_usage__c != null) {
 			var lastStudioUsage = result.records[0].Last_RM_Studio_usage__c
+			lastStudioUsage = str.slice(0,9)
+			
 		  } else {
 			lastStudioUsage = "None"
 		  }
@@ -138,7 +141,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
   	  
   
 		  // Built the Drift reply body
-		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a><br/>" + " | " + Company + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
+		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + Company + " | " + Country + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
 		  callbackFn(body, conversationId, orgId)
 		     }); 
 
