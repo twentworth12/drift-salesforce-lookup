@@ -113,6 +113,9 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 			  callbackFn(body, conversationId, orgId)		  
 		  }
 
+			console.log ("record results = " + record.results)
+			console.log ("SF ID = " + result.records[0].Id)
+
 		  var firstName = result.records[0].FirstName;
 		  var lastName = result.records[0].LastName;
 		  var Id = result.records[0].Id;
