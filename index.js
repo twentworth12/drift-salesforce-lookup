@@ -72,7 +72,7 @@ function GetContactEmail(emailAddress, conversationId, orgId) {
 }
 
 function returnSFAccessToken(emailAddress, callbackFn, conversationId, orgId) {
-
+console.log ("in function returnSFAccessToken")
 
 var jsforce = require('jsforce');
 var conn = new jsforce.Connection({
@@ -93,6 +93,8 @@ function ReturnSFAccessToken(emailAddress, accessToken, conversationId, orgId) {
 
 
 function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, orgId) {
+
+console.log ("in function querySalesforce")
 
  if (typeof emailAddress != 'undefined') {
 
