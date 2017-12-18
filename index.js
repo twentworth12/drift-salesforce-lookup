@@ -148,7 +148,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		     }); 
 		
 		 
-		console.log ("after the message should be sent " + conn.result + " is the result")
+		callbackFn(body, conversationId, orgId)
 
 			
 
