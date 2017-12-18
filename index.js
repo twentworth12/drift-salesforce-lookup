@@ -110,9 +110,6 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		conn.query("SELECT Id, Email, FirstName, LastName, Company, Country, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
 		  
 		  if (err) { 
-		  	  console.log ("salesforce query error")
-			  body = "Oops, we don't have an email address or the user isn't in Salesforce yet"
-			  callbackFn(body, conversationId, orgId)	
 		      return console.error(err);     
 		  }
 
@@ -148,9 +145,11 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + Company + " | " + Country + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
 		  console.log ("about to send message")
 		  callbackFn(body, conversationId, orgId)
+		  return;
 		     }); 
-
-		console.log ("after message should be sent")
+		
+		 
+		console.log ("after the message should be sent")
 
 			
 
@@ -159,6 +158,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		console.log ("email is undefined" + emailAddress)
 		body = "Oops, we don't have an email address or the user isn't in Salesforce yet"
 		callbackFn(body, conversationId, orgId)
+		return;
 		}
 			
 }
