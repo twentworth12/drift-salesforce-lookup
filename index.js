@@ -132,6 +132,9 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  } else {
 			Academic = "Nope"
 		  }
+  		
+ 			console.log ("salesforce id = " + Id) 		
+  
   
 		  // Built the Drift reply body
 		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a><br/>" + "Company: " + Company + "<br/>Total RM Studio Starts: " + totalStudioStarts + "<br/>Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
