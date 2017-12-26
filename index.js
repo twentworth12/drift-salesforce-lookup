@@ -93,7 +93,10 @@ function ReturnSFAccessToken(emailAddress, accessToken, conversationId, orgId) {
 
 function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, orgId) {
 
-
+ 
+ 
+ console.log("emailAddress : " + emailAddress);
+ 
  if (typeof emailAddress != 'undefined') {
 
 		var jsforce = require('jsforce');
@@ -107,12 +110,15 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 	
 
 		// Customize this to change the fields you return from the Lead object
-		conn.query("SELECT Id, Existing_Account__c, Account_Open_Opps__c, Email, FirstName, LastName, Company, Country, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
+		conn.query("SELECT Id, Converted_Num__c, Existing_Account__c, Account_Open_Opps__c, Email, FirstName, LastName, Company, Country, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
 		  
 		  if (err) { 
 		      return console.error(err);     
 		  }
-
+		  
+		  var convertedLead = result.records[0].Converted_Num__c;
+		  console.log("Converted Num :" + convertedLead);
+		  
 		  var firstName = result.records[0].FirstName;
 		  var lastName = result.records[0].LastName;
 		  var Id = result.records[0].Id;
@@ -151,8 +157,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  callbackFn(body, conversationId, orgId)
 		  return
 		     }); 
-		
-			
+
 
 	} else {
 		// No email address was found
