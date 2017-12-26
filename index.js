@@ -111,8 +111,11 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		conn.query("SELECT Id, Email, Existing_Account__c, Owner.Name, Existing_Account__r.Open_Opps__c, FirstName, LastName, Company, Country, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
 		  
 		  if (err) { 
+		  console.log("error");
 		      return console.error(err);     
 		  }
+
+		console.log("no error");
 
 		  var firstName = result.records[0].FirstName;
 		  var lastName = result.records[0].LastName;
