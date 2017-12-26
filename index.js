@@ -139,7 +139,8 @@ function querySalesforceLead(emailAddress, accessToken, conversationId, orgId, c
 		  } else {
 			Academic = "Nope"
 		  }
-		  		  
+		 
+		 // If it's an existing account in Salesforce, create a link to it, otherwise just return the company name 		  
 		 if (existingAccount != null) {
 			companyResponse = "<a target='_blank' href=https://na52.salesforce.com/" + existingAccount + ">" + Company + "</a>"
 		  } else {
