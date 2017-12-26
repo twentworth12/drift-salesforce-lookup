@@ -185,7 +185,7 @@ function postMessage(body, conversationId, orgId) {
     const message = {
     'orgId': orgId,
     'body': body,
-    'type': false ? 'edit' : 'private_prompt',
+    'type': 'private_prompt',
   }
   
   	// Send the message
