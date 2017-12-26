@@ -189,7 +189,7 @@ function querySalesforceAccount(body, conversationId, orgId, accessToken, existi
 	
 
 		// Customize this to change the fields you return from the Lead object
-		conn.query("SELECT Open_Opps__c FROM Account where Id = '" + existingAccount + "'", function(err, result) {
+		conn.query("SELECT Open_Opps__c, Name FROM Account where Id = '" + existingAccount + "'", function(err, result) {
 		  
 		  if (err) { 
 		      console.log("salesforce query error");
@@ -198,11 +198,11 @@ function querySalesforceAccount(body, conversationId, orgId, accessToken, existi
 
 
 		  var openOpportunities = result.records[0].Open_Opps__c;
+		  var name = result.records[0].Name;
 		  
-	console.log("after");		  
 		
 		  // Build the Drift reply body
-		  body = body + "<br/>*** Open Opportunities " + openOpportunities;
+		  body = body + "<br/><B>** In Active Opportunity with " + Name + "</B> **";
 		  callbackFn(body, conversationId, orgId)
 		     }); 		
 
