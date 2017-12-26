@@ -93,7 +93,6 @@ function ReturnSFAccessToken(emailAddress, accessToken, conversationId, orgId) {
 
 function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, orgId) {
 
-	console.log("email address is :" + emailAddress);
 
  if (typeof emailAddress != 'undefined') {
 
@@ -114,6 +113,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		      return console.error(err);     
 		  }
 
+	console.log("email address 0 is :" + emailAddress);
 
 		  var firstName = result.records[0].FirstName;
 		  var lastName = result.records[0].LastName;
@@ -123,6 +123,8 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  var existingAccount = result.records[0].Existing_Account__c;
 		  var ownerName = result.records[0].Owner.Name;
 		  var openOpportunities = result.records[0].Existing_Account__r.Open_Opps__c
+
+	console.log("email address 1 is :" + emailAddress);
     
 		  if (result.records[0].Last_RM_Studio_usage__c != null) {
 			var lastStudioUsage = result.records[0].Last_RM_Studio_usage__c  
