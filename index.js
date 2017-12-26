@@ -107,59 +107,46 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 	
 
 		// Customize this to change the fields you return from the Lead object
-		conn.query("SELECT Id, Converted_Num__c, Existing_Account__c, Account_Open_Opps__c, Email, FirstName, LastName, Company, Country, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
+		conn.query("SELECT Id, Email, FirstName, LastName, Company, Country, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
 		  
 		  if (err) { 
 		      return console.error(err);     
 		  }
-		  
-		console.log("email address :" + emailAddress);
-	    console.log("Converted " + result.records[0].Converted_Num__c);
 
-		if (result.records[0].Converted_Num__c == 0) {
-
-			  var firstName = result.records[0].FirstName;
-			  var lastName = result.records[0].LastName;
-			  var Id = result.records[0].Id;
-			  var Company = result.records[0].Company;
-			  var Country = result.records[0].Country;
-		  
-		  
-			  console.log("existing account :" + Existing_Account__c);
-			  console.log("existing account :" + Account_Open_Opps__c);		  
+		  var firstName = result.records[0].FirstName;
+		  var lastName = result.records[0].LastName;
+		  var Id = result.records[0].Id;
+		  var Company = result.records[0].Company;
+		  var Country = result.records[0].Country;
   
   
-			  if (result.records[0].Last_RM_Studio_usage__c != null) {
-				var lastStudioUsage = result.records[0].Last_RM_Studio_usage__c  
-			  } else {
-				lastStudioUsage = "None"
-			  }
+		  if (result.records[0].Last_RM_Studio_usage__c != null) {
+			var lastStudioUsage = result.records[0].Last_RM_Studio_usage__c  
+		  } else {
+			lastStudioUsage = "None"
+		  }
 		  
   
-			  if (result.records[0].Total_RM_Studio_starts__c != null) {
-				var totalStudioStarts = result.records[0].Total_RM_Studio_starts__c 
-			  } else {
-				totalStudioStarts = "None"
-			  }	  
+		  if (result.records[0].Total_RM_Studio_starts__c != null) {
+			var totalStudioStarts = result.records[0].Total_RM_Studio_starts__c 
+		  } else {
+			totalStudioStarts = "None"
+		  }	  
 		  
   
-			  if (result.records[0].Academics__c != "") {
-				Academic = "Yeah"
-			  } else {
-				Academic = "Nope"
-			  }
+		  if (result.records[0].Academics__c != "") {
+			Academic = "Yeah"
+		  } else {
+			Academic = "Nope"
+		  }
+		  
+  
+		  // Build the Drift reply body
+		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + Company + " | " + Country + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
+		  callbackFn(body, conversationId, orgId)
+		  return
+		     }); 
 		
-			  // Build the Drift reply body
-			  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + Company + " | " + Country + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
-			  
-			  console.log("body is : " + body);
-			  
-			  callbackFn(body, conversationId, orgId); 
-			  }
-			  else {
-			  	console.log("Lead was converted");
-			  	}
-	 	}); 
 			
 
 	} else {
