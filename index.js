@@ -151,7 +151,7 @@ function querySalesforceLead(emailAddress, accessToken, conversationId, orgId, c
   
 		  // Build the Drift reply body
 		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + companyResponse + " | " + Country + "<br/>Owned by " + ownerName + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
-		  callbackFn(body, conversationId, orgId, existingAccount)
+		  callbackFn(body, conversationId, orgId, accessToken, existingAccount)
 		     }); 
 
 			
@@ -160,16 +160,16 @@ function querySalesforceLead(emailAddress, accessToken, conversationId, orgId, c
 		// No email address was found
 		console.log ("email is undefined" + emailAddress)
 		body = "Oops, we don't have an email address or the user isn't in Salesforce yet"
-		callbackFn(body, conversationId, orgId, existingAccount)
+		callbackFn(body, conversationId, orgId, accessToken, existingAccount)
 		return
 		}	
 }
 
-function QuerySalesforceLead(body, conversationId, orgId, existingAccount) {
-    return querySalesforceAccount(body, conversationId, orgId, existingAccount, postMessage)
+function QuerySalesforceLead(body, conversationId, orgId, accessToken, existingAccount) {
+    return querySalesforceAccount(body, conversationId, orgId, accessToken, existingAccount, postMessage)
 }
 
-function querySalesforceAccount(body, conversationId, orgId, existingAccount, callbackFn) {
+function querySalesforceAccount(body, conversationId, orgId, accessToken, existingAccount, callbackFn) {
 	
 	console.log("account ID is :" + existingAccount);		  
 
