@@ -119,52 +119,54 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  var convertedLead = result.records[0].Converted_Num__c;
 		  console.log("Converted Num :" + convertedLead);
 		  
-		  var firstName = result.records[0].FirstName;
-		  var lastName = result.records[0].LastName;
-		  var Id = result.records[0].Id;
-		  var Company = result.records[0].Company;
-		  var Country = result.records[0].Country;
+		  if (convertedLead == 0) {
 		  
-		  console.log("existing account :" + Existing_Account__c);
-		  console.log("existing account :" + Account_Open_Opps__c);		  
-  
-  
-		  if (result.records[0].Last_RM_Studio_usage__c != null) {
-			var lastStudioUsage = result.records[0].Last_RM_Studio_usage__c  
-		  } else {
-			lastStudioUsage = "None"
-		  }
+			  console.log("Lead was not converted");
 		  
+			  var firstName = result.records[0].FirstName;
+			  var lastName = result.records[0].LastName;
+			  var Id = result.records[0].Id;
+			  var Company = result.records[0].Company;
+			  var Country = result.records[0].Country;
+		  
+			  console.log("existing account :" + Existing_Account__c);
+			  console.log("existing account :" + Account_Open_Opps__c);		  
   
-		  if (result.records[0].Total_RM_Studio_starts__c != null) {
-			var totalStudioStarts = result.records[0].Total_RM_Studio_starts__c 
-		  } else {
-			totalStudioStarts = "None"
-		  }	  
+  
+			  if (result.records[0].Last_RM_Studio_usage__c != null) {
+				var lastStudioUsage = result.records[0].Last_RM_Studio_usage__c  
+			  } else {
+				lastStudioUsage = "None"
+			  }
 		  
   
-		  if (result.records[0].Academics__c != "") {
-			Academic = "Yeah"
-		  } else {
-			Academic = "Nope"
-		  }
-		
+			  if (result.records[0].Total_RM_Studio_starts__c != null) {
+				var totalStudioStarts = result.records[0].Total_RM_Studio_starts__c 
+			  } else {
+				totalStudioStarts = "None"
+			  }	  
+		  
+  
+			  if (result.records[0].Academics__c != "") {
+				Academic = "Yeah"
+			  } else {
+				Academic = "Nope"
+			  }
+			  
+			  // Build the Drift reply body
+			  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + Company + " | " + Country + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
+			  callbackFn(body, conversationId, orgId)
+				 });  
+			
+			} else {
+				console.log("Lead was converted");
 
-		  
-  
-		  // Built the Drift reply body
-		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + Company + " | " + Country + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
-		  callbackFn(body, conversationId, orgId)
-		  return
-		     }); 
-
-
-	} else {
-		// No email address was found
-		console.log ("email is undefined" + emailAddress)
-		body = "Oops, we don't have an email address or the user isn't in Salesforce yet"
-		callbackFn(body, conversationId, orgId)
-		return
+			} else {
+				// No email address was found
+				console.log ("email is undefined" + emailAddress)
+				body = "Oops, we don't have an email address or the user isn't in Salesforce yet"
+				callbackFn(body, conversationId, orgId)
+				return
 		}
 			
 }
