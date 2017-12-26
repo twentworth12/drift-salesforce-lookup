@@ -143,12 +143,12 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		 console.log("existing account is : " + existingAccount);
 		  
 		 if (existingAccount != null) {
-			companyResponse = "<a target='_blank' 'href=https://na52.salesforce.com/" + existingAccount + "'>" + Company + "</a>"
+			companyResponse = "<a target='_blank' href=https://na52.salesforce.com/" + existingAccount + ">" + Company + "</a>"
 		  } else {
 			companyResponse = Company;
 		  }
 		  
-  
+  		console.log("*************company response is : " + companyResponse);
   
 		  // Build the Drift reply body
 		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + companyResponse + " | " + Country + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
