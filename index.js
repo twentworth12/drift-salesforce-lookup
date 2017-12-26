@@ -122,14 +122,8 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  var Country = result.records[0].Country;
 		  var existingAccount = result.records[0].Existing_Account__c;
 		  var ownerName = result.records[0].Owner.Name;
-		  // var openOpportunities = result.records[0].Existing_Account__r.Open_Opps__c;
-
-		  
-		  if (result.records[0].Existing_Account__r.Open_Opps__c != null) {
-				console.log("Open Opportunities is not null");
-				} else {
-					console.log("Open Opportunities is  null");  
-					}
+		  var openOpportunities = result.records[0].Existing_Account__r.Open_Opps__c ||
+		  	(() => throw `openOpportunities = broken`)();
 
     
 		  if (result.records[0].Last_RM_Studio_usage__c != null) {
@@ -175,10 +169,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  console.log("before callback");
 		  callbackFn(body, conversationId, orgId)
 		     }); 
-		.catch(function(err) {
-        //handle errors
-        console.log('Promise error while getting job status:', err);
-    });
+
 			
 
 	} else {
