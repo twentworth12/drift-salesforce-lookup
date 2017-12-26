@@ -193,7 +193,11 @@ function querySalesforceAccount(body, conversationId, orgId, existingAccount, ca
 		      return console.error(err);     
 		  }
 
+	console.log("before");		  
+
 		  var openOpportunities = result.records[0].Open_Opps__c;
+		  
+	console.log("after");		  
 		
 		  // Build the Drift reply body
 		  body = body + "<br/>*** Open Opportunities " + openOpportunities;
