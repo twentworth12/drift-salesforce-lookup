@@ -109,7 +109,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 	
 
 		// Customize this to change the fields you return from the Lead object
-		conn.query("SELECT Id, Email, Existing_Account__c, Owner.Name, Existing_Account__r.Open_Opps__c, FirstName, LastName, Company, Country, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
+		conn.query("SELECT Id, Email, Existing_Account__c, Owner.Name, Existing_Account__c.Open_Opps__c, FirstName, LastName, Company, Country, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
 		  
 		  if (err) { 
 		      console.log("salesforce query error");
@@ -152,15 +152,27 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  }
 
 
-		 /* if (openOpportunities > 0) {
+		conn.query("SELECT Open_Opps__c FROM Account where Id = '" + existingAccount + "'", function(err, result) {
+		  
+		if (err) { 
+		      console.log("salesforce query error");
+		      return console.error(err);     
+		  }
+
+
+		var openOpportunities = result.records[0].Open_Opps__c;
+
+
+		 if (openOpportunities > 0) {
 			opportunityResponse = "*** " + openOpportunities + " Open Opportunities ***"
 		  } else {
 			opportunityResponse = "No Open Opportunities";
 		  }
 		  
 		  console.log("opportunity response : " + opportunityResponse);
-		  */
-		
+  		     
+  		     }); 
+
   
 		  // Build the Drift reply body
 		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + companyResponse + " | " + Country + "<br/>Owned by " + ownerName + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
