@@ -107,7 +107,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 	
 
 		// Customize this to change the fields you return from the Lead object
-		conn.query("SELECT Id, Email, Existing_Account__c, FirstName, LastName, Company, Country, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
+		conn.query("SELECT Id, Email, Existing_Account__c, Owner.name, Existing_Account__r.Open_Opps__c, FirstName, LastName, Company, Country, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
 		  
 		  if (err) { 
 		      return console.error(err);     
@@ -119,6 +119,8 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  var Company = result.records[0].Company;
 		  var Country = result.records[0].Country;
 		  var existingAccount = result.records[0].Existing_Account__c;
+		  var ownerName = result.records[0].Owner.name;
+		  var openOpportunities = result.records[0].Existing_Account__r.Open_Opps__c
     
 		  if (result.records[0].Last_RM_Studio_usage__c != null) {
 			var lastStudioUsage = result.records[0].Last_RM_Studio_usage__c  
@@ -148,10 +150,16 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 			companyResponse = Company;
 		  }
 		  
-  		console.log("*************company response is : " + companyResponse);
+		  if (openOpportunities > 0) {
+			opportunityResponse = openOpportunities + " Open Opportunities"
+		  } else {
+			opportunityResponse = "No Open Opportunities";
+		  }
+		  
+		  
   
 		  // Build the Drift reply body
-		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + companyResponse + " | " + Country + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
+		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + companyResponse + " | " + Country + "<br/>Owned by " + ownerName + "<br/>" + opportunityResponse + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
 		  callbackFn(body, conversationId, orgId)
 		  return
 		     }); 
