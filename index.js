@@ -143,14 +143,6 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 			Academic = "Nope"
 		  }
 		
-		
-		  
-		// Customize this to change the fields you return from the Contact object
-		conn.query("SELECT Id, Email, FirstName, LastName, Company, Country, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Opportunities where Email = '" + emailAddress + "'", function(err, result) {
-		  
-		  if (err) { 
-		      return console.error(err);     
-		  }
 
 		  
   
