@@ -107,7 +107,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 	
 
 		// Customize this to change the fields you return from the Lead object
-		conn.query("SELECT Id, Email, FirstName, LastName, Company, Country, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
+		conn.query("SELECT Id, Existing_Account__c, Account_Open_Opps__c, Email, FirstName, LastName, Company, Country, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
 		  
 		  if (err) { 
 		      return console.error(err);     
@@ -118,6 +118,9 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  var Id = result.records[0].Id;
 		  var Company = result.records[0].Company;
 		  var Country = result.records[0].Country;
+		  
+		  console.log("existing account :" + Existing_Account__c);
+		  console.log("existing account :" + Account_Open_Opps__c);		  
   
   
 		  if (result.records[0].Last_RM_Studio_usage__c != null) {
@@ -139,6 +142,16 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  } else {
 			Academic = "Nope"
 		  }
+		
+		
+		  
+		// Customize this to change the fields you return from the Contact object
+		conn.query("SELECT Id, Email, FirstName, LastName, Company, Country, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Opportunities where Email = '" + emailAddress + "'", function(err, result) {
+		  
+		  if (err) { 
+		      return console.error(err);     
+		  }
+
 		  
   
 		  // Built the Drift reply body
