@@ -3,16 +3,13 @@ Salesforce Lookup for Drift
 
 This app looks up the current person we're chatting with in Salesforce and returns a link along with some useful information about them right inside Drift.
 
-You can find your Drift OAuth Access token at dev.drift.com
-![OAuth token]
-
 ## Deploying to Heroku
 
 Take a look at these steps from Drift to setup Heroku https://github.com/Driftt/Driffy
 
 Make sure you set these tokens
 
-DRIFT_TOKEN = {Your Drift OAuth Token}
+DRIFT_TOKEN = {Your Drift OAuth Token}. Note you can find it at dev.drift.com.
 SF_USER = {Your Salesforce User}
 SF_PASS = {Your Salesforce Pass. Note that you might have to append your SF security token too...}
 
