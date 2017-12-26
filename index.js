@@ -84,11 +84,11 @@ function returnSFAccessToken(emailAddress, callbackFn, conversationId, orgId) {
 }
 
 function ReturnSFAccessToken(emailAddress, accessToken, conversationId, orgId) {
-    return querySalesforceLead(emailAddress, accessToken, postMessage, conversationId, orgId)
+    return querySalesforceLead(emailAddress, accessToken, conversationId, orgId, QuerySalesforceLead)
 }
 
 
-function querySalesforceLead(emailAddress, accessToken, callbackFn, conversationId, orgId) {
+function querySalesforceLead(emailAddress, accessToken, conversationId, orgId, callbackFn) {
 	
 	console.log("email address is :" + emailAddress);		  
 
@@ -151,7 +151,7 @@ function querySalesforceLead(emailAddress, accessToken, callbackFn, conversation
   
 		  // Build the Drift reply body
 		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + companyResponse + " | " + Country + "<br/>Owned by " + ownerName + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
-		  callbackFn(body, conversationId, orgId)
+		  callbackFn(body, conversationId, orgId, existingAccount)
 		     }); 
 
 			
@@ -160,10 +160,49 @@ function querySalesforceLead(emailAddress, accessToken, callbackFn, conversation
 		// No email address was found
 		console.log ("email is undefined" + emailAddress)
 		body = "Oops, we don't have an email address or the user isn't in Salesforce yet"
-		callbackFn(body, conversationId, orgId)
+		callbackFn(body, conversationId, orgId, existingAccount)
 		return
-		}
-			
+		}	
+}
+
+function QuerySalesforceLead(body, conversationId, orgId, existingAccount) {
+    return querySalesforceAccount(body, conversationId, orgId, existingAccount, postMessage)
+}
+
+function querySalesforceAccount(body, conversationId, orgId, existingAccount, callbackFn) {
+	
+	console.log("account ID is :" + existingAccount);		  
+
+
+ if (existingAccount != null) {
+
+		var jsforce = require('jsforce');
+		var conn = new jsforce.Connection({
+		  instanceUrl : 'https://na52.salesforce.com',
+		  accessToken : accessToken
+		});
+		
+	    var records = [];
+	
+
+		// Customize this to change the fields you return from the Lead object
+		conn.query("SELECT Open_Opps__c FROM Account where Id = '" + existingAccount + "'", function(err, result) {
+		  
+		  if (err) { 
+		      console.log("salesforce query error");
+		      return console.error(err);     
+		  }
+
+		  var openOpportunities = result.records[0].Open_Opps__c;
+		
+		  // Build the Drift reply body
+		  body = body + "<br/>*** Open Opportunities " + openOpportunities;
+		  callbackFn(body, conversationId, orgId)
+		     }); 		
+
+			} else {
+				callbackFn(body, conversationId, orgId)
+				}	
 }
 
 function postMessage(body, conversationId, orgId) { 
