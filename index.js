@@ -142,10 +142,10 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  
 		 console.log("existing account is : " + existingAccount);
 		  
-		 if (existingAccount != "") {
-			companyResponse = Company;
-		  } else {
+		 if (existingAccount != null) {
 			companyResponse = "<a target='_blank' 'href=https://na52.salesforce.com/" + existingAccount + "'>" + Company + "</a>"
+		  } else {
+			companyResponse = Company;
 		  }
 		  
   
