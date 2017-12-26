@@ -37,10 +37,9 @@ function handleConversation(orgId, data) {
 }
 
 
-// request function
+// Get the contact ID from Drift
 function getContactId(conversationId, callbackFn, orgId) {
 
-// Get the contact from Drift
   request
    .get(CONVERSATION_API_BASE + `${conversationId}`)
     .set('Content-Type', 'application/json')
@@ -50,14 +49,13 @@ function getContactId(conversationId, callbackFn, orgId) {
      });
 }
 
-// call back function
 function GetContactId(contactId, conversationId, orgId) { 
     return getContactEmail(contactId, GetContactEmail, conversationId, orgId);
 }
 
+// Get the email address from Drift
 function getContactEmail (contactId, callbackFn, conversationId, orgId) {
 
-	// Get the email address from Drift
 	request
 	  .get(CONTACT_API_BASE + `${contactId}`)
 	  .set(`Authorization`, `bearer ${DRIFT_TOKEN}`)
@@ -121,7 +119,6 @@ function querySalesforceLead(emailAddress, accessToken, conversationId, orgId, c
 		  var Country = result.records[0].Country;
 		  var existingAccount = result.records[0].Existing_Account__c;
 		  var ownerName = result.records[0].Owner.Name;
-		  // var openOpportunities = result.records[0].Existing_Account__r.Open_Opps__c;
 
 		  if (result.records[0].Last_RM_Studio_usage__c != null) {
 			var lastStudioUsage = result.records[0].Last_RM_Studio_usage__c  
@@ -173,7 +170,6 @@ function querySalesforceAccount(body, conversationId, orgId, accessToken, existi
 	
 
  if (existingAccount != null) {
-  
 
 		var jsforce = require('jsforce');
 		var conn = new jsforce.Connection({
@@ -223,7 +219,7 @@ function postMessage(body, conversationId, orgId) {
 }
 
 app.use(bodyParser.json())
-app.listen(process.env.PORT || 3000, () => console.log('Example app listening on port 3000!'))
+app.listen(process.env.PORT || 3000, () => console.log('salesforce-lookup listening on port 3000!'))
 app.post('/api', (req, res) => {
   
   if (req.body.type === 'new_message') {
