@@ -112,6 +112,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		conn.query("SELECT Id, Email, Existing_Account__c, Owner.Name, Existing_Account__r.Open_Opps__c, FirstName, LastName, Company, Country, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
 		  
 		  if (err) { 
+		      console.log("salesforce query error");
 		      return console.error(err);     
 		  }
 
@@ -122,8 +123,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  var Country = result.records[0].Country;
 		  var existingAccount = result.records[0].Existing_Account__c;
 		  var ownerName = result.records[0].Owner.Name;
-		  var openOpportunities = result.records[0].Existing_Account__r.Open_Opps__c ||
-		  	(() => throw `SETTING environmental variable not set`)();
+		  var openOpportunities = result.records[0].Existing_Account__r.Open_Opps__c;
 
     
 		  if (result.records[0].Last_RM_Studio_usage__c != null) {
@@ -165,8 +165,6 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
   
 		  // Build the Drift reply body
 		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + companyResponse + " | " + Country + "<br/>Owned by " + ownerName + "<br/>" + opportunityResponse + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
-
-		  console.log("before callback");
 		  callbackFn(body, conversationId, orgId)
 		     }); 
 
