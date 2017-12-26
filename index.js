@@ -123,9 +123,10 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  var existingAccount = result.records[0].Existing_Account__c;
 		  var ownerName = result.records[0].Owner.Name;
 		  
-		  var openOpportunities = result.records[0].Existing_Account__r.Open_Opps__c;
+		  // var openOpportunities = result.records[0].Existing_Account__r.Open_Opps__c;
+		  console.log("open opps is : " + result.records[0].Existing_Account__r.Open_Opps__c;
 
-			console.log("after Open Opportunities");		  
+          console.log("after Open Opportunities");		  
 
     
 		  if (result.records[0].Last_RM_Studio_usage__c != null) {
