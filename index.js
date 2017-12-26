@@ -173,12 +173,12 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + companyResponse + " | " + Country + "<br/>Owned by " + ownerName + "<br/>" + opportunityResponse + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
 
 		  console.log("before callback");
-
-
 		  callbackFn(body, conversationId, orgId)
-		  return
 		     }); 
-		
+		.catch(function(err) {
+        //handle errors
+        console.log('Promise error while getting job status:', err);
+    });
 			
 
 	} else {
