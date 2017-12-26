@@ -73,25 +73,22 @@ function GetContactEmail(emailAddress, conversationId, orgId) {
 
 function returnSFAccessToken(emailAddress, callbackFn, conversationId, orgId) {
 
-var jsforce = require('jsforce');
-var conn = new jsforce.Connection({
-  // you can change loginUrl to connect to sandbox or prerelease env.
-  // loginUrl : 'https://test.salesforce.com'
-});
+	var jsforce = require('jsforce');
+	var conn = new jsforce.Connection({
+	});
 
-conn.login(SF_USER, SF_PASS, function(err, userInfo) {
-  if (err) { return console.error(err); }
-  callbackFn(emailAddress, conn.accessToken, conversationId, orgId)
-  
-});
+	conn.login(SF_USER, SF_PASS, function(err, userInfo) {
+	  if (err) { return console.error(err); }
+	  callbackFn(emailAddress, conn.accessToken, conversationId, orgId)
+	});
 }
 
 function ReturnSFAccessToken(emailAddress, accessToken, conversationId, orgId) {
-    return querySalesforce(emailAddress, accessToken, postMessage, conversationId, orgId)
+    return querySalesforceLead(emailAddress, accessToken, postMessage, conversationId, orgId)
 }
 
 
-function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, orgId) {
+function querySalesforceLead(emailAddress, accessToken, callbackFn, conversationId, orgId) {
 	
 	console.log("email address is :" + emailAddress);		  
 
@@ -150,27 +147,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  } else {
 			companyResponse = Company;
 		  }
-
-
-		if (existingAccount != null) {
-			conn.query("SELECT Open_Opps__c FROM Account where Id = '" + existingAccount + "'")
-			.then(function(result) {
-			console.log("open ops is " + result.records[0].Open_Opps__c);
-		    return result.records[0].Open_Opps__c
-		    })
-
-			var openOpportunities = result.records[0].Open_Opps__c;
-
-
-			 if (openOpportunities > 0) {
-				opportunityResponse = "*** " + openOpportunities + " Open Opportunities ***"
-			  } else {
-				opportunityResponse = "No Open Opportunities";
-			  }
-						  
-			console.log("opportunity response : " + opportunityResponse);
-			return
-		}
+		
   
 		  // Build the Drift reply body
 		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + companyResponse + " | " + Country + "<br/>Owned by " + ownerName + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
