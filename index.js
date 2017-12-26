@@ -93,6 +93,7 @@ function ReturnSFAccessToken(emailAddress, accessToken, conversationId, orgId) {
 
 function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, orgId) {
 
+	console.log("email address is :" + emailAddress);
 
  if (typeof emailAddress != 'undefined') {
 
@@ -107,7 +108,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 	
 
 		// Customize this to change the fields you return from the Lead object
-		conn.query("SELECT Id, Email, Existing_Account__c, Owner.name, Existing_Account__r.Open_Opps__c, FirstName, LastName, Company, Country, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
+		conn.query("SELECT Id, Email, Existing_Account__c, Owner.Name, Existing_Account__r.Open_Opps__c, FirstName, LastName, Company, Country, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
 		  
 		  if (err) { 
 		      return console.error(err);     
@@ -119,7 +120,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  var Company = result.records[0].Company;
 		  var Country = result.records[0].Country;
 		  var existingAccount = result.records[0].Existing_Account__c;
-		  var ownerName = result.records[0].Owner.name;
+		  var ownerName = result.records[0].Owner.Name;
 		  var openOpportunities = result.records[0].Existing_Account__r.Open_Opps__c
     
 		  if (result.records[0].Last_RM_Studio_usage__c != null) {
