@@ -112,6 +112,9 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  if (err) { 
 		      return console.error(err);     
 		  }
+		  
+		console.log("email address" + emailAddress);
+	    console.log("Converted " + converted_Num__c);
 
 		if (Converted_Num__c == 0) {
 
