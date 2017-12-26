@@ -153,18 +153,18 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  }
 
 
-		  if (openOpportunities > 0) {
+		 /* if (openOpportunities > 0) {
 			opportunityResponse = "*** " + openOpportunities + " Open Opportunities ***"
 		  } else {
 			opportunityResponse = "No Open Opportunities";
 		  }
 		  
 		  console.log("opportunity response : " + opportunityResponse);
-		  		  
+		  */
 		
   
 		  // Build the Drift reply body
-		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + companyResponse + " | " + Country + "<br/>Owned by " + ownerName + "<br/>" + opportunityResponse + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
+		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + companyResponse + " | " + Country + "<br/>Owned by " + ownerName + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
 		  callbackFn(body, conversationId, orgId)
 		     }); 
 
