@@ -153,26 +153,26 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 
 
 		if (existingAccount != null) {
-		conn.query("SELECT Open_Opps__c FROM Account where Id = '" + existingAccount + "'", function(err, result) {
+			conn.query("SELECT Open_Opps__c FROM Account where Id = '" + existingAccount + "'", function(err, result) {
 		  
-		if (err) { 
-		      console.log("salesforce query error");
-		      return console.error(err);     
-		  }
+			if (err) { 
+				  console.log("salesforce query error");
+				  return console.error(err);     
+			  }
 
 
-		var openOpportunities = result.records[0].Open_Opps__c;
+			var openOpportunities = result.records[0].Open_Opps__c;
 
 
-		 if (openOpportunities > 0) {
-			opportunityResponse = "*** " + openOpportunities + " Open Opportunities ***"
-		  } else {
-			opportunityResponse = "No Open Opportunities";
-		  }
-		    		     
-  		     }); 
-
-		console.log("opportunity response : " + opportunityResponse);
+			 if (openOpportunities > 0) {
+				opportunityResponse = "*** " + openOpportunities + " Open Opportunities ***"
+			  } else {
+				opportunityResponse = "No Open Opportunities";
+			  }
+						 
+				 }); 
+			console.log("opportunity response : " + opportunityResponse);
+			return
 		}
   
 		  // Build the Drift reply body
