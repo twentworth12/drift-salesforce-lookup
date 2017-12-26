@@ -109,7 +109,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 	
 
 		// Customize this to change the fields you return from the Lead object
-		conn.query("SELECT Id, Email, Existing_Account__c, Owner.Name, Existing_Account__c.Open_Opps__c, FirstName, LastName, Company, Country, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
+		conn.query("SELECT Id, Email, Existing_Account__c, Owner.Name, FirstName, LastName, Company, Country, Academics__c, Total_RM_Studio_starts__c, Last_RM_Studio_usage__c FROM Lead where Email = '" + emailAddress + "'", function(err, result) {
 		  
 		  if (err) { 
 		      console.log("salesforce query error");
