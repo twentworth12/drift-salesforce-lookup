@@ -199,7 +199,7 @@ function querySalesforceAccount(body, conversationId, orgId, accessToken, existi
 		  
 		
 		  // Build the Drift reply body
-		  body = body + "<br/><B>** In Active Opportunity **</B>";
+		  body = body + "<br/><B>** In an Active Opportunity **</B>";
 		  callbackFn(body, conversationId, orgId)
 		     }); 		
 
