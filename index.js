@@ -141,9 +141,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  } else {
 			Academic = "Nope"
 		  }
-		  
-		 console.log("existing account is : " + existingAccount);
-		  
+		  		  
 		 if (existingAccount != null) {
 			companyResponse = "<a target='_blank' href=https://na52.salesforce.com/" + existingAccount + ">" + Company + "</a>"
 		  } else {
@@ -151,10 +149,12 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  }
 		  
 		  if (openOpportunities > 0) {
-			opportunityResponse = openOpportunities + " Open Opportunities"
+			opportunityResponse = "*** " + openOpportunities + " Open Opportunities ***"
 		  } else {
 			opportunityResponse = "No Open Opportunities";
 		  }
+		  
+		  console.log("opportunity reponse : " + opportunityResponse;
 		  
 		  
   
