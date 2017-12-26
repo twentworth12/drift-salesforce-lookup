@@ -5,6 +5,7 @@ const request = require('superagent');
 
 const DRIFT_TOKEN = process.env.BOT_API_TOKEN
 
+// Needed to get Salesforce token
 const SF_USER = process.env.SF_USER
 const SF_PASS = process.env.SF_PASS
 
@@ -56,21 +57,21 @@ function GetContactId(contactId, conversationId, orgId) {
 
 function getContactEmail (contactId, callbackFn, conversationId, orgId) {
 
-// Get the email address from Drift
-request
-  .get(CONTACT_API_BASE + `${contactId}`)
-  .set(`Authorization`, `bearer ${DRIFT_TOKEN}`)
-  .set('Content-Type', 'application/json')
-  .end(function (err, res) {
-        callbackFn(res.body.data.attributes.email, conversationId, orgId)
-     });
-}
+	// Get the email address from Drift
+	request
+	  .get(CONTACT_API_BASE + `${contactId}`)
+	  .set(`Authorization`, `bearer ${DRIFT_TOKEN}`)
+	  .set('Content-Type', 'application/json')
+	  .end(function (err, res) {
+			callbackFn(res.body.data.attributes.email, conversationId, orgId)
+		 });
+	}
 
-// call back function
 function GetContactEmail(emailAddress, conversationId, orgId) { 
     return returnSFAccessToken(emailAddress, ReturnSFAccessToken, conversationId, orgId)
 }
 
+// Use jsforce to authenticate to Salesforce. Note your Salesforce implementation may require a different connection method
 function returnSFAccessToken(emailAddress, callbackFn, conversationId, orgId) {
 
 	var jsforce = require('jsforce');
@@ -87,7 +88,7 @@ function ReturnSFAccessToken(emailAddress, accessToken, conversationId, orgId) {
     return querySalesforceLead(emailAddress, accessToken, conversationId, orgId, QuerySalesforceLead)
 }
 
-
+// Query lead data from Salesforce. This will obviously change based on what you'd like to return back to Drift
 function querySalesforceLead(emailAddress, accessToken, conversationId, orgId, callbackFn) {
 	
 	console.log("email address is :" + emailAddress);		  
@@ -149,7 +150,7 @@ function querySalesforceLead(emailAddress, accessToken, conversationId, orgId, c
 		  }
 		
   
-		  // Build the Drift reply body
+		  // Build the Drift reply body. You can make this whatever you want. 
 		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + companyResponse + " | " + Country + "<br/>Owned by " + ownerName + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
 		  callbackFn(body, conversationId, orgId, accessToken, existingAccount)
 		     }); 
@@ -158,10 +159,8 @@ function querySalesforceLead(emailAddress, accessToken, conversationId, orgId, c
 
 	} else {
 		// No email address was found
-		console.log ("email is undefined" + emailAddress)
 		body = "Oops, we don't have an email address or the user isn't in Salesforce yet"
 		callbackFn(body, conversationId, orgId, accessToken, existingAccount)
-		return
 		}	
 }
 
@@ -169,10 +168,9 @@ function QuerySalesforceLead(body, conversationId, orgId, accessToken, existingA
     return querySalesforceAccount(body, conversationId, orgId, accessToken, existingAccount, postMessage)
 }
 
+// Query Salesforce Account, if there is one. This is to check to see if there's an opportunity
 function querySalesforceAccount(body, conversationId, orgId, accessToken, existingAccount, callbackFn) {
 	
-	console.log("account ID is :" + existingAccount);		  
-
 
  if (existingAccount != null) {
   
@@ -186,7 +184,7 @@ function querySalesforceAccount(body, conversationId, orgId, accessToken, existi
 	    var records = [];
 	
 
-		// Customize this to change the fields you return from the Lead object
+		// Ok, there is a little cheating here. We have a custom Account field Open_Opps__c that rolls-up all opportunities in an account. 
 		conn.query("SELECT Open_Opps__c FROM Account where Id = '" + existingAccount + "'", function(err, result) {
 		  
 		  if (err) { 
@@ -194,11 +192,10 @@ function querySalesforceAccount(body, conversationId, orgId, accessToken, existi
 		      return console.error(err);     
 		  }
 
-
 		  var openOpportunities = result.records[0].Open_Opps__c;
 		  
 		
-		  // Build the Drift reply body
+		  // Add Opportunity warning to the response
 		  body = body + "<br/><B>** In an Active Opportunity **</B>";
 		  callbackFn(body, conversationId, orgId)
 		     }); 		
@@ -224,7 +221,6 @@ function postMessage(body, conversationId, orgId) {
     .catch(err => console.log(err))
     
 }
-
 
 app.use(bodyParser.json())
 app.listen(process.env.PORT || 3000, () => console.log('Example app listening on port 3000!'))
