@@ -176,6 +176,9 @@ function querySalesforceAccount(body, conversationId, orgId, existingAccount, ca
 
  if (existingAccount != null) {
 
+	console.log("before");		  
+
+
 		var jsforce = require('jsforce');
 		var conn = new jsforce.Connection({
 		  instanceUrl : 'https://na52.salesforce.com',
@@ -193,7 +196,6 @@ function querySalesforceAccount(body, conversationId, orgId, existingAccount, ca
 		      return console.error(err);     
 		  }
 
-	console.log("before");		  
 
 		  var openOpportunities = result.records[0].Open_Opps__c;
 		  
