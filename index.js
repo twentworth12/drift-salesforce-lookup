@@ -122,11 +122,14 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  var Country = result.records[0].Country;
 		  var existingAccount = result.records[0].Existing_Account__c;
 		  var ownerName = result.records[0].Owner.Name;
-		  
 		  // var openOpportunities = result.records[0].Existing_Account__r.Open_Opps__c;
-		  console.log("open opps is : " + result.records[0].Existing_Account__r.Open_Opps__c);
 
-          console.log("after Open Opportunities");		  
+		  
+		  if (result.records[0].Existing_Account__r.Open_Opps__c != null) {
+				console.log("Open Opportunities is not null");
+				else {
+					console.log("Open Opportunities is  null");  
+					}
 
     
 		  if (result.records[0].Last_RM_Studio_usage__c != null) {
@@ -155,7 +158,6 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 			companyResponse = Company;
 		  }
 
-		  console.log("before openOpportunities");
 
 		  if (openOpportunities > 0) {
 			opportunityResponse = "*** " + openOpportunities + " Open Opportunities ***"
