@@ -123,9 +123,8 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  var Country = result.records[0].Country;
 		  var existingAccount = result.records[0].Existing_Account__c;
 		  var ownerName = result.records[0].Owner.Name;
-		  console.log("before");
-		  var openOpportunities = result.records[0].Existing_Account__r.Open_Opps__c;
-    	  console.log("after");
+		  // var openOpportunities = result.records[0].Existing_Account__r.Open_Opps__c;
+
 		  if (result.records[0].Last_RM_Studio_usage__c != null) {
 			var lastStudioUsage = result.records[0].Last_RM_Studio_usage__c  
 		  } else {
