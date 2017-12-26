@@ -154,7 +154,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 			opportunityResponse = "No Open Opportunities";
 		  }
 		  
-		  console.log("opportunity reponse : " + opportunityResponse;
+		  console.log("opportunity response : " + opportunityResponse);
 		  
 		  
   
