@@ -93,10 +93,7 @@ function ReturnSFAccessToken(emailAddress, accessToken, conversationId, orgId) {
 
 function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, orgId) {
 
- 
- 
- console.log("emailAddress : " + emailAddress);
- 
+
  if (typeof emailAddress != 'undefined') {
 
 		var jsforce = require('jsforce');
@@ -115,19 +112,15 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  if (err) { 
 		      return console.error(err);     
 		  }
-		  
-		  var convertedLead = result.records[0].Converted_Num__c;
-		  console.log("Converted Num :" + convertedLead);
-		  
-		  if (convertedLead == 0) {
-		  
-			  console.log("Lead was not converted");
-		  
+
+		if (Converted_Num__c == 0) {
+
 			  var firstName = result.records[0].FirstName;
 			  var lastName = result.records[0].LastName;
 			  var Id = result.records[0].Id;
 			  var Company = result.records[0].Company;
 			  var Country = result.records[0].Country;
+		  
 		  
 			  console.log("existing account :" + Existing_Account__c);
 			  console.log("existing account :" + Account_Open_Opps__c);		  
@@ -152,21 +145,23 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 			  } else {
 				Academic = "Nope"
 			  }
-			  
+		
 			  // Build the Drift reply body
 			  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + Company + " | " + Country + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
-			  callbackFn(body, conversationId, orgId)
-				 });  
+			  callbackFn(body, conversationId, orgId); 
+			  }
+			  else {
+			  	console.log("Lead was converted");
+			  	}
+	 	}); 
 			
-			} else {
-				console.log("Lead was converted");
 
-			} else {
-				// No email address was found
-				console.log ("email is undefined" + emailAddress)
-				body = "Oops, we don't have an email address or the user isn't in Salesforce yet"
-				callbackFn(body, conversationId, orgId)
-				return
+	} else {
+		// No email address was found
+		console.log ("email is undefined" + emailAddress)
+		body = "Oops, we don't have an email address or the user isn't in Salesforce yet"
+		callbackFn(body, conversationId, orgId)
+		return
 		}
 			
 }
