@@ -119,9 +119,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  var Company = result.records[0].Company;
 		  var Country = result.records[0].Country;
 		  var existingAccount = result.records[0].Existing_Account__c;
-  
-  			console.log("existing account is : " + existingAccount);
-  
+    
 		  if (result.records[0].Last_RM_Studio_usage__c != null) {
 			var lastStudioUsage = result.records[0].Last_RM_Studio_usage__c  
 		  } else {
@@ -142,9 +140,18 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 			Academic = "Nope"
 		  }
 		  
+		 console.log("existing account is : " + existingAccount);
+		  
+		 if (existingAccount != "") {
+			companyResponse = Company;
+		  } else {
+			companyResponse = "<a target='_blank' 'href=https://na52.salesforce.com/" + existingAccount + "'>" + Company + "</a>"
+		  }
+		  
+  
   
 		  // Build the Drift reply body
-		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + Company + " | " + Country + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
+		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + companyResponse + " | " + Country + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
 		  callbackFn(body, conversationId, orgId)
 		  return
 		     }); 
