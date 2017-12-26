@@ -152,6 +152,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  }
 
 
+		if (existingAccount != null) {
 		conn.query("SELECT Open_Opps__c FROM Account where Id = '" + existingAccount + "'", function(err, result) {
 		  
 		if (err) { 
@@ -168,11 +169,11 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  } else {
 			opportunityResponse = "No Open Opportunities";
 		  }
-		  
-		  console.log("opportunity response : " + opportunityResponse);
-  		     
+		    		     
   		     }); 
 
+		console.log("opportunity response : " + opportunityResponse);
+		}
   
 		  // Build the Drift reply body
 		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + companyResponse + " | " + Country + "<br/>Owned by " + ownerName + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
