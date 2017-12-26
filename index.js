@@ -127,7 +127,7 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  
 		  if (result.records[0].Existing_Account__r.Open_Opps__c != null) {
 				console.log("Open Opportunities is not null");
-				else {
+				} else {
 					console.log("Open Opportunities is  null");  
 					}
 
