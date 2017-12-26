@@ -114,9 +114,9 @@ function querySalesforce(emailAddress, accessToken, callbackFn, conversationId, 
 		  }
 		  
 		console.log("email address :" + emailAddress);
-	    console.log("Converted " + converted_Num__c);
+	    console.log("Converted " + result.records[0].Converted_Num__c);
 
-		if (Converted_Num__c == 0) {
+		if (result.records[0].Converted_Num__c == 0) {
 
 			  var firstName = result.records[0].FirstName;
 			  var lastName = result.records[0].LastName;
