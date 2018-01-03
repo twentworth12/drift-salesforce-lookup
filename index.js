@@ -57,6 +57,8 @@ function GetContactId(contactId, conversationId, orgId) {
 
 // Get the email address from Drift
 function getContactEmail (contactId, callbackFn, conversationId, orgId) {
+	
+	console.log("in getContactEmail")
 
 	request
 	  .get(CONTACT_API_BASE + `${contactId}`)
