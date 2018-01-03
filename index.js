@@ -64,10 +64,12 @@ function getContactEmail (contactId, callbackFn, conversationId, orgId) {
 	  .set('Content-Type', 'application/json')
 	  .end(function (err, res) {
 	  
+	  console.log("socialProfile Email is " + res.body.data.attributes.socialProfiles.email)
+	  
 	  if (res.body.data.attributes.email != 'undefined') {
 	  	emailAddress = res.body.data.attributes.email
 	  	} else 
-	  	 {  console.log("socialProfile Email is " + res.body.data.attributes.socialProfiles.email)
+	  	 	{  
 	  	 	if (res.body.data.attributes.socialProfiles.email != 'undefined') {
 	  	 		emailAddress = res.body.data.attributes.socialProfiles.email
 	  	 	}
