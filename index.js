@@ -190,10 +190,10 @@ function querySalesforceAccount(body, conversationId, orgId, accessToken, existi
 		  }
 
 		  var openOpportunities = result.records[0].Open_Opps__c;
-		  
-		
+		  if (openOpportunities > 0) {
 		  // Add Opportunity warning to the response
 		  body = body + "<br/><B>** In an Active Opportunity **</B>";
+		  }
 		  callbackFn(body, conversationId, orgId)
 		     }); 		
 
