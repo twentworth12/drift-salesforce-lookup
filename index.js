@@ -44,7 +44,6 @@ function getContactId(conversationId, callbackFn, orgId) {
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${DRIFT_TOKEN}`)
    .end(function(err, res){
-       console.log("contactID is " + res.body.data.contactId)
        callbackFn(res.body.data.contactId, conversationId, orgId)
      });
 }
@@ -130,7 +129,6 @@ function querySalesforceLead(emailAddress, accessToken, conversationId, orgId, c
 		      return console.error(err);     
 		  }
 
-		console.log("in salesforce query 2");
 
 		  var firstName = result.records[0].FirstName;
 		  var lastName = result.records[0].LastName;
@@ -169,6 +167,9 @@ function querySalesforceLead(emailAddress, accessToken, conversationId, orgId, c
   
 		  // Build the Drift reply body. You can make this whatever you want. 
 		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + companyResponse + " | " + Country + "<br/>Owned by " + ownerName + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
+		  
+		  		console.log("body is " + body);
+		  
 		  callbackFn(body, conversationId, orgId, accessToken, existingAccount)
 		     }); 
 
