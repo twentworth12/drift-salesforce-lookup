@@ -28,8 +28,8 @@ function handleMessage(orgId, data) {
   }
 }
 
-function handleConversation(orgId, data) {
 
+function handleConversation(orgId, data) {
     const messageBody = data.body
     const conversationId = data.id
     console.log("Yeah! We found a new conversation!")
