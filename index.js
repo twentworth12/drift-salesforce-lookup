@@ -45,9 +45,11 @@ function getContactId(conversationId, callbackFn, orgId) {
     .set('Content-Type', 'application/json')
     .set(`Authorization`, `bearer ${DRIFT_TOKEN}`)
    .end(function(err, res){
+       console.log("contactID is " + res.body.data.contactId)
        callbackFn(res.body.data.contactId, conversationId, orgId)
      });
 }
+
 
 function GetContactId(contactId, conversationId, orgId) { 
     return getContactEmail(contactId, GetContactEmail, conversationId, orgId);
