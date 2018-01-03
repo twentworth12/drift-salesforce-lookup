@@ -130,6 +130,8 @@ function querySalesforceLead(emailAddress, accessToken, conversationId, orgId, c
 		      return console.error(err);     
 		  }
 
+		console.log("in salesforce query 2");
+
 		  var firstName = result.records[0].FirstName;
 		  var lastName = result.records[0].LastName;
 		  var Id = result.records[0].Id;
