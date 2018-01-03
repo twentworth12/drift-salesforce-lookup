@@ -165,9 +165,7 @@ function querySalesforceLead(emailAddress, accessToken, conversationId, orgId, c
   
 		  // Build the Drift reply body. You can make this whatever you want. 
 		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + companyResponse + " | " + Country + "<br/>Owned by " + ownerName + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic
-		  
-		  		console.log("body is " + body);
-		  
+		  		  
 		  callbackFn(body, conversationId, orgId, accessToken, existingAccount)
 		     }); 
 
@@ -228,6 +226,9 @@ function postMessage(body, conversationId, orgId) {
     'body': body,
     'type': 'private_prompt',
   	}
+  
+    console.log("message is " + message);
+    
   
   	// Send the message
     return request.post(CONVERSATION_API_BASE + `/${conversationId}/messages`)
