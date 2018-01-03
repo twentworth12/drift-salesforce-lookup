@@ -109,8 +109,6 @@ function querySalesforceLead(emailAddress, accessToken, conversationId, orgId, c
  if (typeof emailAddress != 'undefined') {
 
 
-		console.log("in salesforce query ");
-
 		var jsforce = require('jsforce');
 		var conn = new jsforce.Connection({
 		  instanceUrl : 'https://na52.salesforce.com',
@@ -223,12 +221,14 @@ function querySalesforceAccount(body, conversationId, orgId, accessToken, existi
 }
 
 function postMessage(body, conversationId, orgId) { 
+
+	console.log("in postMessage");
 		
     const message = {
     'orgId': orgId,
     'body': body,
     'type': 'private_prompt',
-  }
+  	}
   
   	// Send the message
     return request.post(CONVERSATION_API_BASE + `/${conversationId}/messages`)
