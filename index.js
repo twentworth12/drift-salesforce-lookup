@@ -227,7 +227,7 @@ function postMessage(body, conversationId, orgId) {
     'type': 'private_prompt',
   	}
   
-    console.log("message is " + message);
+    console.log("org id is " + orgId);
     
   	// Send the message
     request
