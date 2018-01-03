@@ -66,19 +66,19 @@ function getContactEmail (contactId, callbackFn, conversationId, orgId) {
 	  
 	  console.log("socialProfile Email is " + res.body.data.attributes.socialProfiles.email)
 	  
-	  if (typeof res.body.data.attributes.email != 'undefined') {
+	  if (res.body.data.attributes.email != 'undefined') {
 	  	emailAddress = res.body.data.attributes.email
 	  	} else 
 	  	 	{  
-	  	 	if (typeof res.body.data.attributes.socialProfiles.email != 'undefined') {
+	  	 	if (res.body.data.attributes.socialProfiles.email != 'undefined') {
 	  	 		emailAddress = res.body.data.attributes.socialProfiles.email
 	  	 	}
 	  	 }	  	
 	  
 	  		console.log("email getContactEmail is " + emailAddress)
 			callbackFn(emailAddress, conversationId, orgId)
-		});
-}
+		 });
+	}
 
 function GetContactEmail(emailAddress, conversationId, orgId) { 
     return returnSFAccessToken(emailAddress, ReturnSFAccessToken, conversationId, orgId)
