@@ -67,8 +67,9 @@ function getContactEmail (contactId, callbackFn, conversationId, orgId) {
 	  if (res.body.data.attributes.email != 'undefined') {
 	  	emailAddress = res.body.data.attributes.email
 	  	} else 
-	  	 { if (res.body.data.attributes.socialProfiles.email != 'undefined') {
-	  	 	emailAddress = res.body.data.attributes.socialProfiles.email
+	  	 {  console.log("socialProfile Email is " + res.body.data.attributes.socialProfiles.email)
+	  	 	if (res.body.data.attributes.socialProfiles.email != 'undefined') {
+	  	 		emailAddress = res.body.data.attributes.socialProfiles.email
 	  	 	}
 	  	 }	  	
 	  
