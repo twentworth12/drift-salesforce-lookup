@@ -222,7 +222,6 @@ function querySalesforceAccount(body, conversationId, orgId, accessToken, existi
 
 function postMessage(body, conversationId, orgId) { 
 
-	console.log("in postMessage");
 		
     const message = {
     'orgId': orgId,
@@ -236,6 +235,8 @@ function postMessage(body, conversationId, orgId) {
     .set(`Authorization`, `bearer ${DRIFT_TOKEN}`)
     .send(message)
     .catch(err => console.log(err))
+    
+    console.log("after send message");
     
 }
 
