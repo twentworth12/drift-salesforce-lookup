@@ -74,7 +74,6 @@ function getContactEmail (contactId, callbackFn, conversationId, orgId) {
 	  	 	}
 	  	 }	  	
 	  
-	  		console.log("email getContactEmail is " + emailAddress)
 			callbackFn(emailAddress, conversationId, orgId)
 		 });
 	}
@@ -227,7 +226,6 @@ function postMessage(body, conversationId, orgId) {
     'type': 'private_prompt',
   	}
   
-    console.log("org id is " + orgId);
     
   	// Send the message
     request
@@ -236,9 +234,7 @@ function postMessage(body, conversationId, orgId) {
     .set(`Authorization`, `bearer ${DRIFT_TOKEN}`)
     .send(message)
     .catch(err => console.log(err))
-    
-    console.log("after send message");
-    
+        
 }
 
 app.use(bodyParser.json())
