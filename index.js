@@ -39,7 +39,7 @@ function handleConversation(orgId, data) {
 
 // Get the contact ID from Drift
 function getContactId(conversationId, callbackFn, orgId) {
-
+  console.log("in getContactId");
   request
    .get(CONVERSATION_API_BASE + `${conversationId}`)
     .set('Content-Type', 'application/json')
