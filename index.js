@@ -39,7 +39,6 @@ function handleConversation(orgId, data) {
 
 // Get the contact ID from Drift
 function getContactId(conversationId, callbackFn, orgId) {
-  console.log("in getContactId");
   request
    .get(CONVERSATION_API_BASE + `${conversationId}`)
     .set('Content-Type', 'application/json')
@@ -57,17 +56,24 @@ function GetContactId(contactId, conversationId, orgId) {
 
 // Get the email address from Drift
 function getContactEmail (contactId, callbackFn, conversationId, orgId) {
-	
-	console.log("in getContactEmail")
+
 
 	request
 	  .get(CONTACT_API_BASE + `${contactId}`)
 	  .set(`Authorization`, `bearer ${DRIFT_TOKEN}`)
 	  .set('Content-Type', 'application/json')
 	  .end(function (err, res) {
-	  console.log("email getContactEmail is " + res.body.data.attributes.socialProfiles.email)
-	  console.log("ID is " + res.body.data.id)
-			callbackFn(res.body.data.attributes.email, conversationId, orgId)
+	  
+	  if (res.body.data.attributes.email != 'undefined') {
+	  	emailAddress = res.body.data.attributes.email
+	  	} else 
+	  	 { if (res.body.data.attributes.socialProfiles.email != 'undefined') {
+	  	 	emailAddress = res.body.data.attributes.socialProfiles.email
+	  	 	}
+	  	 }	  	
+	  
+	  		console.log("email getContactEmail is " + emailAddress)
+			callbackFn(emailAddress, conversationId, orgId)
 		 });
 	}
 
