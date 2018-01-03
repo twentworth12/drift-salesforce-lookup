@@ -109,6 +109,9 @@ function querySalesforceLead(emailAddress, accessToken, conversationId, orgId, c
 
  if (typeof emailAddress != 'undefined') {
 
+
+		console.log("in salesforce query ");
+
 		var jsforce = require('jsforce');
 		var conn = new jsforce.Connection({
 		  instanceUrl : 'https://na52.salesforce.com',
