@@ -158,7 +158,7 @@ function querySalesforceLead(emailAddress, accessToken, conversationId, orgId, c
 	} else {
 		// No email address was found
 		body = "Oops, we don't have an email address or the user isn't in Salesforce yet"
-		callbackFn(body, conversationId, orgId, accessToken, existingAccount)
+		callbackFn(body, conversationId, orgId, accessToken, "")
 		}	
 }
 
