@@ -63,6 +63,7 @@ function getContactEmail (contactId, callbackFn, conversationId, orgId) {
 	  .set(`Authorization`, `bearer ${DRIFT_TOKEN}`)
 	  .set('Content-Type', 'application/json')
 	  .end(function (err, res) {
+	  console.log("email getContactEmail is " + res.body.data.attributes.email)
 			callbackFn(res.body.data.attributes.email, conversationId, orgId)
 		 });
 	}
