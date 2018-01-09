@@ -13,7 +13,8 @@ const CONVERSATION_API_BASE = 'https://driftapi.com/conversations'
 const CONTACT_API_BASE = 'https://driftapi.com/contacts'
 
 // Set this to true if you want to automatically lookup users for new conversations where we have an email address
-const AUTO_LOOKUP = true;
+// Turned off because there's some sort of bug
+const AUTO_LOOKUP = false;
 
 
 function handleMessage(orgId, data) {
