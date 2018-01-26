@@ -165,7 +165,7 @@ function querySalesforceLead(emailAddress, accessToken, conversationId, orgId, c
 		
   
 		  // Build the Drift reply body. You can make this whatever you want. 
-		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + companyResponse + " | " + Country + "<br/>Owned by " + ownerName + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic " + "<br/><a href=https://www.bostonglobe.com/magazine/2016/03/04/blind-date-what-motivation/lKqPUFb83pzDbFjZVDSOmK/story.html>Blind Date: Whats my Motivation?</a>" 
+		  body = "<a target='_blank' href=https://na52.salesforce.com/" + Id + ">" + firstName + " " + lastName + "</a> | " + companyResponse + " | " + Country + "<br/>Owned by " + ownerName + "<br/>Total RM Studio Starts: " + totalStudioStarts + " | Last RM Studio Usage: " + lastStudioUsage + "<br/>Academic: " + Academic " + "<br/>https://www.bostonglobe.com/magazine/2016/03/04/blind-date-what-motivation/lKqPUFb83pzDbFjZVDSOmK/story.html"
 
 			
 		  callbackFn(body, conversationId, orgId, accessToken, existingAccount)
